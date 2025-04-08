@@ -1,0 +1,5 @@
+{
+  "imports": {
+    "@popov/jwt": "jsr:@popov/jwt@^1.0.1"
+  }
+}

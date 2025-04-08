@@ -1,0 +1,20 @@
+# Node
+node_modules/
+dist/
+build/
+*.log
+package-lock.json
+npm-debug.log
+tt.ts
+
+# Environnements
+.env
+.env.local
+
+# Deno (si jamais tu utilises dans supabase/functions)
+deno.lock
+supabase/.branches
+supabase/.temp
+
+# macOS
+.DS_Store
