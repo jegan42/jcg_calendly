@@ -26,8 +26,9 @@ router.get(
         res.cookie("token", token, {
             httpOnly: true,
             secure: process.env.NODE_ENV === "production",
-            sameSite: "lax", //"strict",
+            sameSite: "none", //"lax", //"strict",
             maxAge: 60 * 60 * 1000,
+            domain: '.onrender.com',
         });
 
 
