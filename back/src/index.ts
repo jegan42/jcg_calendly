@@ -2,7 +2,7 @@
 import dotenv from "dotenv";
 dotenv.config();
 
-import express from "express";
+import express, { Request, Response, NextFunction } from "express";
 import morgan from "morgan";
 import cookieParser from "cookie-parser";
 import passport from "passport";
@@ -86,16 +86,16 @@ app.use("/user", limiter, userRoutes);
 app.use(
     (
         err: Error,
-        _req: express.Request,
-        res: express.Response,
-        _next: express.NextFunction
+        _req: Request,
+        res: Response,
+        _next: NextFunction
     ) => {
         console.error(err.stack);
         res.status(500).json({ message: "Unexpected server error" });
     }
 );
 
-app.use((_req: express.Request, res: express.Response) => {
+app.use((_req: Request, res: Response) => {
     res.status(404).json({ message: "Route not found" });
 });
 
