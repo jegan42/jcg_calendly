@@ -34,12 +34,12 @@ router.get(
         res.redirect(`${process.env.CLIENT_URL}/dashboard`);
 
         // old code
-        // res.json({
-        //     success: true,
-        //     token,
-        //     user,
-        //     message: "Successful login with Google in auth",
-        // });
+        res.json({
+            success: true,
+            token,
+            user,
+            message: "Successful login with Google in auth",
+        });
     }
 );
 
