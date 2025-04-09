@@ -20,6 +20,7 @@ import {
 
 import "./auth/google";
 import { limiter } from "./middleware/secure";
+import process from "node:process";
 
 const app = express();
 
@@ -85,16 +86,16 @@ app.use("/user", limiter, userRoutes);
 app.use(
     (
         err: Error,
-        req: express.Request,
+        _req: express.Request,
         res: express.Response,
-        next: express.NextFunction
+        _next: express.NextFunction
     ) => {
         console.error(err.stack);
         res.status(500).json({ message: "Unexpected server error" });
     }
 );
 
-app.use((req, res) => {
+app.use((_req: express.Request, res: express.Response) => {
     res.status(404).json({ message: "Route not found" });
 });
 

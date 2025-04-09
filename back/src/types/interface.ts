@@ -7,7 +7,6 @@ export interface User {
     avatar: string;
     token: string; // Add the token property to the User type
     accessToken: string; // Add the accessToken property to the User type
-    refreshToken: string; // Add the refreshToken property to the User type
 }
 
 export interface EventType {

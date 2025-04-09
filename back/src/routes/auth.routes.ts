@@ -1,8 +1,9 @@
 // src/routes/auth.routes.ts
-import { Router } from "express";
+import { Router, Request, Response } from "express";
 import passport from "passport";
 import { requireJWTAuth } from "../middleware/jwtAuth";
 import { User } from "../types/interface";
+import process from "node:process";
 
 const router = Router();
 
@@ -19,7 +20,7 @@ router.get(
         session: false,
         failureRedirect: "/auth/google",
     }),
-    (req, res) => {
+    (req: Request, res: Response) => {
         const user = req.user as User;
         const token = user.token;
 
@@ -39,11 +40,11 @@ router.get(
     }
 );
 
-router.get("/me", requireJWTAuth, (req, res) => {
+router.get("/me", requireJWTAuth, (req: Request, res: Response) => {
     res.json({ user: req.user });
 });
 
-router.get("/logout", (req, res) => {
+router.get("/logout", (_req: Request, res: Response) => {
     res.clearCookie("jwt");
     res.redirect("/");
 });

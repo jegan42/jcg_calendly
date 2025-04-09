@@ -1,10 +1,10 @@
 // src/routes/home.routes.ts
-import { Router } from "express";
+import { Router, Request, Response } from "express";
 import { supabase } from "../lib/supabaseClient";
 
 const router = Router();
 
-router.get("/", (req, res) => {
+router.get("/", (_req: Request, res: Response) => {
     // Example: Fetching data from a table
     const getData = async () => {
         try {

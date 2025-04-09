@@ -1,5 +1,6 @@
 // src/routes/index.ts
 import authRoutes from "./auth.routes";
+import bookRoutes from "./book.routes";
 import calendarRoutes from "./calendar.routes";
 import dashboardRoutes from "./dashboard.routes";
 import eventRoutes from "./event.routes";
@@ -8,6 +9,7 @@ import userRoutes from "./user.routes";
 
 export {
     authRoutes,
+    bookRoutes,
     calendarRoutes,
     dashboardRoutes,
     eventRoutes,

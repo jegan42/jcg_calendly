@@ -12,7 +12,8 @@ router.post(
     requireJWTAuth,
     csrfProtection,
     async (req: Request, res: Response) => {
-        const { title, description, start_time, end_time, guests } = req.body;
+        const { _title, _description, start_time, end_time, _guests } =
+            req.body;
         const user = req.user as User;
 
         try {

@@ -68,7 +68,7 @@ export const validateEvent: Array<
     },
 ];
 
-// Créer un événement
+// Create an event
 export const createEvent = async (
     user: User,
     eventData: {
@@ -108,21 +108,21 @@ export const createEvent = async (
     ]);
 
     if (error) {
-        throw new Error(`Erreur de création de l'événement: ${error.message}`);
+        throw new Error(`Error creating the event: ${error.message}`);
     }
 
     if (user.email) {
         sendEmail(
             user.email,
-            "Événement créé",
-            `L'événement ${title} a été créé avec succès.`
+            "Event Created",
+            `The event "${title}" has been successfully created.`
         );
     }
 
     return data;
 };
 
-// Vérifier si un créneau est déjà réservé
+// Check if a time slot is already booked
 export const checkOverlappingEvents = async (
     userId: string,
     start_time: Date,
@@ -135,15 +135,13 @@ export const checkOverlappingEvents = async (
         .or(`(start_time.lt.${end_time},end_time.gt.${start_time})`);
 
     if (error) {
-        throw new Error(
-            `Erreur lors de la vérification des conflits: ${error.message}`
-        );
+        throw new Error(`Error while checking for conflicts: ${error.message}`);
     }
 
     return overlapping;
 };
 
-// Récupérer les événements de l'utilisateur
+// Retrieve user events
 export const getUserEvents = async (userId: string) => {
     const { data, error } = await supabase
         .from("events")
@@ -151,15 +149,13 @@ export const getUserEvents = async (userId: string) => {
         .eq("user_id", userId);
 
     if (error) {
-        throw new Error(
-            `Erreur de récupération des événements: ${error.message}`
-        );
+        throw new Error(`Error retrieving events: ${error.message}`);
     }
 
     return data;
 };
 
-// Mettre à jour un événement
+// Update an event
 export const updateEvent = async (
     eventId: number,
     updatedData: {
@@ -176,15 +172,13 @@ export const updateEvent = async (
         .eq("id", eventId);
 
     if (error) {
-        throw new Error(
-            `Erreur de mise à jour de l'événement: ${error.message}`
-        );
+        throw new Error(`Error updating the event: ${error.message}`);
     }
 
     return data;
 };
 
-// Supprimer un événement
+// Delete an event
 export const deleteEvent = async (eventId: number) => {
     const { data, error } = await supabase
         .from("events")
@@ -192,9 +186,7 @@ export const deleteEvent = async (eventId: number) => {
         .eq("id", eventId);
 
     if (error) {
-        throw new Error(
-            `Erreur de suppression de l'événement: ${error.message}`
-        );
+        throw new Error(`Error deleting the event: ${error.message}`);
     }
 
     return data;

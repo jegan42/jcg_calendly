@@ -2,6 +2,7 @@
 import jwt from "jsonwebtoken";
 import { Request, Response, NextFunction } from "express";
 import { verifyJWT } from "../lib/jwt";
+import process from "node:process";
 
 export const requireJWTAuth = (
     req: Request,
@@ -29,7 +30,7 @@ export const requireJWTAuth = (
         req.user = decoded;
         next();
     } catch (err) {
-        res.status(403).json({ message: "Invalid or expired token" });
+        res.status(403).json({ message: "Invalid or expired token :" + err });
         return;
     }
 };

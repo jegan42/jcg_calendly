@@ -1,5 +1,6 @@
 // src/mailer/mailer.ts
 import nodemailer from "nodemailer";
+import process from "node:process";
 
 const transporter = nodemailer.createTransport({
     service: "gmail",

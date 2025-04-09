@@ -1,5 +1,6 @@
 // src/lib/supabaseClient.ts
 import { createClient } from "@supabase/supabase-js";
+import process from "node:process";
 
 const supabaseUrl = process.env.SUPABASE_URL!;
 const supabaseServiceKey = process.env.SUPABASE_SERVICE_KEY!;

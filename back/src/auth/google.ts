@@ -4,6 +4,7 @@ import { User } from "../types/interface";
 import { Strategy as GoogleStrategy } from "passport-google-oauth20";
 import { supabase } from "../lib/supabaseClient";
 import { generateJWT } from "../lib/jwt";
+import process from "node:process";
 
 passport.use(
     new GoogleStrategy(
@@ -12,7 +13,7 @@ passport.use(
             clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
             callbackURL: "/auth/google/callback",
         },
-        async (_accessToken, _refreshToken, profile, done) => {
+        async (accessToken, _refreshToken, profile, done) => {
             if (!profile.emails || profile.emails.length === 0) {
                 return done(new Error("No email found"), false);
             }
@@ -22,7 +23,7 @@ passport.use(
             const id_google = profile.id;
             const avatar = profile.photos?.[0]?.value ?? null;
             console.log("✅ Profil used :", profile);
-            console.log("✅ AccessToken used :", _accessToken);
+            console.log("✅ AccessToken used :", accessToken);
             try {
                 const { data, error } = await supabase
                     .from("users")
@@ -51,8 +52,7 @@ passport.use(
                 return done(null, {
                     token,
                     id_google,
-                    accessToken: _accessToken,
-                    refreshToken: _refreshToken,
+                    accessToken: accessToken,
                 });
             } catch (err) {
                 console.error("🔥 Error callback Google :", err);
