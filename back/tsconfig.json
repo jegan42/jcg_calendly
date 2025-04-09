@@ -14,7 +14,7 @@
         "skipLibCheck": true /* Skip type checking all .d.ts files. */,
     },
     "exclude": [
-        "supabase/"
+        "src/supabase/"
     ] /* Specify the folder to exclude from compilation. */,
     "include": [
         "src",

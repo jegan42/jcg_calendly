@@ -1,11 +1,18 @@
 // global.d.ts
-declare module 'passport';
-declare module 'passport-google-oauth20';
-declare module 'express';
-declare module 'jsonwebtoken';
-declare module 'morgan';
-declare module 'cookie-parser';
-declare module 'cors';
-declare module 'csurf';
-declare module 'nodemailer';
-declare module 'escape-html';
+import { User } from "./src/types/interface";
+
+declare global {
+    namespace Express {
+        interface Request {
+            user?: User;
+            isAuthenticated?: () => boolean;
+            cookies?: Record<string, string>;
+        }
+
+        interface Response {
+            cookie?: (name: string, val: any, options?: any) => void;
+            clearCookie?: (name: string, options?: any) => void;
+            redirect?: (url: string) => void;
+        }
+    }
+}

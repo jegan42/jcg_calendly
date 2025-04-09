@@ -3,7 +3,6 @@ import { Router, Request, Response } from "express";
 import passport from "passport";
 import { requireJWTAuth } from "../middleware/jwtAuth";
 import { User } from "../types/interface";
-import process from "node:process";
 
 const router = Router();
 

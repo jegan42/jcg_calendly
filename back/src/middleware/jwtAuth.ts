@@ -2,7 +2,6 @@
 import jwt from "jsonwebtoken";
 import { Request, Response, NextFunction } from "express";
 import { verifyJWT } from "../lib/jwt";
-import process from "node:process";
 
 export const requireJWTAuth = (
     req: Request,

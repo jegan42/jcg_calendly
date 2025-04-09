@@ -13,6 +13,9 @@
     "author": "",
     "license": "ISC",
     "dependencies": {
+        "@bearz/dotenv": "^0.1.0",
+        "@inspatial/serve": "npm:@jsr/inspatial__serve@^0.1.2",
+        "@popov/jwt": "npm:@jsr/popov__jwt@^1.0.1",
         "@prisma/client": "^6.5.0",
         "@supabase/functions-js": "^2.4.4",
         "@supabase/supabase-js": "^2.49.4",

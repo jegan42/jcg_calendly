@@ -1,6 +1,6 @@
 // src/mailer/mailer.ts
 import nodemailer from "nodemailer";
-import process from "node:process";
+import SMTPTransport from "nodemailer/lib/smtp-transport";
 
 const transporter = nodemailer.createTransport({
     service: "gmail",
@@ -18,7 +18,7 @@ export const sendEmail = (to: string, subject: string, text: string) => {
         text: text,
     };
 
-    transporter.sendMail(mailOptions, (error, info) => {
+    transporter.sendMail(mailOptions, (error: Error | null, info: SMTPTransport.SentMessageInfo) => {
         if (error) {
             console.log("Error sending email:", error);
         } else {

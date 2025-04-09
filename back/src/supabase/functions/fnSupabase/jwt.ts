@@ -1,5 +1,5 @@
 // src/supabase/functions/fnSupabase/jwt.ts
-import { createJwt, isJwtValid, isJwtExpired, getJwtPayload } from "@popov/jst";
+import { createJwt, isJwtValid, isJwtExpired, getJwtPayload } from "@popov/jwt";
 import { parse } from "@bearz/dotenv";
 
 // Load and parse environment variables from a file or a string
@@ -8,7 +8,7 @@ const env = parse(envContent);
 
 // Retrieve the JWT secret from environment variables
 const JWT_SECRET = env.JWT_SECRET;
-
+``
 if (!JWT_SECRET) {
     throw new Error("JWT_SECRET is not set in environment variables");
 }
