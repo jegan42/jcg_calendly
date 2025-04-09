@@ -32,7 +32,7 @@ router.get(
         });
 
 
-        res.redirect(`${process.env.CLIENT_URL}/dashboard`);
+        // res.redirect(`${process.env.CLIENT_URL}/dashboard`);
 
         // old code
         res.json({
