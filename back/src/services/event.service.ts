@@ -59,7 +59,7 @@ export const validateEvent: Array<
     body("cancellation_policy")
         .isBoolean()
         .withMessage("The cancellation_policy field must be a boolean."),
-    (req, res, next) => {
+    (req: Request, res: Response, next) => {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
             return res.status(400).json({ errors: errors.array() });

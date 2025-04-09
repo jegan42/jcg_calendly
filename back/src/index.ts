@@ -53,7 +53,7 @@ app.use(
 );
 
 // Route to get the CSRF token
-// app.get("/csrf-token", (req, res) => {
+// app.get("/csrf-token", (req: express.Request, res: express.Response) => {
 //     // Send the CSRF token to the frontend
 //     res.json({ csrfToken: req.csrfToken() });
 // });
@@ -100,7 +100,7 @@ app.use((_req: express.Request, res: express.Response) => {
 });
 
 // Test route for session logout
-// app.get("/logout", (req, res) => {
+// app.get("/logout", (req: express.Request, res: express.Response) => {
 //     req.logout((err) => {
 //         if (err) return res.status(500).json({ message: "Logout error" });
 //         req.session.destroy(() => {

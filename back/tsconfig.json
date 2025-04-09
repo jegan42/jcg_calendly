@@ -108,9 +108,9 @@
 
         /* Completeness */
         // "skipDefaultLibCheck": true,                      /* Skip type checking .d.ts files that are included with TypeScript. */
-        "skipLibCheck": true /* Skip type checking all .d.ts files. */,
-        "exclude": [
-            "supabase/"
-        ] /* Specify the folder to exclude from compilation. */
-    }
+        "skipLibCheck": true /* Skip type checking all .d.ts files. */
+    },
+    "exclude": [
+        "supabase/"
+    ] /* Specify the folder to exclude from compilation. */
 }

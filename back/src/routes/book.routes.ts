@@ -25,3 +25,5 @@ router.get(
         res.json(data);
     }
 );
+
+export default router;
