@@ -15,5 +15,9 @@
     },
     "exclude": [
         "supabase/"
-    ] /* Specify the folder to exclude from compilation. */
+    ] /* Specify the folder to exclude from compilation. */,
+    "include": [
+        "src",
+        "global.d.ts"
+    ] /* Specify the folder to include in compilation. */
 }
