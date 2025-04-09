@@ -30,12 +30,16 @@ router.get(
             maxAge: 60 * 60 * 1000,
         });
 
-        res.json({
-            success: true,
-            token,
-            user,
-            message: "Successful login with Google in auth",
-        });
+
+        res.redirect(`${process.env.CLIENT_URL}/dashboard`);
+
+        // old code
+        // res.json({
+        //     success: true,
+        //     token,
+        //     user,
+        //     message: "Successful login with Google in auth",
+        // });
     }
 );
 
