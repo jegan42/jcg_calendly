@@ -32,7 +32,9 @@ router.get(
         });
 
 
-        res.redirect(`${process.env.CLIENT_URL}/dashboard`);
+        setTimeout(() => {
+            res.redirect(`${process.env.CLIENT_URL}/dashboard`);
+          }, 2000); // délai de 2 secondes
 
         // old code
         // res.json({
