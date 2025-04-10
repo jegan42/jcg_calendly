@@ -34,26 +34,25 @@ router.get(
             maxAge: 60 * 60 * 1000,
             domain: process.env.COOKIE_DOMAIN,
         });
-        
-        res.setHeader('Content-Type', 'text/html');
-        res.write(`
-          <html>
-            <head>
-              <script>
-                setTimeout(() => {
-                  window.location.href = "${process.env.CLIENT_URL}/dashboard";
-                }, 1000);
-              </script>
-            </head>
-            <body>
-              <p>Connexion réussie. Redirection vers l'application...</p>
-            </body>
-          </html>
-        `);
-        res.end();
-        
-          
 
+        res.setHeader("Content-Type", "text/html; charset=utf-8");
+        res.send(`
+  <!DOCTYPE html>
+  <html lang="fr">
+    <head>
+      <meta charset="UTF-8" />
+      <title>Connexion réussie</title>
+      <script>
+        setTimeout(() => {
+          window.location.href = "${process.env.CLIENT_URL}/dashboard";
+        }, 1000);
+      </script>
+    </head>
+    <body>
+      <p>Connexion réussie. Redirection vers l'application...</p>
+    </body>
+  </html>
+`);
 
         // old code
         // setTimeout(() => {
