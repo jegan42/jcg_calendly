@@ -30,7 +30,7 @@ router.get(
             httpOnly: true,
             secure: true,
             sameSite: "none",
-            // domain: ".onrender.com",
+            domain: ".onrender.com",
             maxAge: 60 * 60 * 1000,
         });
 
