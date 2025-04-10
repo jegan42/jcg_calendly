@@ -17,9 +17,12 @@ Une application complète de type **Calendly**, permettant aux utilisateurs de g
 
 ### **Backend** :
 - **[Express](https://expressjs.com/)** : Framework pour le serveur Node.js
+- **[Node.js](https://nodejs.org)** : Environnement d'exécution JavaScript côté serveur
+- **[TypeScript](https://www.typescriptlang.org/)** : Superset de JavaScript avec typage statique
 - **[Supabase](https://supabase.io/)** : Base de données en temps réel
 - **[Passport.js](https://www.passportjs.org/)** : Authentification OAuth (Google) et gestion de sessions
 - **[JWT](https://jwt.io/)** : Utilisation de JSON Web Tokens pour sécuriser les routes
+- **[Render](https://render.com)** : Plateforme cloud pour déployer des applications web et API
 
 ---
 
