@@ -32,12 +32,6 @@ app.use(
     })
 );
 
-//test set cookie
-app.get('/set-cookie', (req, res) => {
-    res.cookie('myCookie', 'cookieValue', { maxAge: 900000, httpOnly: true });
-    res.redirect(`${process.env.CLIENT_URL}/`);
-  });
-
 // Middleware to parse JSON and URL-encoded requests
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

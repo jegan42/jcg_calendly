@@ -23,34 +23,16 @@ router.get(
         const user = req.user as User;
         const token = user.token;
 
-        // Log the token to verify it's correct
-        console.log("Token to set in cookie: ", token);
-
         res.cookie("token", token, {
             httpOnly: true,
             secure: process.env.NODE_ENV === "production",
-            sameSite: (process.env.COOKIE_SAMESITE as "none" | "lax" | "strict") ?? "none",
+            sameSite:
+                (process.env.COOKIE_SAMESITE as "none" | "lax" | "strict") ??
+                "none",
             maxAge: 60 * 60 * 1000,
         });
 
-        // Log the cookies after setting the cookie
-        console.log("Cookies in response: ", res.getHeaders());
-
-        // Add a small delay before redirecting to give the browser time to process the cookie
-        setTimeout(() => {
-            res.redirect(`${process.env.CLIENT_URL}/dashboard`);
-        }, 1000);
-
-        // old code
-        // setTimeout(() => {
-        //     res.redirect(`${process.env.CLIENT_URL}/dashboard`);
-        // }, 2000); // délai de 2 secondes
-        // res.json({
-        //     success: true,
-        //     token,
-        //     user,
-        //     message: "Successful login with Google in auth",
-        // });
+        res.redirect(`${process.env.CLIENT_URL}/dashboard`);
     }
 );
 
