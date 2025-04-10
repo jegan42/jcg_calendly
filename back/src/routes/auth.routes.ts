@@ -34,12 +34,24 @@ router.get(
             maxAge: 60 * 60 * 1000,
             domain: process.env.COOKIE_DOMAIN,
         });
+        
+        res.send(`
+            <html>
+              <head>
+                <script>
+                  window.location.href = "${process.env.CLIENT_URL}/dashboard";
+                </script>
+              </head>
+              <body>Redirection...</body>
+            </html>
+          `);
+          
 
-        setTimeout(() => {
-            res.redirect(`${process.env.CLIENT_URL}/dashboard`);
-        }, 2000); // délai de 2 secondes
 
         // old code
+        // setTimeout(() => {
+        //     res.redirect(`${process.env.CLIENT_URL}/dashboard`);
+        // }, 2000); // délai de 2 secondes
         // res.json({
         //     success: true,
         //     token,
