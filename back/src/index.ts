@@ -1,6 +1,7 @@
 // src/index.ts
+// 1. External modules
 import dotenv from "dotenv";
-dotenv.config();
+dotenv.config(); // Call dotenv.config() to load environment variables
 
 import express, { Request, Response, NextFunction } from "express";
 import morgan from "morgan";
@@ -9,107 +10,67 @@ import passport from "passport";
 import helmet from "helmet";
 import cors from "cors";
 
-import {
-    authRoutes,
-    calendarRoutes,
-    dashboardRoutes,
-    eventRoutes,
-    homeRoutes,
-    userRoutes,
-} from "./routes";
+// 2. Custom middleware or utilities
+import { limiter } from "./middleware/limiter";
+import "./auth/google"; // Google authentication (import without assignment)
 
-import "./auth/google";
-import { limiter } from "./middleware/secure";
-import process from "node:process";
+// 3. Application routes
+import { authRoutes, eventRoutes, homeRoutes, notification } from "./routes";
 
+// 4. Express application initialization
 const app = express();
 
-app.use(
-    cors({
-        origin: process.env.CLIENT_URL,
-        credentials: true,
-        methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    })
-);
-
-// Middleware to parse JSON and URL-encoded requests
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-
-// Middleware to parse cookies
-app.use(cookieParser());
-
-// Middleware to log HTTP requests
-app.use(morgan("dev"));
-
+// Security configuration before any other processing
 app.use(
     helmet.contentSecurityPolicy({
         directives: {
             defaultSrc: ["'self'"],
             imgSrc: ["'self'", "https:", "data:"],
-            scriptSrc: ["'self'", "https://apis.google.com"], // or other necessary third-party domains
-            styleSrc: ["'self'", "'unsafe-inline'"], // avoid if possible
+            scriptSrc: ["'self'", "https://apis.google.com"],
+            styleSrc: ["'self'", "'unsafe-inline'"],
         },
     })
 );
 
-// Route to get the CSRF token
-// app.get("/csrf-token", (req: express.Request, res: express.Response) => {
-//     // Send the CSRF token to the frontend
-//     res.json({ csrfToken: req.csrfToken() });
-// });
-
-// Manage sessions
-// app.use(
-//     session({
-//         secret: process.env.SECRET_SESSION_KEY ?? "ultraSecretKey",
-//         resave: false,
-//         saveUninitialized: true,
-//         cookie: {
-//             secure: process.env.NODE_ENV === "production", // Ensure cookies are sent only via HTTPS in production
-//             httpOnly: true, // Prevent access to cookies via JavaScript
-//             maxAge: 3600000,
-//         },
-//     })
-// );
-app.use(passport.initialize());
-
-// If using sessions with Passport.js
-// app.use(passport.session());
-
-app.use("/", limiter, homeRoutes);
-app.use("/auth", limiter, authRoutes);
-app.use("/calendar", limiter, calendarRoutes);
-app.use("/dashboard", limiter, dashboardRoutes);
-app.use("/events", limiter, eventRoutes);
-app.use("/user", limiter, userRoutes);
-
+// CORS: Allow requests from the frontend client
 app.use(
-    (
-        err: Error,
-        _req: Request,
-        res: Response,
-        _next: NextFunction
-    ) => {
-        console.error(err.stack);
-        res.status(500).json({ message: "Unexpected server error" });
-    }
+    cors({
+        origin: process.env.CLIENT_URL,
+        credentials: true,
+        methods: ["GET", "POST", "PUT", "DELETE"],
+    })
 );
 
+// Middleware for parsing request bodies
+app.use(express.json()); // For JSON requests
+app.use(express.urlencoded({ extended: true })); // For form submissions
+app.use(cookieParser()); // For cookie management
+
+// HTTP request logging
+app.use(morgan("dev"));
+
+// Passport initialization for authentication
+app.use(passport.initialize());
+
+// Request rate limiting (to prevent brute force or DDoS attacks)
+app.use(limiter);
+
+// Application routes
+app.use("/", homeRoutes);
+app.use("/auth", authRoutes);
+app.use("/events", eventRoutes);
+app.use("/user", notification);
+
+// General error handling middleware
+app.use((err: Error, _req: Request, res: Response, _next: NextFunction) => {
+    console.error(err.stack);
+    res.status(500).json({ message: "Unexpected server error" });
+});
+
+// Route not found
 app.use((_req: Request, res: Response) => {
     res.status(404).json({ message: "Route not found" });
 });
-
-// Test route for session logout
-// app.get("/logout", (req: express.Request, res: express.Response) => {
-//     req.logout((err) => {
-//         if (err) return res.status(500).json({ message: "Logout error" });
-//         req.session.destroy(() => {
-//             res.clearCookie("connect.sid"); // or another name if renamed
-//             res.redirect("/");
-//         });
-//     });
-// });
 
 const PORT = process.env.PORT ?? 5000;
 app.listen(PORT, () => {

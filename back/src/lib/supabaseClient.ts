@@ -5,14 +5,14 @@ import process from "node:process";
 const supabaseUrl = process.env.SUPABASE_URL!;
 const supabaseServiceKey = process.env.SUPABASE_SERVICE_KEY!;
 
+// Create a single supabase client for interacting with your database
 export const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
 // Example usage
 // This function fetches data from the "users" table and logs it to the console
-const getData = async () => {
-    const { data, error } = await supabase.from("users").select("*");
-    if (error) console.error("Error:", error);
-    else console.log("Data:", data);
-};
-
-getData();
+// const getData = async () => {
+//     const { data, error } = await supabase.from("users").select("*");
+//     if (error) console.error("Error:", error);
+//     else console.log("Data:", data);
+// };
+// getData();

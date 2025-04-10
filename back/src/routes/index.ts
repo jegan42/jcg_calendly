@@ -1,18 +1,7 @@
 // src/routes/index.ts
 import authRoutes from "./auth.routes";
-import bookRoutes from "./book.routes";
-import calendarRoutes from "./calendar.routes";
-import dashboardRoutes from "./dashboard.routes";
 import eventRoutes from "./event.routes";
 import homeRoutes from "./home.routes";
-import userRoutes from "./user.routes";
+import notification from "./notification.routes";
 
-export {
-    authRoutes,
-    bookRoutes,
-    calendarRoutes,
-    dashboardRoutes,
-    eventRoutes,
-    homeRoutes,
-    userRoutes,
-};
+export { authRoutes, eventRoutes, homeRoutes, notification };

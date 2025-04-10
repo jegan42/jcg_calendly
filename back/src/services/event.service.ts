@@ -68,6 +68,25 @@ export const validateEvent: Array<
     },
 ];
 
+// Check if a time slot is already booked
+export const checkOverlappingEvents = async (
+    userId: string,
+    start_time: Date,
+    end_time: Date
+) => {
+    const { data: overlapping, error } = await supabase
+        .from("events")
+        .select("*")
+        .eq("user_id", userId)
+        .or(`(start_time.lt.${end_time},end_time.gt.${start_time})`);
+
+    if (error) {
+        throw new Error(`Error while checking for conflicts: ${error.message}`);
+    }
+
+    return overlapping;
+};
+
 // Create an event
 export const createEvent = async (
     user: User,
@@ -122,23 +141,20 @@ export const createEvent = async (
     return data;
 };
 
-// Check if a time slot is already booked
-export const checkOverlappingEvents = async (
-    userId: string,
-    start_time: Date,
-    end_time: Date
-) => {
-    const { data: overlapping, error } = await supabase
+// Retrieve an event by ID
+export const getEventById = async (userId: string, eventId: number) => {
+    const { data, error } = await supabase
         .from("events")
         .select("*")
+        .eq("id", eventId)
         .eq("user_id", userId)
-        .or(`(start_time.lt.${end_time},end_time.gt.${start_time})`);
+        .single();
 
     if (error) {
-        throw new Error(`Error while checking for conflicts: ${error.message}`);
+        throw new Error(`Unable to find the event: ${error.message}`);
     }
 
-    return overlapping;
+    return data;
 };
 
 // Retrieve user events

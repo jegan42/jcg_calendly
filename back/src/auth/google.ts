@@ -6,6 +6,10 @@ import { supabase } from "../lib/supabaseClient";
 import { generateJWT } from "../lib/jwt";
 import { Request } from "express";
 
+// Google OAuth strategy
+// This strategy is used to authenticate users using their Google account
+// It uses the Google OAuth 2.0 API to obtain user information
+// and create a new user in the database if they don't exist
 passport.use(
     new GoogleStrategy(
         {
@@ -14,7 +18,13 @@ passport.use(
             callbackURL: process.env.GOOGLE_CALLBACK_URL!,
             passReqToCallback: true,
         },
-        async (_req: Request, accessToken: string, _refreshToken: string, profile: passport.Profile, done: (error: Error | null, user?: User) => void) => {
+        async (
+            _req: Request,
+            accessToken: string,
+            _refreshToken: string,
+            profile: passport.Profile,
+            done: (error: Error | null, user?: User) => void
+        ) => {
             if (!profile.emails || profile.emails.length === 0) {
                 return done(new Error("No email found"), undefined);
             }
@@ -22,7 +32,7 @@ passport.use(
             const email = profile.emails[0].value;
             const name = profile.displayName;
             const id_google = profile.id;
-            const avatar = profile.photos?.[0]?.value  ?? "";
+            const avatar = profile.photos?.[0]?.value ?? "";
             console.log("✅ Profil used :", profile);
             console.log("✅ AccessToken used :", accessToken);
             try {
@@ -67,27 +77,34 @@ passport.use(
     )
 );
 
+// Serialize user to store in session
 passport.serializeUser((user, done) => {
     done(null, (user as User).id_google);
 });
 
-passport.deserializeUser(async (id_google: string, done: (err: Error | null, user?: User | null) => void) => {
-    const { data, error } = await supabase
-        .from("users")
-        .select("*")
-        .eq("id_google", id_google)
-        .single();
+// Deserialize user from session
+passport.deserializeUser(
+    async (
+        id_google: string,
+        done: (err: Error | null, user?: User | null) => void
+    ) => {
+        const { data, error } = await supabase
+            .from("users")
+            .select("*")
+            .eq("id_google", id_google)
+            .single();
 
-    if (error) {
-        console.error("Error deserializeUser :", error);
-        return done(error, null);
+        if (error) {
+            console.error("Error deserializeUser :", error);
+            return done(error, null);
+        }
+
+        if (!data) {
+            console.error("User not found with id :", data.id);
+            return done(new Error("User not found"), null);
+        }
+
+        console.log("✅ User deserializeUser :", data);
+        return done(null, data);
     }
-
-    if (!data) {
-        console.error("User not found with id :", data.id);
-        return done(new Error("User not found"), null);
-    }
-
-    console.log("✅ User deserializeUser :", data);
-    return done(null, data); // Retourne l'utilisateur complet
-});
+);
