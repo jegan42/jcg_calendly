@@ -26,32 +26,12 @@ router.get(
         res.cookie("token", token, {
             httpOnly: true,
             secure: process.env.NODE_ENV === "production",
-            sameSite: (["none", "lax", "strict"].includes(
-                process.env.COOKIE_SAMESITE ?? ""
-            )
-                ? process.env.COOKIE_SAMESITE
-                : "none") as "none" | "lax" | "strict",
+            sameSite: "none",
+            domain: ".onrender.com",
             maxAge: 60 * 60 * 1000,
-            domain: process.env.COOKIE_DOMAIN,
         });
 
-        res.setHeader('Content-Type', 'text/html; charset=utf-8');
-res.send(`
-  <!DOCTYPE html>
-  <html lang="fr">
-    <head>
-      <meta charset="UTF-8" />
-      <meta http-equiv="refresh" content="1;url=${process.env.CLIENT_URL}/dashboard" />
-      <title>Redirection...</title>
-    </head>
-    <body>
-      <p>Connexion réussie. Redirection vers l'application...</p>
-      <script>
-        window.location.href = "${process.env.CLIENT_URL}/dashboard";
-      </script>
-    </body>
-  </html>
-`);
+        res.redirect(302, `${process.env.CLIENT_URL}/dashboard`);
 
         // old code
         // setTimeout(() => {
