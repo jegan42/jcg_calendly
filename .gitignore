@@ -1,10 +1,14 @@
 # Node
 node_modules/
-dist/
-build/
 *.log
 npm-debug.log
 tt.ts
+
+# Build frontend React
+front/build/
+
+# Dist backend TypeScript
+back/dist/
 
 # Environnements
 .env
