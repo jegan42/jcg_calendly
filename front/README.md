@@ -1,46 +1,139 @@
-# Getting Started with Create React App
+# 🗓️ Calendly Frontend
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Frontend React.js pour une application de type Calendly, avec :
+- Gestion de l'authentification via JWT
+- UI rapide avec Styled Components
+- Gestion de l'état avec Redux
+- Requêtes API avec Axios et React Query
+- Formulaires avec React Hook Form
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+## 🚀 Stack utilisée
 
-### `npm start`
+- [React.js](https://reactjs.org) : Framework principal pour construire l'UI
+- [TypeScript](https://www.typescriptlang.org/) : Langage pour la gestion des types statiques
+- [Redux](https://redux.js.org) (avec [Redux Toolkit](https://redux-toolkit.js.org/)) : Pour la gestion de l'état global
+- [Styled Components](https://styled-components.com/) : Framework CSS pour créer des composants de style avec JavaScript
+- [Axios](https://axios-http.com/) : Pour effectuer des appels API
+- [React Router](https://reactrouter.com/) : Pour la gestion de la navigation entre les pages
+- [SWR](https://swr.vercel.app/) : Pour l'optimisation des requêtes API
+- [React Hook Form](https://react-hook-form.com/) : Pour la gestion des formulaires et la validation
+- [JWT](https://jwt.io/) : Pour l'authentification avec des tokens JWT
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+---
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## 📁 Structure du projet
 
-### `npm test`
+* frontend/
+    * src/
+        * components/   # Composants réutilisables
+        * pages/        # Pages de l'application
+        * redux/        # Configuration Redux (store, reducers, etc.)
+        * hooks/        # Hooks personnalisés
+        * services/     # Services pour les appels API (Axios)
+        * styles/       # Styles globaux et configuration de Styled Components
+        * utils/        # Utilitaires
+        * App.tsx       # Composant principal de l'application
+        * index.tsx     # Point d'entrée de l'application
+        * tsconfig.json # Configuration TypeScript
+        * package.json  # Dépendances et scripts
+    * public/
+        * index.html    # Fichier HTML de base
+        * favicon.ico   # Icône de l'application
+    * styled-components.d.ts # Déclarations TypeScript pour Styled Components
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+---
 
-### `npm run build`
+## ⚙️ Setup local
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+1. Cloner le repo :
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```bash
+git clone https://github.com/jegan42/jcg_calendly_frontend.git
+cd frontend
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+2. Installer les dépendances
 
-### `npm run eject`
+```bash
+npm install
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+3. Créer un fichier `.env` à la racine de `front/` :
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```env
+REACT_APP_API_URL=https://calendly-back-x0eh.onrender.com   # URL de l'API backend
+REACT_APP_JWT_SECRET=une_phrase_bien_longue_et_sécurisée  # Clé secrète JWT (si nécessaire)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+```
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+⚠️ Note de sécurité : Ne partagez jamais vos clés d'API (`SUPABASE_SERVICE_KEY`, `GOOGLE_CLIENT_ID`, `JWT_SECRET`, etc.) publiquement. Gardez-les dans un environnement sécurisé.
 
-## Learn More
+4. Démarrer en dev :
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```bash
+npm run start
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+L'application sera disponible à `http://localhost:3000`.
+
+
+## 🔐 Authentification
+
+* Connexion via JWT : Utilisation de tokens JWT pour sécuriser les pages de l'application.
+
+* Gestion de l'état avec Redux : Les informations d'utilisateur et le token JWT sont stockés dans le store Redux.
+
+## 🧑‍💻 Routes et Pages
+
+| Route  | Description |
+| ------------- | ------------- |
+| `/`  | Page d'accueil  |
+| `/login`  | Page de connexion  |
+| `/dashboard`  | Page protégée, nécessite un JWT valide  |
+| `/profile`  | Page du profil utilisateur  |
+| `/events`  | Page pour gérer les événements  |
+
+## 💡 Développement
+
+* Pages dynamiques avec React Router : L'application dispose de plusieurs pages, comme le dashboard et le profil, protégées par un JWT valide.
+
+* Optimisation des requêtes avec React Query : Utilisation de React Query pour optimiser les requêtes API et améliorer l'expérience utilisateur.
+
+* Gestion des formulaires avec React Hook Form : Simplifie la gestion des formulaires et la validation côté client.
+
+## 🧪 Tests
+
+Pour les tests, nous utiliserons probablement Jest et React Testing Library pour tester les composants React et les hooks.
+
+## 🛠 Déploiement Render
+
+Une fois prêt, l'application pourra être déployée sur des services comme Render.
+
+
+📬 Contact
+Made with ❤️ by jegan42 >> https://github.com/jegan42
+
+<à controller/modifier/supprimer>
+🧑‍💻 Routes et Pages
+| Route | Description |
+| -- | -- |
+| / | Page d'accueil |
+| /login | Page de connexion (authentification JWT) |
+| /dashboard | Page protégée, nécessite un JWT valide |
+| /profile | Page du profil utilisateur |
+| /events | Page pour gérer les événements |
+| /auth/google | Redirection pour l'authentification via Google |
+| /auth/google/callback | Callback après l'authentification via Google |
+| /auth/me | Récupère les données de l'utilisateur connecté |
+| /auth/logout | Déconnexion (suppression du cookie JWT) |
+| /event | Création d'un événement |
+| /event | Récupère tous les événements de l'utilisateur connecté |
+| /event/:id | Récupère un événement spécifique par ID |
+| /event/:id | Mise à jour d'un événement spécifique par ID |
+| /event/:id | Suppression d'un événement spécifique par ID |
+| /event/check-availability | Vérifie la disponibilité d'un créneau horaire |
+| /event/book/:slug | Récupère les détails d'un type d'événement par "slug" (public) |
+| /notification/send-event-notification | Envoi d'une notification de confirmation d'événement |
+| /notification/send-event-reminder | Envoi d'un rappel pour un événement |

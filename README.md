@@ -1,141 +1,161 @@
-# 🗓️ Calendly Backend
+# 🗓️ **Calendly Project** - Backend & Frontend
 
-Backend Node.js/Express pour une app type Calendly, avec :
-- Authentification Google via Passport
-- JWT sécurisé via cookie
-- Base de données gérée par Supabase
-- Environnement prêt pour production (Render)
+Une application complète de type **Calendly**, permettant aux utilisateurs de gérer des événements, de s'authentifier, et de recevoir des notifications. Ce projet est divisé en deux parties : **Frontend** et **Backend**.
+
+## 🚀 **Stack utilisée**
+
+### **Frontend** :
+- **[React.js](https://reactjs.org/)** : Framework principal pour construire l'UI
+- **[TypeScript](https://www.typescriptlang.org/)** : Langage pour la gestion des types statiques
+- **[Redux](https://redux.js.org)** (avec **[Redux Toolkit](https://redux-toolkit.js.org/)**) : Pour la gestion de l'état global
+- **[Styled Components](https://styled-components.com/)** : Framework CSS pour créer des composants de style avec JavaScript
+- **[Axios](https://axios-http.com/)** : Pour effectuer des appels API
+- **[React Router](https://reactrouter.com/)** : Pour la gestion de la navigation entre les pages
+- **[SWR](https://swr.vercel.app/)** : Pour l'optimisation des requêtes API
+- **[React Hook Form](https://react-hook-form.com/)** : Pour la gestion des formulaires et la validation
+- **[JWT](https://jwt.io/)** : Pour l'authentification avec des tokens JWT
+
+### **Backend** :
+- **[Express](https://expressjs.com/)** : Framework pour le serveur Node.js
+- **[Supabase](https://supabase.io/)** : Base de données en temps réel
+- **[Passport.js](https://www.passportjs.org/)** : Authentification OAuth (Google) et gestion de sessions
+- **[JWT](https://jwt.io/)** : Utilisation de JSON Web Tokens pour sécuriser les routes
 
 ---
 
-## 🚀 Stack utilisée
+## 📁 **Structure du projet**
 
-- [Node.js](https://nodejs.org)
-- [Express](https://expressjs.com)
-- [TypeScript](https://www.typescriptlang.org/)
-- [Supabase](https://supabase.com)
-- [Passport.js](http://www.passportjs.org/)
-- [JWT](https://jwt.io)
-- [Render](https://render.com)
+* **frontend/** : 
+  * Composants, pages, hooks personnalisés, services API, gestion de l'état (Redux), et configuration des styles (Styled Components).
+  
+* **backend/** :
+  * Routes pour l'authentification, la gestion des événements, la gestion des notifications et des utilisateurs, ainsi que des services pour interagir avec la base de données (Supabase).
 
 ---
 
-## 📁 Structure du projet
+## 🧑‍💻 **Développement**
 
-* back/
-    * src/
-        * controllers/ # Contient les logiques des contrôleurs
-        * lib/ # Client Supabase et autres utilitaires
-        * middleware/ # Middlewares pour la sécurité, l'authentification, etc.
-        * routes/ # Routes de l'API
-        * services/ # Logiques liées aux événements et autres services
-        * supabase/ # Configuration de Supabase (clients, fonctions) 
-        * types/ # Définition des types TypeScript
-        * tsconfig.json # Configuration TypeScript
-        * package.json # Dépendances et scripts
+### **Frontend** :
+1. **Cloner le repo** :
+    ```bash
+    git clone https://github.com/jegan42/jcg_calendly_frontend.git
+    cd frontend
+    ```
+
+2. **Installer les dépendances** :
+    ```bash
+    npm install
+    ```
+
+3. **Créer un fichier `.env`** à la racine de `frontend/` :
+    ```env
+    REACT_APP_API_URL=https://calendly-back-x0eh.onrender.com   # URL de l'API backend
+    REACT_APP_JWT_SECRET=une_phrase_bien_longue_et_sécurisée  # Clé secrète JWT (si nécessaire)
+    ```
+
+4. **Démarrer en mode développement** :
+    ```bash
+    npm run start
+    ```
+    L'application sera disponible à `http://localhost:3000`.
+
 ---
 
-## ⚙️ Setup local
+### **Backend** :
+1. **Cloner le repo** :
+    ```bash
+    git clone https://github.com/jegan42/jcg_calendly_backend.git
+    cd backend
+    ```
 
-1. Cloner le repo :
+2. **Installer les dépendances** :
+    ```bash
+    npm install
+    ```
 
-```bash
-git clone https://github.com/jegan42/jcg_calendly.git
-cd back
-```
+3. **Créer un fichier `.env`** à la racine de `backend/` :
+    ```env
+    SUPABASE_URL=https://supabase.co
+    SUPABASE_KEY=your_supabase_service_key
+    JWT_SECRET=your_jwt_secret
+    ```
 
-2. Installer les dépendances
+4. **Démarrer en mode développement** :
+    ```bash
+    npm run dev
+    ```
+    Le serveur sera accessible sur `http://localhost:5000`.
 
-```bash
-npm install
-```
+---
 
-3. Créer un fichier `.env` à la racine de `back/` :
+## 🔐 **Authentification**
 
-```env
-SUPABASE_URL=https://<your-project>.supabase.co
-SUPABASE_SERVICE_KEY=...
-GOOGLE_CLIENT_ID=...
-GOOGLE_CLIENT_SECRET=...
-JWT_SECRET=une_phrase_bien_longue_et_sécurisée
-CLIENT_URL=http://localhost:3000
-NODE_ENV=development
-```
+- **Frontend** : L'authentification est gérée avec **JWT**. Les utilisateurs se connectent via Google OAuth, et un **token JWT** est généré et stocké dans le Redux store.
+  
+- **Backend** : Le backend utilise **Passport.js** pour l'authentification OAuth via Google et **JWT** pour sécuriser les routes sensibles. Le token JWT est envoyé dans les cookies HTTP-Only pour assurer la sécurité.
 
-⚠️ Note de sécurité : Ne partagez jamais vos clés d'API (`SUPABASE_SERVICE_KEY`, `GOOGLE_CLIENT_ID`, `JWT_SECRET`, etc.) publiquement. Gardez-les dans un environnement sécurisé.
+---
 
-1. Démarrer en dev :
+## 🧩 **Fonctionnalités**
 
-```bash
-npm run dev
-```
+### **Frontend** :
+- **Page d'accueil** : Affiche les informations de base et les événements.
+- **Page de connexion** : Authentification via Google OAuth.
+- **Dashboard** : Affichage des événements et possibilité de les gérer.
+- **Page Profil** : Affichage et mise à jour des informations de l'utilisateur.
+- **Gestion des événements** : Créer, afficher, mettre à jour et supprimer des événements.
 
-## 🔐 Authentification
+### **Backend** :
+- **Routes Authentification** : Connexion avec Google OAuth, récupération des données utilisateurs.
+- **Gestion des événements** : Création, mise à jour, suppression, et récupération des événements utilisateurs.
+- **Notifications** : Envoi de rappels ou confirmations par email aux utilisateurs.
+- **Gestion des utilisateurs** : Inscription, authentification et récupération des informations de l'utilisateur.
 
-L’app utilise Google OAuth 2.0 :
+---
 
- - `/auth/google` → démarre le login Google
-
- - `/auth/google/callback` → callback après login
-
- - Cookie JWT sécurisé pour maintenir la session
-
-Middleware :
-
- - `requireJWTAuth` protège les routes comme `/dashboard`, `/user/me`, etc.
-
-## 🧪 Routes utiles
+## 🧑‍💻 **Routes et Pages du Frontend**
 
 | Route  | Description |
 | ------------- | ------------- |
-| `/auth/google`  | Démarre le login Google  |
-| `/auth/google/callback`  | Callback OAuth  |
-| `/auth/logout`  | Déconnecte (supprime le cookie)  |
-| `/auth/me`  | Récupère l’utilisateur courant  |
-| `/dashboard`  | Page protégée (JWT requis)  |
+| `/`  | Page d'accueil  |
+| `/login`  | Page de connexion avec Google OAuth |
+| `/dashboard`  | Page protégée pour la gestion des événements  |
+| `/profile`  | Page du profil utilisateur  |
+| `/events`  | Page pour gérer les événements (création, modification, suppression) |
 
+---
 
+## 🔧 **Développement et Déploiement**
 
-## 🛠 Déploiement Render
+### **Frontend** :
+- Utilise **React Query** pour optimiser les appels API et maintenir l'état global du frontend.
+- **Redux** gère l'état de l'utilisateur (authentification et profil).
+- **Styled Components** permet de créer des composants réutilisables avec des styles encapsulés.
 
-🟢 Prêt pour le déploiement sur Render.
+### **Backend** :
+- **Supabase** est utilisé pour gérer la base de données des utilisateurs et des événements en temps réel.
+- **JWT** sécurise l'API pour empêcher l'accès non autorisé aux routes sensibles.
+- Le **middleware JWT** est utilisé pour protéger les routes sur le backend.
 
-Configuration Render :
- - Root Directory: `back`
+---
 
- - Build Command: `npm install && npm run build`
+## 🧪 **Tests**
 
- - Start Command: `npm run start`
+Les tests seront probablement ajoutés à l'aide de **Jest** pour le backend (tests des routes, des services) et **React Testing Library** pour les composants frontend.
 
- - Environment: Node
+---
 
-Variables d’environnement :
+## 🛠 **Déploiement**
 
-```env
-SUPABASE_URL=...
-SUPABASE_SERVICE_KEY=...
-GOOGLE_CLIENT_ID=...
-GOOGLE_CLIENT_SECRET=...
-JWT_SECRET=...
-CLIENT_URL=https://tonfrontend.vercel.app
-NODE_ENV=production
-```
-⚠️ Note de sécurité : Ne partagez jamais vos clés d'API (`SUPABASE_SERVICE_KEY`, `GOOGLE_CLIENT_ID`, `JWT_SECRET`, etc.) publiquement. Gardez-les dans un environnement sécurisé.
+1. **Frontend** : Une fois prêt, le frontend pourra être déployé sur des services comme **Netlify**, **Vercel**, ou **Render**.
 
+2. **Backend** : Le backend peut être déployé sur des services comme **Render**, **Heroku**, ou **Vercel**.
 
-## ✅ À faire
+---
 
- Auth Google + JWT (OK)
+## 📬 **Contact**
 
- Cookie sécurisé (OK)
+Projet réalisé avec ❤️ par **jegan42**.
 
- Middleware protégé (OK)
+[GitHub](https://github.com/jegan42)
 
- Intégration avec le frontend (plus tard)
-
- Tests unitaires (plus tard)
- 
- Gestion des erreurs (améliorer la gestion des erreurs globales)
-
-📬 Contact
-Made with ❤️ by jegan42 >> https://github.com/jegan42
