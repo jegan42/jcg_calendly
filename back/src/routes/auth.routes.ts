@@ -23,6 +23,9 @@ router.get(
         const user = req.user as User;
         const token = user.token;
 
+        // Log the token to verify it's correct
+        console.log("Token to set in cookie: ", token);
+
         res.cookie("token", token, {
             httpOnly: true,
             secure: process.env.NODE_ENV === "production",
@@ -31,7 +34,13 @@ router.get(
             maxAge: 60 * 60 * 1000,
         });
 
-        res.redirect(302, `${process.env.CLIENT_URL}/dashboard`);
+        // Log the cookies after setting the cookie
+        console.log("Cookies in response: ", res.getHeaders());
+
+        // Add a small delay before redirecting to give the browser time to process the cookie
+        setTimeout(() => {
+            res.redirect(`${process.env.CLIENT_URL}/dashboard`);
+        }, 1000);
 
         // old code
         // setTimeout(() => {
