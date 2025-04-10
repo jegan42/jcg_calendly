@@ -35,21 +35,20 @@ router.get(
             domain: process.env.COOKIE_DOMAIN,
         });
 
-        res.setHeader("Content-Type", "text/html; charset=utf-8");
-        res.send(`
+        res.setHeader('Content-Type', 'text/html; charset=utf-8');
+res.send(`
   <!DOCTYPE html>
   <html lang="fr">
     <head>
       <meta charset="UTF-8" />
-      <title>Connexion réussie</title>
-      <script>
-        setTimeout(() => {
-          window.location.href = "${process.env.CLIENT_URL}/dashboard";
-        }, 1000);
-      </script>
+      <meta http-equiv="refresh" content="1;url=${process.env.CLIENT_URL}/dashboard" />
+      <title>Redirection...</title>
     </head>
     <body>
       <p>Connexion réussie. Redirection vers l'application...</p>
+      <script>
+        window.location.href = "${process.env.CLIENT_URL}/dashboard";
+      </script>
     </body>
   </html>
 `);
