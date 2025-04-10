@@ -35,16 +35,23 @@ router.get(
             domain: process.env.COOKIE_DOMAIN,
         });
         
-        res.send(`
-            <html>
-              <head>
-                <script>
+        res.setHeader('Content-Type', 'text/html');
+        res.write(`
+          <html>
+            <head>
+              <script>
+                setTimeout(() => {
                   window.location.href = "${process.env.CLIENT_URL}/dashboard";
-                </script>
-              </head>
-              <body>Redirection...</body>
-            </html>
-          `);
+                }, 1000);
+              </script>
+            </head>
+            <body>
+              <p>Connexion réussie. Redirection vers l'application...</p>
+            </body>
+          </html>
+        `);
+        res.end();
+        
           
 
 
