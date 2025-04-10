@@ -26,15 +26,18 @@ router.get(
         res.cookie("token", token, {
             httpOnly: true,
             secure: process.env.NODE_ENV === "production",
-            sameSite: "none", //"lax", //"strict",
+            sameSite: (["none", "lax", "strict"].includes(
+                process.env.COOKIE_SAMESITE ?? ""
+            )
+                ? process.env.COOKIE_SAMESITE
+                : "none") as "none" | "lax" | "strict",
             maxAge: 60 * 60 * 1000,
             domain: process.env.COOKIE_DOMAIN,
         });
 
-
         setTimeout(() => {
             res.redirect(`${process.env.CLIENT_URL}/dashboard`);
-          }, 2000); // délai de 2 secondes
+        }, 2000); // délai de 2 secondes
 
         // old code
         // res.json({
