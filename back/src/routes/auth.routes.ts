@@ -28,7 +28,7 @@ router.get(
             secure: process.env.NODE_ENV === "production",
             sameSite: "none", //"lax", //"strict",
             maxAge: 60 * 60 * 1000,
-            domain: '.onrender.com',
+            domain: process.env.COOKIE_DOMAIN,
         });
 
 
