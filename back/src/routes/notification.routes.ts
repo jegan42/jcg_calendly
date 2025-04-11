@@ -20,12 +20,12 @@ router.post(
 
             res.status(200).json({
                 success: true,
-                message: "Notification envoyée avec succès",
+                message: "Notification sent successfully",
             });
         } catch (error) {
             res.status(500).json({
                 success: false,
-                message: "Erreur lors de l'envoi de la notification",
+                message: "Error sending the notification",
                 error: (error as Error).message,
             });
         }
@@ -39,6 +39,11 @@ router.post(
     async (req: Request, res: Response) => {
         const { _event_id, user_email, event_date, event_title } = req.body;
 
+        if (!user_email || !event_title || !event_date) {
+            res.status(400).json({ message: "Missing required fields" });
+            return;
+        }
+
         try {
             const subject = `Rappel: Votre événement "${event_title}" approche`;
             const text = `Bonjour, \n\nCeci est un rappel pour votre événement "${event_title}" qui aura lieu le ${event_date}. \n\nNous avons hâte de vous voir !`;
@@ -47,12 +52,12 @@ router.post(
 
             res.status(200).json({
                 success: true,
-                message: "Rappel envoyé avec succès",
+                message: "Reminder successfully sent to " + user_email,
             });
         } catch (error) {
             res.status(500).json({
                 success: false,
-                message: "Erreur lors de l'envoi du rappel",
+                message: "Error sending the reminder",
                 error: (error as Error).message,
             });
         }

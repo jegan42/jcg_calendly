@@ -72,6 +72,10 @@ app.use((_req: Request, res: Response) => {
     res.status(404).json({ message: "Route not found" });
 });
 
+// ➕ Event reminder scheduler
+import { scheduleEventReminders } from "./cron/reminderScheduler";
+scheduleEventReminders();
+
 const PORT = process.env.PORT ?? 5000;
 app.listen(PORT, () => {
     console.log(`🚀 Server running at http://0.0.0.0:${PORT}`);
