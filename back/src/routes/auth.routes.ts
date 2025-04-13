@@ -7,7 +7,7 @@ import passport from "passport";
 // 2. Custom middleware and types
 import { requireJWTAuth } from "../middleware/jwtAuth";
 import { User } from "../types/interface";
-import { supabase } from "../lib/supabaseClient";
+import { getUserById } from "../lib/supabaseQueries";
 
 // 3. Initialize the router
 const router = Router();
@@ -55,39 +55,15 @@ router.get(
         const reqUser = req.user as User;
 
         // Fetch user from Supabase database
-        const { data, error } = await supabase
-            .from("users")
-            .select("*")
-            .eq("user_id", reqUser.id)
-            .single();
+        const user = await getUserById(reqUser.id);
 
-        // Handle possible errors or missing user
-        if (error) {
-            res.status(400).json({
-                success: false,
-                message: "Error fetching user data",
-                error: error.message,
-            });
-            return;
-        }
-
-        if (!data) {
+        if (!user) {
             res.status(404).json({
                 success: false,
                 message: "User not found",
             });
             return;
         }
-
-        // Return sanitized user object
-        const user = {
-            id: data.id,
-            name: data.name,
-            email: data.email,
-            avatar: data.avatar,
-            created_at: data.created_at,
-            updated_at: data.updated_at,
-        };
 
         res.status(200).json({ success: true, user });
     }

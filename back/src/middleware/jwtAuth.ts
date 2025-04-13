@@ -1,10 +1,10 @@
 // src/middleware/jwtAuth.ts
-import jwt from "jsonwebtoken";
 import { Request, Response, NextFunction } from "express";
 import { verifyJWT } from "../lib/jwt";
+import { supabase } from "../lib/supabaseClient";
 
 // Middleware to check if the user is authenticated using JWT
-export const requireJWTAuth = (
+export const requireJWTAuth = async (
     req: Request,
     res: Response,
     next: NextFunction
@@ -19,19 +19,30 @@ export const requireJWTAuth = (
         return;
     }
 
-    const payload = verifyJWT(token);
-    if (!payload) {
+    const decoded = verifyJWT(token);
+    if (!decoded) {
         res.status(403).json({ message: "Invalid token" });
         return;
     }
 
     try {
-        const decoded = jwt.verify(token, process.env.JWT_SECRET!);
-        req.user = decoded;
+        const { data: user, error } = await supabase
+            .from("users")
+            .select("*")
+            .eq("id", decoded.id)
+            .single();
+
+        if (error || !user) {
+            res.status(401).json({ message: "User not found" });
+            return;
+        }
+
+        req.user = user;
         next();
     } catch (error) {
         res.status(403).json({
-            message: "Invalid or expired token :" + (error as Error).message,
+            message: "Invalid or expired token",
+            error: (error as Error).message,
         });
         return;
     }

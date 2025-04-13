@@ -2,9 +2,9 @@
 import passport from "passport";
 import { User } from "../types/interface";
 import { Strategy as GoogleStrategy } from "passport-google-oauth20";
-import { supabase } from "../lib/supabaseClient";
 import { generateJWT } from "../lib/jwt";
 import { Request } from "express";
+import { getUserByIdGoogle, upsertUser } from "../lib/supabaseQueries";
 
 // Google OAuth strategy
 // This strategy is used to authenticate users using their Google account
@@ -33,45 +33,51 @@ passport.use(
             const name = profile.displayName;
             const id_google = profile.id;
             const avatar = profile.photos?.[0]?.value ?? "";
+            const todayDate = new Date();
+
+            const jwtPayload = { id_google, email, name };
+            const token = generateJWT(jwtPayload);
+
             console.log("✅ Profil used :", profile);
             console.log("✅ AccessToken used :", accessToken);
             try {
-                const { data, error } = await supabase
-                    .from("users")
-                    .upsert(
-                        [
-                            {
-                                id_google: id_google,
-                                email: email,
-                                name: name,
-                                avatar: avatar,
-                            },
-                        ],
-                        {
-                            onConflict: "id_google",
-                        }
-                    )
-                    .select();
-
-                if (error) throw error;
+                const data = await upsertUser(
+                    id_google,
+                    email,
+                    name,
+                    avatar,
+                    token,
+                    accessToken
+                );
 
                 console.log("✅ User saved :", data);
 
-                const jwtPayload = { id_google, email, name };
-                const token = generateJWT(jwtPayload);
+                let id = data[0].id;
+
+                if (!data) {
+                    const dataUser = await getUserByIdGoogle(id_google);
+                    if (!dataUser)
+                        console.error(
+                            "🔥 Error callback Google No User in DB :"
+                        );
+
+                    id = dataUser.id;
+                }
 
                 return done(null, {
-                    id: data[0].id,
-                    email: email,
-                    name: name,
-                    avatar: avatar,
-                    token,
+                    id,
                     id_google,
-                    accessToken: accessToken,
+                    email,
+                    name,
+                    avatar,
+                    token,
+                    accessToken,
+                    created_at: todayDate,
+                    updated_at: todayDate,
                 });
-            } catch (err) {
-                console.error("🔥 Error callback Google :", err);
-                return done(err as Error, undefined);
+            } catch (error) {
+                console.error("🔥 Error callback Google :", error);
+                return done(error as Error, undefined);
             }
         }
     )
@@ -88,23 +94,14 @@ passport.deserializeUser(
         id_google: string,
         done: (err: Error | null, user?: User | null) => void
     ) => {
-        const { data, error } = await supabase
-            .from("users")
-            .select("*")
-            .eq("id_google", id_google)
-            .single();
+        const dataUser = await getUserByIdGoogle(id_google);
 
-        if (error) {
-            console.error("Error deserializeUser :", error);
-            return done(error, null);
-        }
-
-        if (!data) {
-            console.error("User not found with id :", data.id);
+        if (!dataUser) {
+            console.error("User not found with id :", dataUser.id);
             return done(new Error("User not found"), null);
         }
 
-        console.log("✅ User deserializeUser :", data);
-        return done(null, data);
+        console.log("✅ User deserializeUser :", dataUser);
+        return done(null, dataUser);
     }
 );

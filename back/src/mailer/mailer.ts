@@ -12,12 +12,25 @@ const transporter = nodemailer.createTransport({
 });
 
 // Function to send an email
-export const sendEmail = (to: string, subject: string, text: string) => {
+export const sendEmail = (
+    to: string,
+    subject: string,
+    text: string,
+    eventId?: number
+) => {
+    const responseUrl = eventId
+        ? `${process.env.FRONTEND_URL}/response?eventId=${eventId}&guestEmail=${to}`
+        : "";
+
+    const message = eventId
+        ? `${text} Please confirm your attendance by clicking on the link: ${responseUrl}`
+        : text;
+
     const mailOptions = {
         from: process.env.GMAIL_USER,
-        to: to,
-        subject: subject,
-        text: text,
+        to,
+        subject,
+        text: message,
     };
 
     transporter.sendMail(

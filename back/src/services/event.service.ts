@@ -179,6 +179,9 @@ export const updateEvent = async (
         description?: string;
         start_time?: Date;
         end_time?: Date;
+        is_public?: boolean;
+        notification_enabled?: boolean;
+        cancellation_policy?: boolean;
         guests?: string[];
     }
 ) => {
@@ -203,6 +206,79 @@ export const deleteEvent = async (eventId: number) => {
 
     if (error) {
         throw new Error(`Error deleting the event: ${error.message}`);
+    }
+
+    return data;
+};
+
+export const saveEvent = async (req: Request, res: Response) => {
+    try {
+        const { eventDetails, googleRequestId } = req.body;
+
+        // Sauvegarde dans la base de données
+        const { data, error } = await supabase.from("events").insert([
+            {
+                title: eventDetails.title,
+                description: eventDetails.description,
+                start_time: eventDetails.start_time,
+                end_time: eventDetails.end_time,
+                google_request_id: googleRequestId,
+                user_id: eventDetails.user_id,
+                is_public: eventDetails.is_public,
+                notification_enabled: eventDetails.notification_enabled,
+                cancellation_policy: eventDetails.cancellation_policy,
+                guests: eventDetails.guests,
+            },
+        ]);
+
+        if (error) {
+            return res.status(400).json({ error: error.message });
+        }
+
+        return res.status(200).json({ data });
+    } catch (err) {
+        return res.status(500).json({ error: "Internal server error" });
+    }
+};
+
+// Add a guest to an event
+export const addGuestToEvent = async (eventId: string, guestEmail: string) => {
+    const { data, error } = await supabase
+        .from("event_guests")
+        .insert([
+            { event_id: eventId, guest_email: guestEmail, status: "pending" },
+        ]);
+
+    if (error) {
+        throw new Error(`Error adding guest: ${error.message}`);
+    }
+
+    return data;
+};
+
+// Retrieve the list of guests for an event
+export const getEventGuests = async (eventId: string) => {
+    const { data, error } = await supabase
+        .from("event_guests")
+        .select("*")
+        .eq("event_id", eventId);
+
+    if (error) {
+        throw new Error(`Error fetching guests: ${error.message}`);
+    }
+
+    return data;
+};
+
+// Update the status of a guest
+export const updateGuestStatus = async (guestId: string, status: string) => {
+    const { data, error } = await supabase
+        .from("event_guests")
+        .update({ status })
+        .eq("id", guestId);
+
+    if (error) {
+        throw new Error(`Error updating guest status: ${error.message}`);
     }
 
     return data;

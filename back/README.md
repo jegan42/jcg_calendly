@@ -13,20 +13,52 @@ Backend Node.js/Express pour une app type Calendly, avec :
 
 ## 🚀 Stack utilisée
 
--   **[Node.js](https://nodejs.org/en/)** (version 22.14.0) : Serveur backend pour gérer les requêtes HTTP.
--   **[Express](https://expressjs.com/)** (version 5.1.0) : Framework pour la gestion des routes et middlewares.
--   **[Supabase](https://supabase.com/)** : Plateforme de backend-as-a-service pour gérer l'authentification, les fonctions serverless et la base de données (PostgreSQL).
--   **[Prisma ORM](https://www.prisma.io/)** : Outil pour interagir avec la base de données et gérer les modèles.
--   **[JWT (JSON Web Tokens)](https://jwt.io/)** : Utilisé pour l'authentification et l'autorisation des utilisateurs.
--   **[Google OAuth2](https://developers.google.com/identity/protocols/oauth2)** : Stratégie d'authentification via Google.
--   **[Passport.js](http://www.passportjs.org/)** : Middleware pour l'authentification via différentes stratégies (incluant Google OAuth).
--   **[Node-cron](https://www.npmjs.com/package/node-cron)** : Utilisé pour exécuter des tâches récurrentes côté serveur (ex. rappels programmés).
--   **[Helmet](https://helmetjs.github.io/)** : Middleware de sécurité pour Express, protégeant contre les vulnérabilités courantes.
--   **[cookie-parser](https://www.npmjs.com/package/cookie-parser)** et **[express-session](https://www.npmjs.com/package/express-session)** : Gestion des sessions et des cookies dans l'application.
--   **[csrf-tokens](https://www.npmjs.com/package/csrf-tokens)** et **[csurf](https://www.npmjs.com/package/csurf)** : Protection contre les attaques Cross-Site Request Forgery (CSRF).
--   **[TypeScript](https://www.typescriptlang.org/)** : Langage de programmation utilisé pour ce projet, offrant un typage statique pour une meilleure maintenance du code.
--   **[nodemon](https://www.npmjs.com/package/nodemon)** et **[ts-node-dev](https://www.npmjs.com/package/ts-node-dev)** : Outils pour le développement en temps réel et le redémarrage automatique du serveur.
--   **[Render](https://render.com/)** : Plateforme de déploiement cloud offrant des services pour héberger des applications web, des bases de données, et des fonctions serverless. Elle permet un déploiement rapide et facile avec une gestion automatique des ressources et des mises à jour.
+### 🛠️ Framework et Environnement
+- **[Node.js](https://nodejs.org/en/)** (version 20.17.0) : Environnement d'exécution JavaScript pour le backend.
+- **[Express](https://expressjs.com/)** (version 5.1.0) : Framework pour la gestion des requêtes HTTP et la création d'applications web.
+- **[TypeScript](https://www.typescriptlang.org/)** (version 5.8.3) : Langage surensemble de JavaScript qui ajoute un typage statique.
+- **[Prisma ORM](https://www.prisma.io/)** (version 6.5.0) : ORM pour interagir avec la base de données.
+- **[Supabase](https://supabase.com/)** (version 2.20.5) : Backend-as-a-Service offrant des fonctionnalités comme la base de données et l'authentification.
+
+### 🔐 Authentification et Sécurité
+- **[Passport.js](http://www.passportjs.org/)** (version 0.7.0) : Middleware pour l'authentification.
+- **[passport-google-oauth20](https://www.npmjs.com/package/passport-google-oauth20)** (version 2.0.0) : Stratégie d'authentification OAuth 2.0 avec Google.
+- **[Google OAuth2](https://developers.google.com/identity/protocols/oauth2)** : Stratégie d'authentification via Google.
+- **[jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken)** (version 9.0.2) : Gestion des tokens JWT pour l'authentification.
+- **[csrf-tokens](https://www.npmjs.com/package/csrf-tokens)** (version 1.0.4) : Protection contre les attaques CSRF.
+- **[csurf](https://www.npmjs.com/package/csurf)** (version 1.2.2) : Protection contre les attaques Cross-Site Request Forgery (CSRF).
+- **[express-rate-limit](https://www.npmjs.com/package/express-rate-limit)** (version 7.5.0) : Protection contre les attaques par déni de service (DDoS).
+- **[helmet](https://www.npmjs.com/package/helmet)** (version 8.1.0) : Sécurisation des headers HTTP.
+- **[cookie-parser](https://www.npmjs.com/package/cookie-parser)** (version 1.4.7) : Middleware pour parser les cookies.
+- **[express-session](https://www.npmjs.com/package/express-session)** (version 1.18.1) : Gestion des sessions utilisateurs.
+- **[express-validator](https://www.npmjs.com/package/express-validator)** (version 7.2.1) : Middleware pour la validation des données des requêtes HTTP.
+
+### 💾 Base de données et ORM
+- **[Prisma](https://www.prisma.io/)** (version 6.5.0) : ORM pour interagir avec la base de données.
+- **[Supabase](https://supabase.com/)** (version 2.20.5) : Fournisseur de services de base de données PostgreSQL.
+
+### ⚙️ Fonctionnalités supplémentaires
+- **[node-cron](https://www.npmjs.com/package/node-cron)** (version 3.0.3) : Planification des tâches cron.
+- **[nodemailer](https://nodemailer.com/)** (version 6.10.0) : Envoi d'emails via SMTP.
+- **[googleapis](https://www.npmjs.com/package/googleapis)** (version 148.0.0) : Interaction avec les API Google.
+- **[morgan](https://www.npmjs.com/package/morgan)** (version 1.10.0) : Middleware de logging des requêtes HTTP.
+
+### 🌱 Environnement et gestion des variables
+- **[dotenv](https://www.npmjs.com/package/dotenv)** (version 16.4.7) : Chargement des variables d'environnement.
+- **[@bearz/dotenv](https://www.npmjs.com/package/@bearz/dotenv)** (version 0.1.0) : Gestion des variables d'environnement de manière optimisée.
+- **[Render](https://render.com/)** : Plateforme de déploiement cloud offrant des services pour héberger des applications web, des bases de données, et des fonctions serverless. Elle permet un déploiement rapide et facile avec une gestion automatique des ressources et des mises à jour.
+
+### 🛠️ Dépendances de développement
+- **[nodemon](https://www.npmjs.com/package/nodemon)** (version 3.1.9) : Outil pour redémarrer automatiquement l'application pendant le développement.
+- **[ts-node](https://www.npmjs.com/package/ts-node)** (version 10.9.2) : Exécution de fichiers TypeScript sans compilation préalable.
+- **[ts-node-dev](https://www.npmjs.com/package/ts-node-dev)** (version 2.0.0) : Outil pour le développement rapide en TypeScript.
+- **[@types/node](https://www.npmjs.com/package/@types/node)** (version 22.14.0) : Types TypeScript pour Node.js.
+- **[@types/express](https://www.npmjs.com/package/@types/express)** (version 5.0.1) : Types TypeScript pour Express.
+- **[@types/passport](https://www.npmjs.com/package/@types/passport)** (version 1.0.17) : Types TypeScript pour Passport.
+- **[@types/express-session](https://www.npmjs.com/package/@types/express-session)** (version 1.18.1) : Types TypeScript pour express-session.
+- **[@types/jsonwebtoken](https://www.npmjs.com/package/@types/jsonwebtoken)** (version 9.0.9) : Types TypeScript pour jsonwebtoken.
+- **[@types/cookie-parser](https://www.npmjs.com/package/@types/cookie-parser)** (version 1.4.8) : Types TypeScript pour cookie-parser.
+- **[@types/cors](https://www.npmjs.com/package/@types/cors)** (version 2.8.17) : Types TypeScript pour cors.
 
 ---
 
@@ -101,8 +133,9 @@ Le serveur sera accessible à l'adresse `http://localhost:5000`.
 
 -   `back/` - Dossier principal contenant tout le code du backend.
     -   `src/` - Contient les fichiers source du projet backend.
-        -   `controllers/` - Contient les logiques des contrôleurs pour la gestion des requêtes.
+        -   `cron/` - pour les tâches planifiées (reminderScheduler, recurringInstances)
         -   `lib/` - Bibliothèques et utilitaires spécifiques au projet.
+        -   `mailer/` - Envoi d'emails via SMTP.
         -   `middleware/` - Contient les middlewares pour la gestion des sécurités, authentifications, etc.
         -   `routes/` - Définition des routes de l'API.
         -   `services/` - Logique métier, par exemple, pour la gestion des événements.
@@ -113,24 +146,46 @@ Le serveur sera accessible à l'adresse `http://localhost:5000`.
 
 ---
 
-## 🧪 Routes utiles
+## 📚 Références API (routes)
 
-| Route                                   | Méthode HTTP | Description                                                    | Middleware                        |
-| --------------------------------------- | ------------ | -------------------------------------------------------------- | --------------------------------- |
-| `/`                                     | `GET`        | Vérification de l'état de l'application (health check)         | -                                 |
-| `/auth/google`                          | `GET`        | Redirection pour l'authentification via Google                 | `passport.authenticate("google")` |
-| `/auth/google/callback`                 | `GET`        | Callback après l'authentification via Google                   | `passport.authenticate("google")` |
-| `/auth/me`                              | `GET`        | Récupère les données de l'utilisateur connecté                 | `requireJWTAuth`                  |
-| `/auth/logout`                          | `GET`        | Déconnexion (suppression du cookie JWT)                        | -                                 |
-| `/events`                               | `POST`       | Création d'un événement                                        | `requireJWTAuth`, `validateEvent` |
-| `/events`                               | `GET`        | Récupère tous les événements de l'utilisateur connecté         | `requireJWTAuth`                  |
-| `/events/:id`                           | `GET`        | Récupère un événement spécifique par ID                        | `requireJWTAuth`                  |
-| `/events/:id`                           | `PUT`        | Mise à jour d'un événement spécifique par ID                   | `requireJWTAuth`                  |
-| `/events/:id`                           | `DELETE`     | Suppression d'un événement spécifique par ID                   | `requireJWTAuth`                  |
-| `/events/check-availability`            | `POST`       | Vérifie la disponibilité d'un créneau horaire                  | `requireJWTAuth`                  |
-| `/events/book/:slug`                    | `GET`        | Récupère les détails d'un type d'événement par "slug" (public) | -                                 |
-| `/notification/send-event-notification` | `POST`       | Envoi d'une notification de confirmation d'événement           | `requireJWTAuth`                  |
-| `/notification/send-event-reminder`     | `POST`       | Envoi d'un rappel pour un événement                            | `requireJWTAuth`                  |
+| Route                                   | Méthode HTTP | Description                                                          | Middleware                         |
+| --------------------------------------- | ------------ | --------------------------------------------------------------       | ---------------------------------  |
+| `/`                                     | `GET`        | Vérification de l'état de l'application (health check)               | -                                  |
+| `/auth/google`                          | `GET`        | Redirection pour l'authentification via Google                       | `passport.authenticate("google")`  |
+| `/auth/google/callback`                 | `GET`        | Callback pour l'authentification Google après la redirection         | `passport.authenticate("google")`  |
+| `/auth/me`                              | `GET`        | Récupérer les données de l'utilisateur connecté                      | `requireJWTAuth`                   |
+| `/auth/logout`                          | `GET`        | Déconnexion et suppression du cookie JWT                             | -                                  |
+| `/availability`                         | `GET`        | Récupérer tous les créneaux de disponibilité pour l'utilisateur      | `requireJWTAuth`                   |
+| `/availability`                         | `POST`       | Ajouter un nouveau créneau de disponibilité                          | `requireJWTAuth`                   |
+| `/availability/:id`                     | `PUT`        | Mettre à jour un créneau de disponibilité                            | `requireJWTAuth`                   |
+| `/availability/:id`                     | `DELETE`     | Supprimer un créneau de disponibilité                                | `requireJWTAuth`                   |
+| `/events`                               | `POST`       | Créer un événement avec validation                                   | `requireJWTAuth` , `validateEvent` |
+| `/events`                               | `GET`        | Récupérer tous les événements pour l'utilisateur                     | `requireJWTAuth`                   |
+| `/events/:id`                           | `GET`        | Récupérer un événement spécifique par son ID                         | `requireJWTAuth`                   |
+| `/events/:id`                           | `PUT`        | Mettre à jour un événement spécifique                                | `requireJWTAuth`                   |
+| `/events/:id`                           | `DELETE`     | Supprimer un événement spécifique                                    | `requireJWTAuth`                   |
+| `/events/check-availability`            | `POST`       | Vérifier la disponibilité d'un créneau pour un événement             | `requireJWTAuth`                   |
+| `/events/google-calendar`               | `POST`       | Créer un événement dans Google Calendar                              | `requireJWTAuth`                   |
+| `/events/:eventId/guests`               | `POST`       | Ajouter un invité à un événement                                     | `requireJWTAuth`                   |
+| `/events/:eventId/guests`               | `GET`        | Récupérer tous les invités d'un événement                            | `requireJWTAuth`                   |
+| `/events/:eventId/guests/:guestId`      | `PUT`        | Mettre à jour le statut d'un invité                                  | `requireJWTAuth`                   |
+| `/events/:eventId/guests/:guestId`      | `DELETE`     | Supprimer un invité d'un événement                                   | `requireJWTAuth`                   |
+| `/response`                             | `POST`       | Mettre à jour la réponse d'un invité pour un événement               | `requireJWTAuth`                   |
+| `/public/book/:slug`                    | `GET`        | Récupérer un événement public par son slug                           | -                                  |
+| `/public/book/:slug`                    | `POST`       | Réserver un créneau pour un événement public                         | -                                  |
+| `/event-bookings/        `              | `POST`       | Créer une nouvelle réservation                                       | `requireJWTAuth`                   |
+| `/event-bookings/:eventId`              | `GET`        | Récupérer toutes les réservations d'un événement spécifique          | `requireJWTAuth`                   |
+| `/event-bookings/:bookingId`            | `DELETE`     | Supprimer une réservation par ID                                     | `requireJWTAuth`                   |
+| `/event-bookings/:bookingId`            | `PUT`        | Mettre à jour le statut d'une réservation (confirmé, annulé, etc.)   | `requireJWTAuth`                   |
+| `/event-bookings/user/:userId`          | `GET`        | Voir les réservations d’un utilisateur                               | `requireJWTAuth`                   |
+| `/notification/send-event-notification` | `POST`       | Envoyer une notification de confirmation d'événement                 | `requireJWTAuth`                   |
+| `/notification/send-event-reminder`     | `POST`       | Envoyer un rappel pour un événement                                  | `requireJWTAuth`                   |
+| `/recurring`                            | `POST`       | Créer un événement récurrent                                         | `requireJWTAuth`                   |
+| `/recurring`                            | `GET`        | Récupérer tous les événements récurrents pour un utilisateur         | `requireJWTAuth`                   |
+| `/recurring/:id`                        | `GET`        | Récupérer un événement récurrent par son ID                          | `requireJWTAuth`                   |
+| `/recurring/:id`                        | `PUT`        | Mettre à jour un événement récurrent                                 | `requireJWTAuth`                   |
+| `/recurring/:id`                        | `DELETE`     | Supprimer un événement récurrent                                     | `requireJWTAuth`                   |
+| `/recurring/generate/:id`               | `POST`       | Générer des instances d'événements à partir d'un événement récurrent | `requireJWTAuth`                   |
 
 ---
 
@@ -147,35 +202,6 @@ L’app utilise Google OAuth 2.0 :
 Middleware :
 
 -   `requireJWTAuth` protège les routes comme `/dashboard`, `/user/me`, etc.
-
----
-
-## ⚙️ Fonctionnalités supplémentaires
-
-### 🕒 Rappels d'événements (Automatiques via Cron)
-
-Les rappels d'événements sont envoyés automatiquement en arrière-plan grâce à un cron job. Ce processus est géré par la fonction `scheduleEventReminders`, qui s'exécute toutes les minutes et vérifie les événements prévus pour les 1 heure et 24 heures à venir.
-
--   **Comment ça marche ?**
-
-    -   À chaque exécution, la fonction récupère les événements qui doivent avoir lieu dans les 1h ou 24h.
-    -   Ensuite, elle envoie des emails de rappel aux invités et à l'organisateur de l'événement.
-
--   **Comment vérifier que le cron job fonctionne ?**
-    -   Vous pouvez vérifier les logs des tâches cron pour toute activité d'exécution en arrière-plan.
-    -   Assurez-vous qu'un événement de test avec un rappel prévu dans l'heure suivante est correctement rappelé par email.
-
-Cette fonctionnalité fonctionne automatiquement en arrière-plan et n'est pas accessible via une route API, mais elle garantit que les utilisateurs reçoivent des rappels en temps voulu pour leurs événements.
-
-### 📅 Gestion des événements
-
-Ce projet permet aux utilisateurs de créer et de gérer leurs événements via une interface API RESTful. Les utilisateurs peuvent :
-
--   Créer un événement avec des détails (titre, date, etc.).
--   Mettre à jour ou supprimer des événements.
--   Vérifier la disponibilité d'un créneau horaire pour planifier un événement.
-
-Les événements sont stockés dans Supabase, qui offre une base de données PostgreSQL gérée avec une authentification intégrée.
 
 ---
 
@@ -208,6 +234,62 @@ NODE_ENV=production
 ```
 
 ⚠️ Rappel : ne partage pas tes clés API publiquement, et assure-toi qu'elles sont définies dans les variables d'environnement lors du déploiement.
+
+---
+
+## ⚙️ Fonctionnalités supplémentaires
+
+### 🕒 Rappels d'événements (Automatiques via Cron)
+
+Les rappels d'événements sont envoyés automatiquement en arrière-plan grâce à un cron job. Ce processus est géré par la fonction `scheduleEventReminders`, qui s'exécute toutes les minutes et vérifie les événements prévus pour les 1 heure et 24 heures à venir.
+
+-   **Comment ça marche ?**
+
+    -   À chaque exécution, la fonction récupère les événements qui doivent avoir lieu dans les 1h ou 24h.
+    -   Ensuite, elle envoie des emails de rappel aux invités et à l'organisateur de l'événement.
+
+-   **Comment vérifier que le cron job fonctionne ?**
+    -   Vous pouvez vérifier les logs des tâches cron pour toute activité d'exécution en arrière-plan.
+    -   Assurez-vous qu'un événement de test avec un rappel prévu dans l'heure suivante est correctement rappelé par email.
+
+Cette fonctionnalité fonctionne automatiquement en arrière-plan et n'est pas accessible via une route API, mais elle garantit que les utilisateurs reçoivent des rappels en temps voulu pour leurs événements.
+
+### 📅 Gestion des événements
+
+Ce projet permet aux utilisateurs de créer et de gérer leurs événements via une interface API RESTful. Les utilisateurs peuvent :
+
+-   Créer un événement avec des détails (titre, date, etc.).
+-   Mettre à jour ou supprimer des événements.
+-   Vérifier la disponibilité d'un créneau horaire pour planifier un événement.
+
+Les événements sont stockés dans Supabase, qui offre une base de données PostgreSQL gérée avec une authentification intégrée.
+
+### 🔁 Événements récurrents
+
+- Les événements récurrents peuvent être créés avec une fréquence (quotidienne, hebdomadaire, mensuelle).
+- Un cron job se charge de générer automatiquement les instances futures d’événements à partir de leur modèle de récurrence.
+
+Voir la route :
+`/recurring` (CRUD) et `/recurring/generate/:id` (génération manuelle)
+
+### 👥 Gestion des invités
+
+- Les utilisateurs peuvent inviter des personnes (même non inscrites).
+- Suivi de leur réponse : accepté, refusé, peut-être
+- Possibilité de mettre à jour ou supprimer un invité
+
+Voir les routes :  
+`/events/:eventId/guests` (POST/GET)  
+`/events/:eventId/guests/:guestId` (PUT/DELETE)  
+`/response` (GET via lien public)
+
+### 📆 Réservations publiques
+
+- Les événements publics peuvent être consultés par slug.
+- Un utilisateur ou un visiteur peut réserver un créneau (si libre).
+- Cela crée une entrée dans la table `event_bookings`.
+
+Routes : `/public/book/:slug` (GET), `/public/book/:slug` (POST)
 
 ---
 
@@ -279,4 +361,4 @@ Merci de vous conformer aux [guidelines de style de code](#) pour assurer une bo
 ---
 
 📬 Contact
-Made with ❤️ by jegan42 >> https://github.com/jegan42
+Made with ❤️ by **[jegan42](https://github.com/jegan42)**

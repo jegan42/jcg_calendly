@@ -15,10 +15,23 @@ import { limiter } from "./middleware/limiter";
 import "./auth/google"; // Google authentication (import without assignment)
 
 // 3. Application routes
-import { authRoutes, eventRoutes, homeRoutes, notification } from "./routes";
+import {
+    authRoutes,
+    availabilityRoutes,
+    eventBookingsRoutes,
+    eventRoutes,
+    homeRoutes,
+    notificationRoutes,
+    publicRoutes,
+    recurringEventsRoutes,
+    responseRoutes,
+} from "./routes";
 
 // 4. Express application initialization
 const app = express();
+
+// HTTP request logging
+app.use(morgan("combined"));
 
 // Security configuration before any other processing
 app.use(
@@ -58,8 +71,23 @@ app.use(limiter);
 // Application routes
 app.use("/", homeRoutes);
 app.use("/auth", authRoutes);
+app.use("/public", publicRoutes);
+
+// 🔐 All availability routes require authentication
+// CSRF protection middleware
+app.use(requireJWTAuth);
+app.use(csrfProtection);
+
+// All routes below this point require authentication
+// and CSRF protection
+app.use("/availability", availabilityRoutes);
+app.use("/event-bookings", eventBookingsRoutes);
 app.use("/events", eventRoutes);
-app.use("/user", notification);
+app.use("/notification", notificationRoutes);
+app.use("/recurring", recurringEventsRoutes);
+app.use("/response", responseRoutes);
+
+app.use(csrfErrorHandler);
 
 // General error handling middleware
 app.use((err: Error, _req: Request, res: Response, _next: NextFunction) => {
@@ -74,6 +102,8 @@ app.use((_req: Request, res: Response) => {
 
 // ➕ Event reminder scheduler
 import { scheduleEventReminders } from "./cron/reminderScheduler";
+import { csrfErrorHandler, csrfProtection } from "./middleware/csrf";
+import { requireJWTAuth } from "./middleware/jwtAuth";
 scheduleEventReminders();
 
 const PORT = process.env.PORT ?? 5000;
