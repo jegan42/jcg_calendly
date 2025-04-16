@@ -31,7 +31,7 @@ export const requireJWTAuth = async (
         const { data: user, error } = await supabase
             .from("users")
             .select("*")
-            .eq("id", decoded.id)
+            .eq("id_google", decoded.id)
             .single();
 
         if (error || !user) {
