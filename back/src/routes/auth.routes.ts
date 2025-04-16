@@ -32,7 +32,7 @@ router.get(
         const token = user.token;
 
         // Send JWT token as HTTP-only cookie
-        res.cookie("jwt", token, {
+        res.cookie("token", token, {
             httpOnly: true,
             secure: process.env.NODE_ENV === "production", // HTTPS only in prod
             sameSite:
@@ -71,7 +71,7 @@ router.get(
 
 // 7. Logout route - clears JWT cookie
 router.get("/logout", (_req: Request, res: Response) => {
-    res.clearCookie("jwt", {
+    res.clearCookie("token", {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
         sameSite:
