@@ -13,27 +13,27 @@ const useAuth = () => {
 
     useEffect(() => {
         const fetchUser = async () => {
-            // if (!token) {
-            try {
-                const { data } = await axiosInstance.get("/auth/me");
-                if (data?.user) {
-                    dispatch({
-                        type: "auth/login",
-                        payload: { token: data.token, user: data.user },
-                    });
-                    // navigate("/dashboard");
-                } else {
+            if (!token) {
+                try {
+                    const { data } = await axiosInstance.get("/auth/me");
+                    if (data?.user) {
+                        dispatch({
+                            type: "auth/login",
+                            payload: { token: "data.token", user: data.user },
+                        });
+                        // navigate("/dashboard");
+                    } else {
+                        navigate("/login");
+                    }
+                } catch (err) {
+                    console.log("Pas d'utilisateur connecté, erreur:", err);
                     navigate("/login");
+                } finally {
+                    setLoading(false);
                 }
-            } catch (err) {
-                console.log("Pas d'utilisateur connecté, erreur:", err);
-                navigate("/login");
-            } finally {
+            } else {
                 setLoading(false);
             }
-            // } else {
-            //     setLoading(false);
-            // }
         };
         fetchUser();
     }, [dispatch, navigate, token]);
