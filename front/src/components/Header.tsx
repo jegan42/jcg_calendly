@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axiosInstance from "../services/axios";
 import { useDispatch } from "react-redux";
 import { logout } from "../redux/authSlice";
-import { LoggoutButton } from "./Button";
+import { Button, LoggoutButton } from "./Button";
 
 const Nav = styled.nav`
     background: #1e293b;
@@ -40,6 +40,8 @@ const Header = () => {
         navigate("/login");
     };
 
+    const tokenExists = document.cookie.includes("token=");
+
     return (
         <Nav>
             <h1>Calendly</h1>
@@ -49,10 +51,15 @@ const Header = () => {
                 <Link to="/calendar">Calendrier</Link>
                 <Link to="/events">Événements</Link>
                 <Link to="/event/new">Créer</Link>
-
-                <LoggoutButton onClick={handleLogout}>
-                    Déconnexion
-                </LoggoutButton>
+                {tokenExists ? (
+                    <LoggoutButton onClick={handleLogout}>
+                        Déconnexion
+                    </LoggoutButton>
+                ) : (
+                    <Button onClick={() => navigate("/login")}>
+                        Connexion
+                    </Button>
+                )}{" "}
             </NavLinks>
         </Nav>
     );
