@@ -61,7 +61,7 @@ const Header = () => {
             </Link>
 
             <NavLinks>
-                {token ? (
+                {token && (
                     <>
                         <Link to="/dashboard">Dashboard</Link>
                         <Link to="/profile">Profil</Link>
@@ -72,10 +72,6 @@ const Header = () => {
                             Déconnexion
                         </LoggoutButton>
                     </>
-                ) : (
-                    <Button onClick={() => navigate("/login")}>
-                        Connexion
-                    </Button>
                 )}
             </NavLinks>
         </Nav>

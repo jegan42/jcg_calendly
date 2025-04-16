@@ -28,9 +28,12 @@ import AppLayout from "./layout/AppLayout";
 import Layout from "./layout/Layout";
 
 const App: React.FC = () => {
-    const token = useAuth();
+    const { token, loading } = useAuth();
 
     console.log("token dans App [", token, "]");
+
+    if (loading)
+        return <p style={{ textAlign: "center" }}>Chargement en cours...</p>;
 
     return (
         <>
