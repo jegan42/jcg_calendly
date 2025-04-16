@@ -65,7 +65,7 @@ router.get(
             return;
         }
 
-        res.status(200).json({ success: true, user });
+        res.status(200).json({ success: true, user, token: req.cookies.token });
     }
 );
 

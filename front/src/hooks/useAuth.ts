@@ -19,7 +19,7 @@ const useAuth = () => {
                     if (data?.user) {
                         dispatch({
                             type: "auth/login",
-                            payload: { token: "data.token", user: data.user },
+                            payload: { token: data.token, user: data.user },
                         });
                         // navigate("/dashboard");
                     } else {
