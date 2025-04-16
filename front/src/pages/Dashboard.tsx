@@ -43,7 +43,7 @@ const Dashboard = () => {
             </Button>
             <h2>📅 Mes événements</h2>
 
-            {events?.length === 0 ? (
+            {events?.length && events?.length === 0 ? (
                 <p>Aucun événement trouvé.</p>
             ) : (
                 <ul>
