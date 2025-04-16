@@ -13,6 +13,8 @@ import cors from "cors";
 // 2. Custom middleware or utilities
 import { limiter } from "./middleware/limiter";
 import "./auth/google"; // Google authentication (import without assignment)
+import { csrfErrorHandler, csrfProtection } from "./middleware/csrf";
+import { requireJWTAuth } from "./middleware/jwtAuth";
 
 // 3. Application routes
 import {
@@ -102,8 +104,6 @@ app.use((_req: Request, res: Response) => {
 
 // ➕ Event reminder scheduler
 import { scheduleEventReminders } from "./cron/reminderScheduler";
-import { csrfErrorHandler, csrfProtection } from "./middleware/csrf";
-import { requireJWTAuth } from "./middleware/jwtAuth";
 scheduleEventReminders();
 
 const PORT = process.env.PORT ?? 5000;
