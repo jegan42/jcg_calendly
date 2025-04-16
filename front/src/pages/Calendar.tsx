@@ -70,7 +70,7 @@ const Calendar = () => {
         };
 
         try {
-            await axiosInstance.post("/event", payload);
+            await axiosInstance.post("/events", payload);
             setShowModal(false);
             navigate("/dashboard"); // Redirect after successful creation
         } catch (err) {

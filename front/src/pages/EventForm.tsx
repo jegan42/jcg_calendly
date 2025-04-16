@@ -49,7 +49,7 @@ const EventForm = () => {
             console.log("Données soumises :", payload);
 
         try {
-            await axiosInstance.post("/event", payload);
+            await axiosInstance.post("/events", payload);
             navigate("/dashboard"); // retour au dashboard après succès
         } catch (err) {
             console.error("Erreur lors de la création :", err);

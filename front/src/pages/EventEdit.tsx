@@ -54,7 +54,7 @@ const EventEdit = () => {
 
     const onSubmit = async (formData: FormData) => {
         try {
-            await axiosInstance.put(`/event/${id}`, {
+            await axiosInstance.put(`/events/${id}`, {
                 ...formData,
                 guests: formData.guests
                     .split(",")
