@@ -13,6 +13,8 @@ export const requireJWTAuth = async (
     const token = authHeader?.startsWith("Bearer ")
         ? authHeader.split(" ")[1]
         : req.cookies.token;
+    console.log("🔍 Cookie reçu :", req.cookies);
+    console.log("🔍 Authorization header :", req.headers.authorization);
 
     if (!token) {
         res.status(401).json({ message: "Missing token" });
