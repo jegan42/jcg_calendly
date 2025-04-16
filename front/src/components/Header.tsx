@@ -73,7 +73,7 @@ const Header = () => {
                         </LoggoutButton>
                     </>
                 ) : (
-                    <Button as={Link} to="/login">
+                    <Button onClick={() => navigate("/login")}>
                         Connexion
                     </Button>
                 )}

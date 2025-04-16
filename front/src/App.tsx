@@ -34,7 +34,7 @@ const App: React.FC = () => {
 
     return (
         <>
-            {token && <Header />}
+            <Header />
             <Routes>
                 <Route element={<Layout />}>
                     <Route path="/" element={<Home />} />
