@@ -32,6 +32,8 @@ const Dashboard = () => {
         fetchEvents();
     }, []);
     console.log("events", events);
+    console.log("events.length", events.length);
+    console.log("document.cookie", document.cookie);
     return (
         <div style={{ padding: "2rem" }}>
             <h2>Mon tableau de bord</h2>
