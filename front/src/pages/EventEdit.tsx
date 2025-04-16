@@ -1,3 +1,4 @@
+// src/pages/EventEdit.tsx
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useParams, useNavigate } from "react-router-dom";
@@ -11,7 +12,7 @@ interface FormData {
     description: string;
     start_time: string;
     end_time: string;
-    guests: string; // chaîne d’emails séparés par virgule
+    guests: string;
     is_public: boolean;
     notification_enabled: boolean;
     cancellation_policy: boolean;
@@ -33,7 +34,6 @@ const EventEdit = () => {
         const fetchEvent = async () => {
             try {
                 const { data } = await axiosInstance.get(`/events/${id}`);
-                // Pré-remplir les champs avec les données
                 reset({
                     title: data.title,
                     description: data.description,

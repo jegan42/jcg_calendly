@@ -14,7 +14,7 @@ export const createGoogleCalendarEvent = async (eventDetails: {
             "/events/google-calendar",
             eventDetails,
             {
-                withCredentials: true, // 👈 Inclut les cookies (JWT)
+                withCredentials: true,
             }
         );
 

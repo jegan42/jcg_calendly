@@ -11,9 +11,8 @@ const Logout: React.FC = () => {
     useEffect(() => {
         const logoutUser = async () => {
             try {
-                // Appeler le backend pour déconnecter l'utilisateur (supprimer le cookie JWT)
                 await axiosInstance.get("/auth/logout");
-                dispatch(logout()); // Nettoyer l'état de l'utilisateur dans Redux
+                dispatch(logout());
             } catch (error) {
                 console.error("Erreur lors de la déconnexion:", error);
             } finally {

@@ -1,3 +1,4 @@
+// front/src/components/ErrorMessage.tsx
 import styled from "styled-components";
 
 const ErrorMessage = styled.p`

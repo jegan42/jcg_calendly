@@ -12,7 +12,7 @@ type EventFormData = {
     description?: string;
     start_time: string;
     end_time: string;
-    guests: string; // emails séparés par des virgules
+    guests: string;
     is_public: boolean;
     notification_enabled: boolean;
     cancellation_policy: boolean;

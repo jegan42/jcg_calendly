@@ -25,7 +25,7 @@ const Events = () => {
                 const { data } = await axiosInstance.get("/events");
                 setEvents(data.events);
             } catch (err) {
-                console.error("Erreur lors du chargement des événements", err);
+                console.error("Error while loading events", err);
             }
         };
 

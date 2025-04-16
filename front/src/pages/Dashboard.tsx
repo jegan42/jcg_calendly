@@ -18,7 +18,7 @@ const Dashboard = () => {
     useEffect(() => {
         const fetchEvents = async () => {
             try {
-                const { data } = await axiosInstance.get("/events"); // ← route du backend
+                const { data } = await axiosInstance.get("/events"); // ← route backend
                 setEvents(data);
             } catch (err) {
                 console.error(

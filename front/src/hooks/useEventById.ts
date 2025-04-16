@@ -6,6 +6,6 @@ export const useEventById = (id: string | undefined) => {
     return useQuery({
         queryKey: ["event", id],
         queryFn: () => getEventById(id!),
-        enabled: !!id, // pour éviter que ça run avant que id soit dispo
+        enabled: !!id, // to prevent it from running before the id is available
     });
 };

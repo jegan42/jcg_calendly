@@ -16,7 +16,6 @@ export const saveEventWithGoogleRequestId = async (
     googleRequestId: string
 ) => {
     try {
-        // Appel à l'API backend pour sauvegarder l'événement dans Supabase
         const response = await axiosInstance.post("/events", {
             eventDetails,
             googleRequestId,

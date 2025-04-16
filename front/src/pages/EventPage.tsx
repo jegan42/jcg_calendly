@@ -1,10 +1,10 @@
 // src/pages/EventPage.tsx
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import axiosInstance from "../services/axios"; // Assure-toi que ce fichier est bien configuré
+import axiosInstance from "../services/axios";
 
 const EventPage = () => {
-    const { id } = useParams<{ id: string }>(); // Récupérer l'ID depuis l'URL
+    const { id } = useParams<{ id: string }>();
     const [event, setEvent] = useState<any>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
@@ -12,7 +12,7 @@ const EventPage = () => {
     useEffect(() => {
         const fetchEvent = async () => {
             try {
-                const response = await axiosInstance.get(`/events/${id}`); // Appel à l'API backend
+                const response = await axiosInstance.get(`/events/${id}`);
                 setEvent(response.data.event);
                 setLoading(false);
             } catch (err) {
@@ -47,7 +47,7 @@ const EventPage = () => {
             <h3>Invités:</h3>
             <ul>
                 {event.guests.map((guest: string, index: number) => (
-                    <li key={index}>{guest}</li>
+                    <li key={Number(index)}>{guest}</li>
                 ))}
             </ul>
         </div>

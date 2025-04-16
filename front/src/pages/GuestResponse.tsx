@@ -49,7 +49,7 @@ const GuestResponse: React.FC = () => {
         const guest_email = searchParams.get("guest_email");
         const status = searchParams.get("status"); // accepted | declined | maybe
 
-        // 🔒 Vérifications de sécurité simples côté client
+        // 🔒 Simple client-side security checks
         const validStatus = ["accepted", "declined", "maybe"];
         const isValidEmail = (email: string) =>
             /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);

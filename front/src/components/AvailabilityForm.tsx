@@ -37,12 +37,12 @@ const AvailabilityForm: React.FC<Props> = ({
         setError("");
 
         if (!day || !start || !end) {
-            setError("Veuillez remplir tous les champs.");
+            setError("Please fill out all fields.");
             return;
         }
 
         if (start >= end) {
-            setError("L'heure de début doit être avant l'heure de fin.");
+            setError("Start time must be before end time.");
             return;
         }
 

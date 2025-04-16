@@ -1,6 +1,6 @@
 // src/context/ToastContext.tsx
 import React, { createContext, useContext, useState } from "react";
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
 
 interface ToastContextType {
     showSuccess: (message: string) => void;
@@ -9,7 +9,9 @@ interface ToastContextType {
 
 const ToastContext = createContext<ToastContextType | undefined>(undefined);
 
-export const ToastProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }) => {
+export const ToastProvider: React.FC<React.PropsWithChildren<{}>> = ({
+    children,
+}) => {
     const showSuccess = (message: string) => {
         toast.success(message, {
             position: "top-right",

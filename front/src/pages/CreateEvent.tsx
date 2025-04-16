@@ -27,7 +27,7 @@ type EventFormValues = {
     description: string;
     start_time: string;
     end_time: string;
-    guests: string; // une string séparée par virgule qu'on split ensuite
+    guests: string;
     timeZone: string;
 };
 

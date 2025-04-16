@@ -1,24 +1,31 @@
 // src/App.tsx
 import React from "react";
 import { Route, Routes } from "react-router-dom";
-import { Home, Login, Dashboard, EventForm } from "./pages";
+import {
+    Availability,
+    Calendar,
+    CreateEvent,
+    Dashboard,
+    EventDetail,
+    EventEdit,
+    EventForm,
+    EventPage,
+    Events,
+    GuestResponse,
+    Home,
+    Login,
+    Logout,
+    NotFound,
+    Profile,
+    PublicBooking,
+    RecurringEvents,
+    Unauthorized,
+} from "./pages";
 import useAuth from "./hooks/useAuth";
 import ProtectedRoute from "./components/ProtectedRoute";
-import Profile from "./pages/Profile";
 import Header from "./components/Header";
-import Events from "./pages/Events";
-import CreateEvent from "./pages/CreateEvent";
-import EventPage from "./pages/EventPage";
-import EventDetail from "./pages/EventDetail";
-import EventEdit from "./pages/EventEdit";
 import AppLayout from "./layout/AppLayout";
 import Layout from "./layout/Layout";
-import Calendar from "./pages/Calendar";
-import Unauthorized from "./pages/Unauthorized";
-import NotFound from "./pages/404";
-import Logout from "./pages/Logout";
-import PublicBooking from "./pages/PublicBooking";
-import GuestResponse from "./pages/GuestResponse";
 
 const App: React.FC = () => {
     const token = useAuth();
@@ -35,6 +42,14 @@ const App: React.FC = () => {
                     <Route element={<AppLayout />}>
                         <Route path="/book/:slug" element={<PublicBooking />} />
                         <Route path="/response" element={<GuestResponse />} />
+                        <Route
+                            path="/availability"
+                            element={<Availability />}
+                        />
+                        <Route
+                            path="/recurringevents"
+                            element={<RecurringEvents />}
+                        />
                         <Route
                             path="/dashboard"
                             element={

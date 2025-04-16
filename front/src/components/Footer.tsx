@@ -1,3 +1,4 @@
+// front/src/components/Footer.tsx
 import styled from "styled-components";
 
 const FooterContainer = styled.footer`

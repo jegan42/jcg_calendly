@@ -72,7 +72,7 @@ const Calendar = () => {
         try {
             await axiosInstance.post("/event", payload);
             setShowModal(false);
-            navigate("/dashboard"); // Redirige après création réussie
+            navigate("/dashboard"); // Redirect after successful creation
         } catch (err) {
             console.error("Erreur lors de la création de l'événement :", err);
         }
@@ -91,7 +91,7 @@ const Calendar = () => {
                     right: "dayGridMonth,timeGridWeek,timeGridDay",
                 }}
                 eventClick={handleEventClick}
-                dateClick={handleDateClick} // Ajouter le clic sur une date pour créer un événement
+                dateClick={handleDateClick} // Add click on a date to create an event
                 height="auto"
             />
 

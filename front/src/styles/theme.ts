@@ -4,7 +4,7 @@ export const theme = {
         primary: "#0057ff",
         background: "#f5f5f5",
         text: "#333",
-        accent: "#ff5733", // Ajouter des couleurs supplémentaires si besoin
+        accent: "#ff5733",
     },
     fonts: {
         body: "Arial, sans-serif",

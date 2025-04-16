@@ -1,3 +1,4 @@
+// src/services/recurringService.ts
 import api from "./axios";
 
 export const getRecurringEvents = async () => {
