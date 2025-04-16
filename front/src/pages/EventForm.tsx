@@ -46,6 +46,7 @@ const EventForm = () => {
                 .map((email) => email.trim())
                 .filter((email) => email.length > 0),
         };
+            console.log("Données soumises :", payload);
 
         try {
             await axiosInstance.post("/event", payload);

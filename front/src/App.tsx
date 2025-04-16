@@ -132,7 +132,7 @@ const App: React.FC = () => {
                     </Route>
                 </Route>
                 <Route path="/login" element={<Login />} />
-                <Route path="/unauthorized" element={<Unauthorized />} />
+                <Route path="/44" element={<Unauthorized />} />
                 <Route path="*" element={<NotFound />} />
             </Routes>
         </>
