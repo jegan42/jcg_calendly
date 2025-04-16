@@ -1,39 +1,124 @@
 // src/App.tsx
-import React, { useEffect } from 'react';
-import { BrowserRouter as Router, Route, Routes, useNavigate } from 'react-router-dom';
-import axiosInstance from './services/axios';  // Assure-toi que ce fichier est bien configuré
-import { Home, Login, Dashboard } from './pages';
-import useAuth from './hooks/useAuth';
+import React from "react";
+import { Route, Routes } from "react-router-dom";
+import { Home, Login, Dashboard, EventForm } from "./pages";
+import useAuth from "./hooks/useAuth";
+import ProtectedRoute from "./components/ProtectedRoute";
+import Profile from "./pages/Profile";
+import Header from "./components/Header";
+import Events from "./pages/Events";
+import CreateEvent from "./pages/CreateEvent";
+import EventPage from "./pages/EventPage";
+import EventDetail from "./pages/EventDetail";
+import EventEdit from "./pages/EventEdit";
+import AppLayout from "./layout/AppLayout";
+import Layout from "./layout/Layout";
+import Calendar from "./pages/Calendar";
+import Unauthorized from "./pages/Unauthorized";
+import NotFound from "./pages/404";
+import Logout from "./pages/Logout";
+import PublicBooking from "./pages/PublicBooking";
+import GuestResponse from "./pages/GuestResponse";
 
 const App: React.FC = () => {
+    const token = useAuth();
 
-//   // Vérification si l'utilisateur est déjà authentifié (c'est-à-dire s'il a un cookie JWT)
-//   useEffect(() => {
-//     const fetchUser = async () => {
-//       try {
-//         const { data } = await axiosInstance.get("/auth/me"); // Appel pour vérifier l'authentification
-//         if (data?.user) {
-//           // Si l'utilisateur est authentifié, rediriger vers le dashboard
-//           navigate("/dashboard");
-//         }
-//       } catch (err) {
-//         console.log("Aucune session trouvée");
-//       }
-//     };
+    console.log("token dans App [", token, "]");
 
-//     fetchUser();
-//   }, [navigate]); // Assure-toi que `navigate` est disponible ici
-  const token = useAuth(); 
+    return (
+        <>
+            {token && <Header />}
+            <Routes>
+                <Route element={<Layout />}>
+                    <Route path="/" element={<Home />} />
 
-  console.log("token dans App [", token, "]");
-
-  return (
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-      </Routes>
-  );
+                    <Route element={<AppLayout />}>
+                        <Route path="/book/:slug" element={<PublicBooking />} />
+                        <Route path="/response" element={<GuestResponse />} />
+                        <Route
+                            path="/dashboard"
+                            element={
+                                <ProtectedRoute>
+                                    <Dashboard />
+                                </ProtectedRoute>
+                            }
+                        />
+                        <Route
+                            path="/profile"
+                            element={
+                                <ProtectedRoute>
+                                    <Profile />
+                                </ProtectedRoute>
+                            }
+                        />
+                        <Route
+                            path="/event"
+                            element={
+                                <ProtectedRoute>
+                                    <Events />
+                                </ProtectedRoute>
+                            }
+                        />
+                        <Route
+                            path="/event/create"
+                            element={
+                                <ProtectedRoute>
+                                    <CreateEvent />
+                                </ProtectedRoute>
+                            }
+                        />
+                        <Route
+                            path="/event/new"
+                            element={
+                                <ProtectedRoute>
+                                    <EventForm />
+                                </ProtectedRoute>
+                            }
+                        />
+                        <Route
+                            path="/event/:id"
+                            element={
+                                <ProtectedRoute>
+                                    <EventDetail />
+                                </ProtectedRoute>
+                            }
+                        />
+                        <Route
+                            path="/event/preview/:id"
+                            element={
+                                <ProtectedRoute>
+                                    <EventPage />
+                                </ProtectedRoute>
+                            }
+                        />
+                        <Route
+                            path="/event/edit/:id"
+                            element={
+                                <ProtectedRoute>
+                                    <EventEdit />
+                                </ProtectedRoute>
+                            }
+                        />
+                        <Route
+                            path="/calendar"
+                            element={
+                                <ProtectedRoute>
+                                    <Calendar />
+                                </ProtectedRoute>
+                            }
+                        />
+                        <Route
+                            path="/logout"
+                            element={<Logout />} // Route pour déconnexion
+                        />
+                    </Route>
+                </Route>
+                <Route path="/login" element={<Login />} />
+                <Route path="/unauthorized" element={<Unauthorized />} />
+                <Route path="*" element={<NotFound />} />
+            </Routes>
+        </>
+    );
 };
 
 export default App;

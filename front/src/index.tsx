@@ -1,3 +1,4 @@
+// src/index.tsx
 import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
@@ -8,6 +9,8 @@ import { ThemeProvider } from "styled-components";
 import { theme } from "./styles/theme";
 import GlobalStyle from "./styles/GlobalStyle";
 import { BrowserRouter as Router } from "react-router-dom";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastProvider } from "./context/ToastContext";
 
 const queryClient = new QueryClient();
 
@@ -19,7 +22,9 @@ root.render(
                 <ThemeProvider theme={theme}>
                     <GlobalStyle />
                     <Router>
-                        <App />
+                        <ToastProvider>
+                            <App />
+                        </ToastProvider>
                     </Router>
                 </ThemeProvider>
             </Provider>

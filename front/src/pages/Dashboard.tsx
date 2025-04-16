@@ -1,37 +1,69 @@
-import React from "react";
-// import useAuth from "../hooks/useAuth";
-import styled from "styled-components";
+// src/pages/Dashboard.tsx
+import { useEffect, useState } from "react";
+import axiosInstance from "../services/axios";
+import { useNavigate } from "react-router-dom";
+import { Button } from "../components/Button";
 
-const Container = styled.div`
-  padding: 2rem;
-`;
-
-const Title = styled.h1`
-  font-size: 2rem;
-  color: #333;
-`;
+interface Event {
+    id: number;
+    title: string;
+    start_time: string;
+    end_time: string;
+}
 
 const Dashboard = () => {
-  const getCookie = (name: string) => {
-    const value = `; ${document.cookie}`;
-    console.log( "my value", value);
-    const parts = value.split(`; ${name}=`);
-    if (parts.length === 2) return parts.pop()?.split(';').shift();
-    return null;
-  };
-  
-  const tokenTest = getCookie('token');
-  console.log("tokenTest", tokenTest);
+    const [events, setEvents] = useState<Event[]>([]);
+    const navigate = useNavigate();
 
-  // const token = useAuth(); // vérifie l'accès
+    useEffect(() => {
+        const fetchEvents = async () => {
+            try {
+                const { data } = await axiosInstance.get("/events"); // ← route du backend
+                setEvents(data);
+            } catch (err) {
+                console.error(
+                    "Erreur lors du chargement des événements :",
+                    err
+                );
+            }
+        };
 
-  return (
-    <Container>
-      <Title>🎉 Bienvenue sur ton Dashboard</Title>
-      <p>Tu es connecté avec un token JWT !</p>
-      <p>Token: {tokenTest}</p>
-    </Container>
-  );
+        fetchEvents();
+    }, []);
+
+    return (
+        <div style={{ padding: "2rem" }}>
+            <h2>Mon tableau de bord</h2>
+
+            <Button onClick={() => navigate("/event/new")}>
+                ➕ Créer un événement
+            </Button>
+            <h2>📅 Mes événements</h2>
+
+            {events.length === 0 ? (
+                <p>Aucun événement trouvé.</p>
+            ) : (
+                <ul>
+                    {events.map((event) => (
+                        <li
+                            key={event.id}
+                            style={{ marginBottom: "1rem", cursor: "pointer" }}
+                        >
+                            <Button
+                                onClick={() => navigate(`/event/${event.id}`)}
+                            >
+                                <strong>{event.title}</strong> <br />
+                                {new Date(
+                                    event.start_time
+                                ).toLocaleString()} →{" "}
+                                {new Date(event.end_time).toLocaleString()}
+                            </Button>
+                        </li>
+                    ))}
+                </ul>
+            )}
+        </div>
+    );
 };
 
 export default Dashboard;

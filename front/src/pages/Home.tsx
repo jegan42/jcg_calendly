@@ -1,4 +1,4 @@
-import React from 'react';
+// src/pages/Home.tsx
 
 const Home = () => {
   return <h1>Bienvenue sur Calendly Frontend</h1>;
