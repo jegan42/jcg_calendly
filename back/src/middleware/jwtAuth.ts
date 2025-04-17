@@ -40,6 +40,9 @@ export const requireJWTAuth = async (
             .eq("id_google", decoded.id_google)
             .single();
 
+
+            console.log(" ✅ USER / ✅ [", user, "]");
+            console.log(" ✅ ERROR / ✅ [", error, "]");
         if (error || !user) {
             res.status(401).json({ message: "User not found" });
             return;
