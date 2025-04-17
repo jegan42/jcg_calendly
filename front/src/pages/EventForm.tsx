@@ -46,10 +46,12 @@ const EventForm = () => {
                 .map((email) => email.trim())
                 .filter((email) => email.length > 0),
         };
-            console.log("Données soumises :", payload);
+        console.log("Données soumises :", payload);
 
         try {
-            await axiosInstance.post("/events", payload);
+            await axiosInstance.post("/events", payload, {
+                withCredentials: true,
+            });
             navigate("/dashboard"); // retour au dashboard après succès
         } catch (err) {
             console.error("Erreur lors de la création :", err);

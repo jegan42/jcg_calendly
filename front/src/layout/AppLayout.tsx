@@ -1,15 +1,30 @@
 // src/layout/AppLayout.tsx
 import { Outlet } from "react-router-dom";
+import styled from "styled-components";
 import Header from "../components/Header";
+import Footer from "../components/Footer";
+
+const Wrapper = styled.div`
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+`;
+
+const Main = styled.main`
+    flex: 1;
+    padding: 2rem;
+    background-color: #f1f5f9;
+`;
 
 const AppLayout = () => {
     return (
-        <>
-            {/* <Header /> */}
-            <main>
+        <Wrapper>
+            <Header />
+            <Main>
                 <Outlet />
-            </main>
-        </>
+            </Main>
+            <Footer />
+        </Wrapper>
     );
 };
 

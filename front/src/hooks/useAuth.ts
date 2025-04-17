@@ -21,7 +21,7 @@ const useAuth = () => {
                             type: "auth/login",
                             payload: { token: data.token, user: data.user },
                         });
-                        // navigate("/dashboard");
+                        navigate("/dashboard");
                     } else {
                         navigate("/login");
                     }
