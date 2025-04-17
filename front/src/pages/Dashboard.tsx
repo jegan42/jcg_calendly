@@ -19,7 +19,7 @@ const Dashboard = () => {
         const fetchEvents = async () => {
             try {
                 const { data } = await axiosInstance.get("/events"); // ← route backend
-                setEvents(data);
+                setEvents(data.events);
             } catch (err) {
                 console.error(
                     "Erreur lors du chargement des événements :",
