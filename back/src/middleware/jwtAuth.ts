@@ -9,7 +9,9 @@ export const requireJWTAuth = async (
     res: Response,
     next: NextFunction
 ) => {
-    console.log(" ✅ requireJWTAuth / ✅ data received:", req);
+    console.log(" ✅ requireJWTAuth / ✅ req.header received:", req.headers);
+    console.log(" ✅ requireJWTAuth / ✅ req.cookies received:", req.cookies);
+    console.log(" ✅ requireJWTAuth / ✅ req.body received:", req.body);
     const authHeader = req.headers.authorization;
     const token = authHeader?.startsWith("Bearer ")
         ? authHeader.split(" ")[1]
