@@ -5,7 +5,7 @@ import Header from "../components/Header";
 const AppLayout = () => {
     return (
         <>
-            <Header />
+            {/* <Header /> */}
             <main>
                 <Outlet />
             </main>
