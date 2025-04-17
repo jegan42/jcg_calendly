@@ -111,6 +111,7 @@ export const createEvent = async (
         notification_enabled,
         cancellation_policy,
     } = eventData;
+    console.log("Creating event with data:", eventData);
 
     const { data, error } = await supabase.from("events").insert([
         {

@@ -25,6 +25,8 @@ const router = Router();
 // ✅ Create an event with validation
 router.post("/", validateEvent, async (req: Request, res: Response) => {
     try {
+        console.log("Event data received:", req.body);
+        console.log("User data received:", req.user);
         const user = req.user as User;
         const event = await createEvent(user, req.body);
 
