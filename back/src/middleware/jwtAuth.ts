@@ -9,6 +9,7 @@ export const requireJWTAuth = async (
     res: Response,
     next: NextFunction
 ) => {
+    console.log(" ✅ requireJWTAuth / ✅ data received:", req);
     const authHeader = req.headers.authorization;
     const token = authHeader?.startsWith("Bearer ")
         ? authHeader.split(" ")[1]
