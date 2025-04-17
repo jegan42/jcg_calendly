@@ -33,6 +33,8 @@ const Dashboard = () => {
     console.log("events", events);
     console.log("events.length", events.length);
     console.log("document.cookie", document.cookie);
+
+    console.log("🔍🔍🔍 events.keys", events.keys);
     return (
         <div style={{ padding: "2rem" }}>
             <h2>Mon tableau de bord</h2>
