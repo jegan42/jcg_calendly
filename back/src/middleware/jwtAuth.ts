@@ -18,6 +18,7 @@ export const requireJWTAuth = async (
         : req.cookies.token;
     console.log("🔍 Cookie reçu :", req.cookies);
     console.log("🔍 Authorization header :", req.headers.authorization);
+    console.log(" ✅ requireJWTAuth / ✅ token received:", token);
 
     if (!token) {
         res.status(401).json({ message: "Missing token" });
@@ -25,6 +26,7 @@ export const requireJWTAuth = async (
     }
 
     const decoded = verifyJWT(token);
+    console.log(" ✅ requireJWTAuth / ✅ decoded received:", decoded);
     if (!decoded) {
         res.status(403).json({ message: "Invalid token" });
         return;
