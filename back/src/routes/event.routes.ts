@@ -42,6 +42,8 @@ router.post("/", validateEvent, async (req: Request, res: Response) => {
 
 // 📅 Get all events for the authenticated user
 router.get("/", async (req: Request, res: Response) => {
+    console.log(" ✅ GET / ✅ Event data received:", req.body);
+    console.log(" ✅ GET / ✅ User data received:", req.user);
     try {
         const user = req.user as User;
         const events = await getUserEvents(user.id);
