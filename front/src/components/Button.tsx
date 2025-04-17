@@ -10,7 +10,7 @@ export const Button = styled.button`
     padding: 0.75rem;
     border: none;
     border-radius: 4px;
-    background-color: ${theme_front.colors.background};
+    background-color: ${theme_front.colors.primary};
     color: white;
     font-weight: bold;
     cursor: pointer;
@@ -24,7 +24,7 @@ export const Button = styled.button`
 
 export const PrimaryButton = styled.button`
     padding: 0.75rem 1.25rem;
-    background-color: ${theme_front.colors.background};
+    background-color: ${theme_front.colors.primary};
     color: white;
     font-weight: bold;
     border: none;
