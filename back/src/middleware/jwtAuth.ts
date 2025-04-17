@@ -27,11 +27,12 @@ export const requireJWTAuth = async (
 
     const decoded = verifyJWT(token);
     console.log(" ✅ requireJWTAuth / ✅ decoded received:", decoded);
-    if (!decoded) {
+    if (!decoded?.id_google) {
         res.status(403).json({ message: "Invalid token" });
         return;
     }
 
+    console.log(" ✅ ON EST PASSER / ✅ ");
     try {
         const { data: user, error } = await supabase
             .from("users")
