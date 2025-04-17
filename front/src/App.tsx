@@ -37,7 +37,7 @@ const App: React.FC = () => {
 
     return (
         <>
-            <Header />
+            {/* <Header /> */}
             <Routes>
                 <Route element={<Layout />}>
                     <Route path="/" element={<Home />} />
