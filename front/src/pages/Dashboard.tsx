@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import axiosInstance from "../services/axios";
 import { useNavigate } from "react-router-dom";
 import { Button } from "../components/Button";
-import { log } from "console";
 
 interface Event {
     id: number;
@@ -42,6 +41,7 @@ const Dashboard = () => {
                 ➕ Créer un événement
             </Button>
             <h2>📅 Mes événements</h2>
+            <h2>📅 Total events: {events.length}</h2>
 
             {!events.length ? (
                 <p>Aucun événement trouvé.</p>
