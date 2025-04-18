@@ -118,7 +118,7 @@ export const createEvent = async (
     } = eventData;
     console.log("Creating event with data:", eventData);
 
-    const { data, error } = await supabase.from("events").insert([
+    const { data, error } = await supabase.from("events").upsert([
         {
             user_id: user.id,
             title,
