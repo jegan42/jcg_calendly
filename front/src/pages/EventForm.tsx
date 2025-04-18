@@ -46,13 +46,14 @@ const EventForm = () => {
                 .map((email) => email.trim())
                 .filter((email) => email.length > 0),
         };
-        console.log("Données soumises :", payload);
 
         try {
-            await axiosInstance.post("/events", payload, {
+        console.log("Données soumises :", payload);
+            const retVal = await axiosInstance.post("/events", payload, {
                 withCredentials: true,
             });
-            navigate("/dashboard"); // retour au dashboard après succès
+            console.log("retVal apres axios :", retVal);
+            // navigate("/dashboard"); // retour au dashboard après succès
         } catch (err) {
             console.error("Erreur lors de la création :", err);
             setSubmitError("Erreur lors de la création de l’événement.");
