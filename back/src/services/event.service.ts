@@ -37,6 +37,7 @@ export const validateEvent: Array<
             return true;
         }),
     body("guests")
+        .optional({ nullable: true })
         .isArray()
         .withMessage("Guests must be an array of emails.")
         .custom((guests) => {
@@ -49,7 +50,10 @@ export const validateEvent: Array<
             }
             return true;
         }),
-    body("guests.*").isEmail().withMessage("Each guest must be a valid email."),
+    body("guests.*")
+        .optional()
+        .isEmail()
+        .withMessage("Each guest must be a valid email."),
     body("is_public")
         .isBoolean()
         .withMessage("The event visibility must be a boolean."),
