@@ -30,6 +30,9 @@ router.post("/", validateEvent, async (req: Request, res: Response) => {
         const user = req.user as User;
         const event = await createEvent(user, req.body);
 
+        console.log(" ✅ POST / events ✅ user:[", user, "]");
+        console.log(" ✅ POST / events ✅ createEvent:[", event, "]");
+
         res.status(201).json({ success: true, event });
     } catch (error) {
         res.status(500).json({
