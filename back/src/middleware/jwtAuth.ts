@@ -31,8 +31,6 @@ export const requireJWTAuth = async (
         res.status(403).json({ message: "Invalid token" });
         return;
     }
-
-    console.log(" ✅ ON EST PASSER / ✅ ");
     try {
         const { data: user, error } = await supabase
             .from("users")
@@ -40,15 +38,16 @@ export const requireJWTAuth = async (
             .eq("id_google", decoded.id_google)
             .single();
 
-
-            console.log(" ✅ USER / ✅ [", user, "]");
-            console.log(" ✅ ERROR / ✅ [", error, "]");
+        console.log(" ✅ USER / ✅ [", user, "]");
+        console.log(" ✅ ERROR / ✅ [", error, "]");
         if (error || !user) {
             res.status(401).json({ message: "User not found" });
             return;
         }
 
         req.user = user;
+
+        console.log(" ✅ ON EST PASSER / ✅ ");
         next();
     } catch (error) {
         res.status(403).json({
