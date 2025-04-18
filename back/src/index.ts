@@ -60,6 +60,14 @@ app.use(
 app.use(express.json()); // For JSON requests
 app.use(express.urlencoded({ extended: true })); // For form submissions
 app.use(cookieParser()); // For cookie management
+app.use((req, res, next) => {
+    console.log("📩 Incoming request:");
+    console.log("  - URL:", req.originalUrl);
+    console.log("  - Method:", req.method);
+    console.log("  - Cookies:", req.cookies);
+    console.log("  - Headers:", req.headers);
+    next();
+});
 
 // HTTP request logging
 app.use(morgan("dev"));
