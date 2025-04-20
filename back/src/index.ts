@@ -41,16 +41,16 @@ app.use((req, res, next) => {
 app.use(morgan("combined"));
 
 // Security configuration before any other processing
-// app.use(
-//     helmet.contentSecurityPolicy({
-//         directives: {
-//             defaultSrc: ["'self'"],
-//             imgSrc: ["'self'", "https:", "data:"],
-//             scriptSrc: ["'self'", "https://apis.google.com"],
-//             styleSrc: ["'self'", "'unsafe-inline'"],
-//         },
-//     })
-// );
+app.use(
+    helmet.contentSecurityPolicy({
+        directives: {
+            defaultSrc: ["'self'"],
+            imgSrc: ["'self'", "https:", "data:"],
+            scriptSrc: ["'self'", "https://apis.google.com"],
+            styleSrc: ["'self'", "'unsafe-inline'"],
+        },
+    })
+);
 
 // CORS: Allow requests from the frontend client
 app.use(
