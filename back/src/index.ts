@@ -91,7 +91,7 @@ app.use("/public", publicRoutes);
 // 🔐 All availability routes require authentication
 // CSRF protection middleware
 app.use(requireJWTAuth);
-// app.use(csrfProtection);
+app.use(csrfProtection);
 
 // All routes below this point require authentication
 // and CSRF protection
