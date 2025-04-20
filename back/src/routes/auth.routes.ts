@@ -84,7 +84,7 @@ router.get("/logout", (_req: Request, res: Response) => {
 });
 
 // 8. CSRF token route
-router.get("/csrf-token", (req, res) => {
+router.get("/csrf-token", csrfProtection, (req, res) => {
     res.status(200).json({ csrfToken: req.csrfToken() });
 });
 
