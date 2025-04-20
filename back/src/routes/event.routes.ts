@@ -24,14 +24,15 @@ const router = Router();
 
 // ✅ Create an event with validation
 router.post("/", validateEvent, async (req: Request, res: Response) => {
+    console.log(" ✅ POST events/ ✅ Enter before try data received:", req.body);
     try {
-        console.log(" ✅ POST / ✅ Event data received:", req.body);
-        console.log(" ✅ POST / ✅ User data received:", req.user);
+        console.log(" ✅ POST events before create/ ✅ Event data received:", req.body);
+        console.log(" ✅ POST events before create/ ✅ User data received:", req.user);
         const user = req.user as User;
         const event = await createEvent(user, req.body);
 
-        console.log(" ✅ POST / events ✅ user:[", user, "]");
-        console.log(" ✅ POST / events ✅ createEvent:[", event, "]");
+        console.log(" ✅ POST / events after create ✅ user:[", user, "]");
+        console.log(" ✅ POST / events after create ✅ createEvent:[", event, "]");
 
         res.status(201).json({ success: true, event });
     } catch (error) {

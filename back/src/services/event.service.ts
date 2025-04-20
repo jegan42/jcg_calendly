@@ -116,9 +116,10 @@ export const createEvent = async (
         notification_enabled,
         cancellation_policy,
     } = eventData;
-    console.log("Creating event with data:", eventData);
+    console.log("✅ enter Creating before upsert or insert event with data:", eventData);
+    console.log("✅ enter Creating before upsert or insert event with uer:", user);
 
-    const { data, error } = await supabase.from("events").upsert([
+    const { data, error } = await supabase.from("events").insert([
         {
             user_id: user.id,
             title,
@@ -132,10 +133,14 @@ export const createEvent = async (
         },
     ]);
 
+    console.log("✅ enter Creating AFTER upsert or insert event with data:", data);
+    console.log("✅ enter Creating AFTER upsert or insert event with error:", error);
+
     if (error) {
         throw new Error(`Error creating the event: ${error.message}`);
     }
 
+    console.log("✅ enter Creating BEFORE send MAIL with user:", user);
     if (user.email) {
         sendEmail(
             user.email,
