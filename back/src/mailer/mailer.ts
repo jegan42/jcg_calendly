@@ -18,6 +18,8 @@ export const sendEmail = (
     text: string,
     eventId?: number
 ) => {
+    console.log("✅ ✅ process.env.GMAIL_USER:", process.env.GMAIL_USER);
+    console.log("✅ ✅ process.env.GMAIL_PASSWORD:", process.env.GMAIL_PASSWORD);
     const responseUrl = eventId
         ? `${process.env.FRONTEND_URL}/response?eventId=${eventId}&guestEmail=${to}`
         : "";
