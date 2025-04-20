@@ -23,7 +23,7 @@ import { sendEmail } from "../mailer/mailer";
 const router = Router();
 
 // ✅ Create an event with validation
-router.post("/", validateEvent, async (req: Request, res: Response) => {
+router.post("/", async (req: Request, res: Response) => {
     console.log(" ✅ POST events/ ✅ Enter before try data received:", req.body);
     try {
         console.log(" ✅ POST events before create/ ✅ Event data received:", req.body);
