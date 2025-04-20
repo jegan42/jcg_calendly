@@ -32,6 +32,11 @@ import {
 // 4. Express application initialization
 const app = express();
 
+
+app.use((req, res, next) => {
+    console.log(`🧪 GLOBAL MIDDLEWARE PASSED FOR ${req.method} ${req.url}`);
+    next();
+});
 // HTTP request logging
 app.use(morgan("combined"));
 
@@ -113,6 +118,11 @@ app.use((_req: Request, res: Response) => {
 // ➕ Event reminder scheduler
 import { scheduleEventReminders } from "./cron/reminderScheduler";
 scheduleEventReminders();
+
+app.use((req, res) => {
+    console.log("⚠️ Catch-all reached, route not found");
+    res.status(404).json({ message: "Route not found" });
+});
 
 const PORT = process.env.PORT ?? 5000;
 app.listen(PORT, () => {
