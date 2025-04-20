@@ -1,15 +1,18 @@
-// src/middleware/secure.ts
+// src/middleware/csrf.ts
 import csrf from "csurf";
 
-// Init CSRF protection
-// This middleware is used to protect against CSRF attacks
-// It uses a cookie to store the CSRF token
-export const csrfProtection = csrf({ cookie: true });
+// CSRF protection middleware with secure cookie
+export const csrfProtection = csrf({
+    cookie: {
+        httpOnly: true,
+        secure: true, // Render is HTTPS, so required
+        sameSite: "none", // Important when using cross-origin (front/back separated)
+    },
+});
 
 export const csrfErrorHandler = (err: any, req: any, res: any, next: any) => {
     if (err.code === "EBADCSRFTOKEN") {
-        res.status(403).json({ message: "Invalid CSRF token" });
-    } else {
-        next(err);
+        return res.status(403).json({ message: "Invalid CSRF token" });
     }
+    next(err);
 };

@@ -6,6 +6,7 @@ import passport from "passport";
 
 // 2. Custom middleware and types
 import { requireJWTAuth } from "../middleware/jwtAuth";
+import { csrfProtection } from "../middleware/csrf";
 import { User } from "../types/interface";
 import { getUserById } from "../lib/supabaseQueries";
 
@@ -82,5 +83,9 @@ router.get("/logout", (_req: Request, res: Response) => {
     res.redirect("/");
 });
 
-// 8. Export the router
+// 8. CSRF token route
+router.get("/csrf-token", (req, res) => {
+    res.status(200).json({ csrfToken: req.csrfToken() });
+});
+
 export default router;

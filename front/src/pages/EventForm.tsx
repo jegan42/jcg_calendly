@@ -6,6 +6,7 @@ import { useState } from "react";
 import { Input } from "../components/Input";
 import { Button } from "../components/Button";
 import ErrorMessage from "../components/ErrorMessage";
+import type { AxiosError } from "axios";
 
 type EventFormData = {
     title: string;
@@ -48,15 +49,21 @@ const EventForm = () => {
         };
 
         try {
-        console.log("Données soumises :", payload);
-            const retVal = await axiosInstance.post("/events", payload, {
-                withCredentials: true,
-            });
+            console.log("Données soumises :", payload);
+            const retVal = await axiosInstance.post("/events", payload);
             console.log("retVal apres axios :", retVal);
             // navigate("/dashboard"); // retour au dashboard après succès
-        } catch (err) {
-            console.error("Erreur lors de la création :", err);
+        } catch (error) {
+            console.error("Erreur lors de la création :", error);
             setSubmitError("Erreur lors de la création de l’événement.");
+
+            if ((error as AxiosError).response?.status === 403) {
+                setSubmitError(
+                    "❌ Erreur de sécurité : CSRF token invalide ou expiré."
+                );
+            } else {
+                setSubmitError("Erreur lors de la création de l’événement.");
+            }
         }
     };
 
