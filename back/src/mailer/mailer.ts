@@ -34,6 +34,7 @@ export const sendEmail = (
         subject,
         text: message,
     };
+    console.log("✅ ✅ mailOptions:", mailOptions);
 
     transporter.sendMail(
         mailOptions,
