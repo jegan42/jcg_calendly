@@ -5,7 +5,7 @@ import { Button } from "./Button";
 import { Input } from "./Input";
 import ErrorMessage from "./ErrorMessage";
 import type { AxiosError } from "axios";
-import { Modal, ModalButton, ModalLabelCol, ModalLabelLin } from "./Modal";
+import { Modal, ModalButton, ModalForm, ModalLabelCol, ModalLabelLin } from "./Modal";
 
 type EventFormData = {
     title: string;
@@ -78,7 +78,7 @@ export const EventFormModal = ({
     return (
         <Modal>
             <h3>Créer un événement</h3>
-            <form
+            <ModalForm
                 onSubmit={handleSubmit(onSubmit)}
                 style={{ display: "flex", flexDirection: "column" }}
             >
@@ -120,24 +120,24 @@ export const EventFormModal = ({
                 </ModalLabelCol>
 
                 <ModalLabelLin>
+                    <span>Événement public :</span>
                     <Input type="checkbox" {...register("is_public")} />
-                    <span>Événement public</span>
                 </ModalLabelLin>
 
                 <ModalLabelLin>
+                    <span>Notifications :</span>
                     <Input
                         type="checkbox"
                         {...register("notification_enabled")}
                     />
-                    <span>Notifications</span>
                 </ModalLabelLin>
 
                 <ModalLabelLin>
+                    <span>Annulation autorisée :</span>
                     <Input
                         type="checkbox"
                         {...register("cancellation_policy")}
                     />
-                    <span>Annulation autorisée</span>
                 </ModalLabelLin>
 
                 <ModalLabelLin>
@@ -148,7 +148,7 @@ export const EventFormModal = ({
                         Annuler
                     </ModalButton>
                 </ModalLabelLin>
-            </form>
+            </ModalForm>
         </Modal>
     );
 };
