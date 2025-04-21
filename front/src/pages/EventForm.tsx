@@ -1,7 +1,7 @@
 // src/pages/EventForm.tsx
 import { useForm } from "react-hook-form";
 import axiosInstance from "../services/axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useState } from "react";
 import { Input } from "../components/Input";
 import { Button } from "../components/Button";
@@ -20,12 +20,19 @@ type EventFormData = {
 };
 
 const EventForm = () => {
+    const location = useLocation();
+    const queryParams = new URLSearchParams(location.search);
+    const preselectedDate = queryParams.get("date");
     const {
         register,
         handleSubmit,
         watch,
         formState: { errors, isSubmitting },
-    } = useForm<EventFormData>();
+    } = useForm<EventFormData>({
+        defaultValues: {
+            start_time: preselectedDate || "",
+        },
+    });
     const navigate = useNavigate();
     const [submitError, setSubmitError] = useState<string | null>(null);
 
