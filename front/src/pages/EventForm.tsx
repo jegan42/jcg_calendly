@@ -30,7 +30,7 @@ const EventForm = () => {
         formState: { errors, isSubmitting },
     } = useForm<EventFormData>({
         defaultValues: {
-            start_time: preselectedDate || "",
+            start_time: preselectedDate?.slice(0, 16) ?? "",
         },
     });
     const navigate = useNavigate();
@@ -97,7 +97,7 @@ const EventForm = () => {
                     <Input
                         type="datetime-local"
                         {...register("start_time", { required: true })}
-                        defaultValue={preselectedDate ?? ""}
+                        defaultValue={preselectedDate?.slice(0, 16) ?? ""}
                     />
                 </label>
                 {errors.start_time && (
