@@ -69,7 +69,7 @@ const Dashboard = () => {
                 <h3>Total événements: {events.length}</h3>
                 {!events.length && <p>Aucun événement trouvé.</p>}
                 {!!events.length && (
-                    <>
+                    <div>
                         <p>Mode d'affichage :</p>
                         {viewMode === "list" && (
                             <IconButton onClick={() => setViewMode("calendar")}>
@@ -81,7 +81,7 @@ const Dashboard = () => {
                                 📋
                             </IconButton>
                         )}
-                    </>
+                    </div>
                 )}
             </div>
             {!!events.length && viewMode === "calendar" && (
