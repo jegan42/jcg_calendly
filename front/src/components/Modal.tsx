@@ -18,6 +18,17 @@ export const ModalForm = styled.form`
     gap: 1rem;
 `;
 
+export const ModalLabelLin = styled.label`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+`;
+
+export const ModalLabelCol = styled.label`
+    display: flex;
+    flex-direction: column;
+`;
+
 export const ModalButton = styled.button`
     background-color: #007bff;
     color: white;
@@ -29,15 +40,4 @@ export const ModalButton = styled.button`
     &:hover {
         background-color: #0056b3;
     }
-`;
-
-export const ModalLabelLin = styled.label`
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-`;
-
-export const ModalLabelCol = styled.label`
-    display: flex;
-    flex-direction: column;
 `;

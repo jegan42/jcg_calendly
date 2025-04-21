@@ -97,7 +97,7 @@ const Calendar = () => {
             />
             {showModal && newEventData.start_time && (
                 <EventFormModal
-                    defaultDate={newEventData.start_time}
+                    initDate={newEventData.start_time}
                     onClose={() => setShowModal(false)}
                     onSuccess={() => {
                         window.location.reload(); // ou refetchEvents si tu préfères
