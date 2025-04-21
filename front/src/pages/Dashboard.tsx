@@ -112,10 +112,13 @@ const Dashboard = () => {
                     eventClick={(info) => {
                         navigate(`/event/${info.event.id}`);
                     }}
-                    dateClick={(info) => {
+                    dateClick={
+                        
+                        (info) => {
                         const date = new Date(info.dateStr).toISOString();
                         navigate(`/event/new?date=${encodeURIComponent(date)}`);
-                    }}
+                    }
+                }
                     height="auto"
                 />
             )}
