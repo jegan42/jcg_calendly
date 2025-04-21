@@ -58,20 +58,24 @@ const Dashboard = () => {
                 ➕ Créer un événement
             </Button>
             <h2>📅 Mes événements</h2>
-            <h3>Total événements: {events.length}</h3>
-            {!events.length && <p>Aucun événement trouvé.</p>}
-            {!!events.length && (
-                <div style={{ marginBottom: "1rem" }}>
-                    {viewMode === "list" && (
-                        <Button onClick={() => setViewMode("calendar")}>
-                            📅
-                        </Button>
-                    )}
-                    {viewMode === "calendar" && (
-                        <Button onClick={() => setViewMode("list")}>📋</Button>
-                    )}
-                </div>
-            )}
+            <div style={{ display: "flex", gap: "1rem" }}>
+                <h3>Total événements: {events.length}</h3>
+                {!events.length && <p>Aucun événement trouvé.</p>}
+                {!!events.length && (
+                    <div style={{ marginBottom: "1rem" }}>
+                        {viewMode === "list" && (
+                            <Button onClick={() => setViewMode("calendar")}>
+                                📅
+                            </Button>
+                        )}
+                        {viewMode === "calendar" && (
+                            <Button onClick={() => setViewMode("list")}>
+                                📋
+                            </Button>
+                        )}
+                    </div>
+                )}
+            </div>
             {!!events.length && viewMode === "calendar" && (
                 <FullCalendar
                     plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
