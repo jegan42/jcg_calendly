@@ -22,6 +22,11 @@ export const Button = styled.button`
     }
 `;
 
+export const IconButton = styled(Button)`
+    border: 1px solid ${theme_front.colors.primary};
+    background-color: transparent;
+`;
+
 export const PrimaryButton = styled.button`
     padding: 0.75rem 1.25rem;
     background-color: ${theme_front.colors.primary};

@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import axiosInstance from "../services/axios";
 import { useNavigate } from "react-router-dom";
-import { Button } from "../components/Button";
+import { Button, IconButton } from "../components/Button";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
@@ -58,22 +58,30 @@ const Dashboard = () => {
                 ➕ Créer un événement
             </Button>
             <h2>📅 Mes événements</h2>
-            <div style={{ display: "flex", gap: "1rem" }}>
+            <div
+                style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    marginBottom: "1rem",
+                }}
+            >
                 <h3>Total événements: {events.length}</h3>
                 {!events.length && <p>Aucun événement trouvé.</p>}
                 {!!events.length && (
-                    <div style={{ marginBottom: "1rem" }}>
+                    <>
+                        <p>Mode d'affichage :</p>
                         {viewMode === "list" && (
-                            <Button onClick={() => setViewMode("calendar")}>
+                            <IconButton onClick={() => setViewMode("calendar")}>
                                 📅
-                            </Button>
+                            </IconButton>
                         )}
                         {viewMode === "calendar" && (
-                            <Button onClick={() => setViewMode("list")}>
+                            <IconButton onClick={() => setViewMode("list")}>
                                 📋
-                            </Button>
+                            </IconButton>
                         )}
-                    </div>
+                    </>
                 )}
             </div>
             {!!events.length && viewMode === "calendar" && (
