@@ -3,7 +3,7 @@ import { Input } from "./Input";
 import ErrorMessage from "./ErrorMessage";
 import { ModalButton, ModalForm, ModalLabelCol, ModalLabelLin } from "./Modal";
 import { UseFormReturn } from "react-hook-form";
-import { EventFormData } from "../types/types";
+import { EventFormData } from "../utils/types";
 
 type Props = {
     form: UseFormReturn<EventFormData>;

@@ -3,20 +3,10 @@ import { useForm } from "react-hook-form";
 import axiosInstance from "../services/axios";
 import { Modal } from "./Modal";
 import { EventFormContent } from "./EventFormContent";
-import type { AxiosError } from "axios";
+import { AxiosError } from "axios";
 import { useState } from "react";
-import type { EventFormData } from "../types/types";
-
-const getDefaultTimes = (date: string) => {
-    const base = new Date(date);
-    const defaultStart = new Date(base.getTime() + 9 * 60 * 60 * 1000)
-        .toISOString()
-        .slice(0, 16);
-    const defaultEnd = new Date(base.getTime() + 10 * 60 * 60 * 1000)
-        .toISOString()
-        .slice(0, 16);
-    return { defaultStart, defaultEnd };
-};
+import { EventFormData } from "../utils/types";
+import { getDefaultTimes } from "../utils/funtions";
 
 export const EventFormModal = ({
     onClose,
