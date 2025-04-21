@@ -1,44 +1,36 @@
 // src/components/EventFormModal.tsx
 import { useForm } from "react-hook-form";
 import axiosInstance from "../services/axios";
-import { Button } from "./Button";
-import { Input } from "./Input";
-import ErrorMessage from "./ErrorMessage";
+import { Modal } from "./Modal";
+import { EventFormContent } from "./EventFormContent";
 import type { AxiosError } from "axios";
-import { Modal, ModalButton, ModalForm, ModalLabelCol, ModalLabelLin } from "./Modal";
+import { useState } from "react";
+import type { EventFormData } from "../types/types";
 
-type EventFormData = {
-    title: string;
-    description?: string;
-    start_time: string;
-    end_time: string;
-    guests: string;
-    is_public: boolean;
-    notification_enabled: boolean;
-    cancellation_policy: boolean;
+const getDefaultTimes = (date: string) => {
+    const base = new Date(date);
+    const defaultStart = new Date(base.getTime() + 9 * 60 * 60 * 1000)
+        .toISOString()
+        .slice(0, 16);
+    const defaultEnd = new Date(base.getTime() + 10 * 60 * 60 * 1000)
+        .toISOString()
+        .slice(0, 16);
+    return { defaultStart, defaultEnd };
 };
 
 export const EventFormModal = ({
     onClose,
-    defaultDate,
+    initDate,
     onSuccess,
 }: {
     onClose: () => void;
-    defaultDate: string;
+    initDate: string;
     onSuccess?: () => void;
 }) => {
-    const defaultStart = new Date(defaultDate).toISOString().slice(0, 16);
-    const defaultEnd = new Date(
-        new Date(defaultDate).getTime() + 60 * 60 * 1000
-    )
-        .toISOString()
-        .slice(0, 16);
+    const [submitError, setSubmitError] = useState<string | null>(null);
+    const { defaultStart, defaultEnd } = getDefaultTimes(initDate);
 
-    const {
-        register,
-        handleSubmit,
-        formState: { errors, isSubmitting },
-    } = useForm<EventFormData>({
+    const form = useForm<EventFormData>({
         defaultValues: {
             start_time: defaultStart,
             end_time: defaultEnd,
@@ -50,7 +42,9 @@ export const EventFormModal = ({
         const end = new Date(data.end_time);
 
         if (start >= end) {
-            alert("La date de fin doit être après la date de début.");
+            setSubmitError(
+                "❌ La date de fin doit être après la date de début."
+            );
             return;
         }
 
@@ -68,87 +62,22 @@ export const EventFormModal = ({
             onClose();
         } catch (error) {
             if ((error as AxiosError).response?.status === 403) {
-                alert("CSRF token invalide ou expiré.");
+                setSubmitError("❌ Erreur CSRF : token invalide ou expiré.");
             } else {
-                alert("Erreur lors de la création de l’événement.");
+                setSubmitError("Erreur lors de la création de l’événement.");
             }
         }
     };
 
     return (
         <Modal>
-            <h3>Créer un événement</h3>
-            <ModalForm
-                onSubmit={handleSubmit(onSubmit)}
-                style={{ display: "flex", flexDirection: "column" }}
-            >
-                <ModalLabelLin>
-                    <span>Titre :</span>
-                    <Input {...register("title", { required: true })} />
-                </ModalLabelLin>
-                {errors.title && (
-                    <ErrorMessage>Le titre est requis</ErrorMessage>
-                )}
-
-                <ModalLabelCol>
-                    <span>Description :</span>
-                    <textarea {...register("description")} />
-                </ModalLabelCol>
-
-                <ModalLabelLin>
-                    <span>Date de début :</span>
-                    <Input
-                        type="datetime-local"
-                        {...register("start_time", { required: true })}
-                    />
-                </ModalLabelLin>
-
-                <ModalLabelLin>
-                    <span>Date de fin :</span>
-                    <Input
-                        type="datetime-local"
-                        {...register("end_time", { required: true })}
-                    />
-                </ModalLabelLin>
-
-                <ModalLabelCol>
-                    <span>Invités :</span>
-                    <Input
-                        {...register("guests")}
-                        placeholder="mail1@mail.com, mail2@mail.com"
-                    />
-                </ModalLabelCol>
-
-                <ModalLabelLin>
-                    <span>Événement public :</span>
-                    <Input type="checkbox" {...register("is_public")} />
-                </ModalLabelLin>
-
-                <ModalLabelLin>
-                    <span>Notifications :</span>
-                    <Input
-                        type="checkbox"
-                        {...register("notification_enabled")}
-                    />
-                </ModalLabelLin>
-
-                <ModalLabelLin>
-                    <span>Annulation autorisée :</span>
-                    <Input
-                        type="checkbox"
-                        {...register("cancellation_policy")}
-                    />
-                </ModalLabelLin>
-
-                <ModalLabelLin>
-                    <ModalButton type="submit" disabled={isSubmitting}>
-                        {isSubmitting ? "Création..." : "Créer l'événement"}
-                    </ModalButton>
-                    <ModalButton onClick={onClose} type="button">
-                        Annuler
-                    </ModalButton>
-                </ModalLabelLin>
-            </ModalForm>
+            <EventFormContent
+                form={form}
+                submitError={submitError}
+                onSubmit={() => form.handleSubmit(onSubmit)()}
+                onClose={onClose}
+                isSubmitting={form.formState.isSubmitting}
+            />
         </Modal>
     );
 };
