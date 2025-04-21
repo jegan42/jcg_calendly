@@ -140,14 +140,14 @@ export const EventFormModal = ({
                     <span>Annulation autorisée</span>
                 </ModalLabelLin>
 
-                <div style={{ marginTop: "1rem" }}>
+                <ModalLabelLin>
                     <Button type="submit" disabled={isSubmitting}>
                         {isSubmitting ? "Création..." : "Créer l'événement"}
                     </Button>
                     <Button onClick={onClose} type="button">
                         Annuler
                     </Button>
-                </div>
+                </ModalLabelLin>
             </form>
         </Modal>
     );

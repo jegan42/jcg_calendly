@@ -22,5 +22,6 @@ export const ModalLabelLin = styled.label`
 export const ModalLabelCol = styled.label`
     display: flex;
     flex-direction: column;
+    margin-bottom: 1rem;
 `;
 
