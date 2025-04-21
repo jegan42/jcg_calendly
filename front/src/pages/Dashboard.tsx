@@ -8,7 +8,6 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 
-
 interface Event {
     id: number;
     title: string;
@@ -19,6 +18,8 @@ interface Event {
 const Dashboard = () => {
     const [events, setEvents] = useState<Event[]>([]);
     const [formattedEvents, setFormattedEvents] = useState();
+    const [viewMode, setViewMode] = useState<"calendar" | "list">("calendar");
+
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -58,55 +59,67 @@ const Dashboard = () => {
             </Button>
             <h2>📅 Mes événements</h2>
             <h2>📅 Total events: {events.length}</h2>
+            <div style={{ marginBottom: "1rem" }}>
+                <Button
+                    onClick={() => setViewMode("calendar")}
+                    style={{
+                        marginRight: "1rem",
+                        backgroundColor:
+                            viewMode === "calendar" ? "#ccc" : undefined,
+                    }}
+                >
+                    📅 Vue Calendrier
+                </Button>
+                <Button
+                    onClick={() => setViewMode("list")}
+                    style={{
+                        backgroundColor:
+                            viewMode === "list" ? "#ccc" : undefined,
+                    }}
+                >
+                    📋 Vue Liste
+                </Button>
+            </div>
 
-            {!events.length ? (
-                <p>Aucun événement trouvé.</p>
-            ) : (
-                <>
-                    <FullCalendar
-                        plugins={[
-                            dayGridPlugin,
-                            timeGridPlugin,
-                            interactionPlugin,
-                        ]}
-                        initialView="dayGridMonth"
-                        headerToolbar={{
-                            start: "prev,next today",
-                            center: "title",
-                            end: "dayGridMonth,timeGridWeek,timeGridDay",
-                        }}
-                        events={formattedEvents}
-                        height="auto"
-                        eventClick={(info) => {
-                            navigate(`/event/${info.event.id}`);
-                        }}
-                    />
-
-                    <ul>
-                        {events.map((event) => (
-                            <li
-                                key={event.id}
-                                style={{
-                                    marginBottom: "1rem",
-                                    cursor: "pointer",
-                                }}
+            {!events.length && <p>Aucun événement trouvé.</p>}
+            {!!events.length && viewMode === "calendar" && (
+                <FullCalendar
+                    plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+                    initialView="dayGridMonth"
+                    headerToolbar={{
+                        start: "prev,next today",
+                        center: "title",
+                        end: "dayGridMonth,timeGridWeek,timeGridDay",
+                    }}
+                    events={formattedEvents}
+                    height="auto"
+                    eventClick={(info) => {
+                        navigate(`/event/${info.event.id}`);
+                    }}
+                />
+            )}
+            {!!events.length && viewMode === "list" && (
+                <ul>
+                    {events.map((event) => (
+                        <li
+                            key={event.id}
+                            style={{
+                                marginBottom: "1rem",
+                                cursor: "pointer",
+                            }}
+                        >
+                            <Button
+                                onClick={() => navigate(`/event/${event.id}`)}
                             >
-                                <Button
-                                    onClick={() =>
-                                        navigate(`/event/${event.id}`)
-                                    }
-                                >
-                                    <strong>{event.title}</strong> <br />
-                                    {new Date(
-                                        event.start_time
-                                    ).toLocaleString()}{" "}
-                                    →{" "}
-                                    {new Date(event.end_time).toLocaleString()}
-                                </Button>
-                            </li>
-                        ))}
-                    </ul>
-                </>
+                                <strong>{event.title}</strong> <br />
+                                {new Date(
+                                    event.start_time
+                                ).toLocaleString()} →{" "}
+                                {new Date(event.end_time).toLocaleString()}
+                            </Button>
+                        </li>
+                    ))}
+                </ul>
             )}
         </div>
     );
