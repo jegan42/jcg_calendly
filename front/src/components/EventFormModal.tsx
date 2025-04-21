@@ -5,7 +5,7 @@ import { Button } from "./Button";
 import { Input } from "./Input";
 import ErrorMessage from "./ErrorMessage";
 import type { AxiosError } from "axios";
-import { Modal, ModalLabelCol, ModalLabelLin } from "./Modal";
+import { Modal, ModalButton, ModalLabelCol, ModalLabelLin } from "./Modal";
 
 type EventFormData = {
     title: string;
@@ -141,12 +141,12 @@ export const EventFormModal = ({
                 </ModalLabelLin>
 
                 <ModalLabelLin>
-                    <Button type="submit" disabled={isSubmitting}>
+                    <ModalButton type="submit" disabled={isSubmitting}>
                         {isSubmitting ? "Création..." : "Créer l'événement"}
-                    </Button>
-                    <Button onClick={onClose} type="button">
+                    </ModalButton>
+                    <ModalButton onClick={onClose} type="button">
                         Annuler
-                    </Button>
+                    </ModalButton>
                 </ModalLabelLin>
             </form>
         </Modal>
