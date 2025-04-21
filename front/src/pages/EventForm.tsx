@@ -24,11 +24,15 @@ const EventForm = () => {
     const queryParams = new URLSearchParams(location.search);
     const preselectedDate = queryParams.get("date");
     const defaultStart = preselectedDate
-        ? new Date(preselectedDate).toISOString().slice(0, 16)
+        ? new Date(
+              new Date(preselectedDate).getTime() + 9 * 60 * 60 * 1000 // +9h
+          )
+              .toISOString()
+              .slice(0, 16)
         : "";
     const defaultEnd = preselectedDate
         ? new Date(
-              new Date(preselectedDate).getTime() + 60 * 60 * 1000 // +1h
+              new Date(preselectedDate).getTime() + 10 * 60 * 60 * 1000 // +10h
           )
               .toISOString()
               .slice(0, 16)
