@@ -78,7 +78,14 @@ const Dashboard = () => {
                 <h3>Total événements: {events.length}</h3>
                 {!events.length && <p>Aucun événement trouvé.</p>}
                 {!!events.length && (
-                    <div>
+                    <div
+                        style={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                            alignItems: "center",
+                            marginBottom: "1rem",
+                        }}
+                    >
                         <p>Mode d'affichage :</p>
                         {viewMode === "list" && (
                             <IconButton onClick={() => setViewMode("calendar")}>
@@ -110,27 +117,26 @@ const Dashboard = () => {
                 />
             )}
             {!!events.length && viewMode === "list" && (
-                <ul>
+                <div
+                    style={{
+                        display: "grid",
+                        gridTemplateColumns:
+                            "repeat(auto-fit, minmax(300px, 1fr))",
+                        gap: "1rem",
+                    }}
+                >
                     {events.map((event) => (
-                        <li
+                        <Button
                             key={event.id}
-                            style={{
-                                marginBottom: "1rem",
-                                cursor: "pointer",
-                            }}
+                            onClick={() => navigate(`/event/${event.id}`)}
+                            style={{ width: "100%" }}
                         >
-                            <Button
-                                onClick={() => navigate(`/event/${event.id}`)}
-                            >
-                                <strong>{event.title}</strong> <br />
-                                {new Date(
-                                    event.start_time
-                                ).toLocaleString()} →{" "}
-                                {new Date(event.end_time).toLocaleString()}
-                            </Button>
-                        </li>
+                            <strong>{event.title}</strong> <br />
+                            {new Date(event.start_time).toLocaleString()} →{" "}
+                            {new Date(event.end_time).toLocaleString()}
+                        </Button>
                     ))}
-                </ul>
+                </div>
             )}
         </div>
     );
