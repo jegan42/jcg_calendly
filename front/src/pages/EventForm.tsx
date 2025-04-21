@@ -97,7 +97,7 @@ const EventForm = () => {
                     <Input
                         type="datetime-local"
                         {...register("start_time", { required: true })}
-                        defaultValue={preselectedDate?.slice(0, 16) ?? ""}
+                        value={preselectedDate?.slice(0, 16) ?? ""}
                     />
                 </label>
                 {errors.start_time && (
