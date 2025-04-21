@@ -114,6 +114,10 @@ const Dashboard = () => {
                     eventClick={(info) => {
                         navigate(`/event/${info.event.id}`);
                     }}
+                    dateClick={(info) => {
+                        const date = new Date(info.dateStr).toISOString();
+                        navigate(`/event/new?date=${encodeURIComponent(date)}`);
+                    }}
                 />
             )}
             {!!events.length && viewMode === "list" && (
