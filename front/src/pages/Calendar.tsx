@@ -8,6 +8,7 @@ import axiosInstance from "../services/axios";
 import { useNavigate } from "react-router-dom";
 import { Input } from "../components/Input";
 import { Button } from "../components/Button";
+import { EventFormModal } from "../components/EventFormModal";
 
 interface Event {
     id: number;
@@ -94,8 +95,17 @@ const Calendar = () => {
                 dateClick={handleDateClick} // Add click on a date to create an event
                 height="auto"
             />
-
-            {showModal && (
+            {showModal && newEventData.start_time && (
+                <EventFormModal
+                    defaultDate={newEventData.start_time}
+                    onClose={() => setShowModal(false)}
+                    onSuccess={() => {
+                        window.location.reload(); // ou refetchEvents si tu préfères
+                    }}
+                />
+            )}
+            {/* old version 
+             {showModal && (
                 <div
                     style={{
                         position: "fixed",
@@ -155,7 +165,7 @@ const Calendar = () => {
                         </Button>
                     </form>
                 </div>
-            )}
+            )} */}
         </div>
     );
 };

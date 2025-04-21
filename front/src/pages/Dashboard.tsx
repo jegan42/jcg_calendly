@@ -83,7 +83,6 @@ const Dashboard = () => {
                             display: "flex",
                             justifyContent: "space-between",
                             alignItems: "center",
-                            marginBottom: "1rem",
                         }}
                     >
                         <p>Mode d'affichage :</p>
@@ -104,13 +103,12 @@ const Dashboard = () => {
                 <FullCalendar
                     plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
                     initialView="dayGridMonth"
+                    events={formattedEvents}
                     headerToolbar={{
                         start: "prev,next today",
                         center: "title",
                         end: "dayGridMonth,timeGridWeek,timeGridDay",
                     }}
-                    events={formattedEvents}
-                    height="auto"
                     eventClick={(info) => {
                         navigate(`/event/${info.event.id}`);
                     }}
@@ -118,6 +116,7 @@ const Dashboard = () => {
                         const date = new Date(info.dateStr).toISOString();
                         navigate(`/event/new?date=${encodeURIComponent(date)}`);
                     }}
+                    height="auto"
                 />
             )}
             {!!events.length && viewMode === "list" && (
