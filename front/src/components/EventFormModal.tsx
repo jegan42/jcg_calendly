@@ -5,6 +5,7 @@ import { Button } from "./Button";
 import { Input } from "./Input";
 import ErrorMessage from "./ErrorMessage";
 import type { AxiosError } from "axios";
+import { Modal, ModalLabelCol, ModalLabelLin } from "./Modal";
 
 type EventFormData = {
     title: string;
@@ -75,7 +76,7 @@ export const EventFormModal = ({
     };
 
     return (
-        <div
+        <Modal
             style={{
                 position: "fixed",
                 top: "20%",
@@ -89,46 +90,46 @@ export const EventFormModal = ({
         >
             <h3>Créer un événement</h3>
             <form onSubmit={handleSubmit(onSubmit)} style ={{ display: "flex", flexDirection: "column" }}>
-                <label>
+                <ModalLabelLin>
                     <span>Titre :</span>
                     <Input {...register("title", { required: true })} />
-                </label>
+                </ModalLabelLin>
                 {errors.title && <ErrorMessage>Le titre est requis</ErrorMessage>}
 
-                <label>
+                <ModalLabelCol>
                     <span>Description :</span>
                     <textarea {...register("description")} />
-                </label>
+                </ModalLabelCol>
 
-                <label>
+                <ModalLabelLin>
                     <span>Date de début :</span>
                     <Input type="datetime-local" {...register("start_time", { required: true })} />
-                </label>
+                </ModalLabelLin>
 
-                <label>
+                <ModalLabelLin>
                     <span>Date de fin :</span>
                     <Input type="datetime-local" {...register("end_time", { required: true })} />
-                </label>
+                </ModalLabelLin>
 
-                <label>
+                <ModalLabelCol>
                     <span>Invités :</span>
                     <Input {...register("guests")} placeholder="mail1@mail.com, mail2@mail.com" />
-                </label>
+                </ModalLabelCol>
 
-                <label>
-                    <span>Événement public :</span>
+                <ModalLabelLin>
                     <Input type="checkbox" {...register("is_public")} />
-                </label>
+                    <span>Événement public</span>
+                </ModalLabelLin>
 
-                <label>
-                    <span>Notifications :</span>
+                <ModalLabelLin>
                     <Input type="checkbox" {...register("notification_enabled")} />
-                </label>
+                    <span>Notifications</span>
+                </ModalLabelLin>
 
-                <label>
-                    <span>Annulation autorisée :</span>
+                <ModalLabelLin>
                     <Input type="checkbox" {...register("cancellation_policy")} />
-                </label>
+                    <span>Annulation autorisée</span>
+                </ModalLabelLin>
 
                 <div style={{ marginTop: "1rem" }}>
                     <Button type="submit" disabled={isSubmitting}>
@@ -139,6 +140,6 @@ export const EventFormModal = ({
                     </Button>
                 </div>
             </form>
-        </div>
+        </Modal>
     );
 };
