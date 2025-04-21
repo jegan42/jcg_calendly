@@ -52,12 +52,21 @@ const Dashboard = () => {
     console.log("🔍🔍🔍 events.keys", events.keys);
     return (
         <div style={{ padding: "2rem" }}>
-            <h2>Mon tableau de bord</h2>
+            <h1>Mon tableau de bord</h1>
 
-            <Button onClick={() => navigate("/event/new")}>
-                ➕ Créer un événement
-            </Button>
-            <h2>📅 Mes événements</h2>
+            <div
+                style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    marginBottom: "1rem",
+                }}
+            >
+                <h2>📅 Mes événements</h2>
+                <Button onClick={() => navigate("/event/new")}>
+                    ➕ Créer un événement
+                </Button>
+            </div>
             <div
                 style={{
                     display: "flex",
