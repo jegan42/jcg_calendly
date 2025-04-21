@@ -76,25 +76,19 @@ export const EventFormModal = ({
     };
 
     return (
-        <Modal
-            style={{
-                position: "fixed",
-                top: "20%",
-                left: "30%",
-                backgroundColor: "white",
-                padding: "1rem",
-                zIndex: 1000,
-                boxShadow: "0 0 20px rgba(0,0,0,0.2)",
-                borderRadius: "8px",
-            }}
-        >
+        <Modal>
             <h3>Créer un événement</h3>
-            <form onSubmit={handleSubmit(onSubmit)} style ={{ display: "flex", flexDirection: "column" }}>
+            <form
+                onSubmit={handleSubmit(onSubmit)}
+                style={{ display: "flex", flexDirection: "column" }}
+            >
                 <ModalLabelLin>
                     <span>Titre :</span>
                     <Input {...register("title", { required: true })} />
                 </ModalLabelLin>
-                {errors.title && <ErrorMessage>Le titre est requis</ErrorMessage>}
+                {errors.title && (
+                    <ErrorMessage>Le titre est requis</ErrorMessage>
+                )}
 
                 <ModalLabelCol>
                     <span>Description :</span>
@@ -103,17 +97,26 @@ export const EventFormModal = ({
 
                 <ModalLabelLin>
                     <span>Date de début :</span>
-                    <Input type="datetime-local" {...register("start_time", { required: true })} />
+                    <Input
+                        type="datetime-local"
+                        {...register("start_time", { required: true })}
+                    />
                 </ModalLabelLin>
 
                 <ModalLabelLin>
                     <span>Date de fin :</span>
-                    <Input type="datetime-local" {...register("end_time", { required: true })} />
+                    <Input
+                        type="datetime-local"
+                        {...register("end_time", { required: true })}
+                    />
                 </ModalLabelLin>
 
                 <ModalLabelCol>
                     <span>Invités :</span>
-                    <Input {...register("guests")} placeholder="mail1@mail.com, mail2@mail.com" />
+                    <Input
+                        {...register("guests")}
+                        placeholder="mail1@mail.com, mail2@mail.com"
+                    />
                 </ModalLabelCol>
 
                 <ModalLabelLin>
@@ -122,12 +125,18 @@ export const EventFormModal = ({
                 </ModalLabelLin>
 
                 <ModalLabelLin>
-                    <Input type="checkbox" {...register("notification_enabled")} />
+                    <Input
+                        type="checkbox"
+                        {...register("notification_enabled")}
+                    />
                     <span>Notifications</span>
                 </ModalLabelLin>
 
                 <ModalLabelLin>
-                    <Input type="checkbox" {...register("cancellation_policy")} />
+                    <Input
+                        type="checkbox"
+                        {...register("cancellation_policy")}
+                    />
                     <span>Annulation autorisée</span>
                 </ModalLabelLin>
 
