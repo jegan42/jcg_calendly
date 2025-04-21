@@ -23,6 +23,16 @@ const EventForm = () => {
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
     const preselectedDate = queryParams.get("date");
+    const defaultStart = preselectedDate
+        ? new Date(preselectedDate).toISOString().slice(0, 16)
+        : "";
+    const defaultEnd = preselectedDate
+        ? new Date(
+              new Date(preselectedDate).getTime() + 60 * 60 * 1000 // +1h
+          )
+              .toISOString()
+              .slice(0, 16)
+        : "";
     const {
         register,
         handleSubmit,
@@ -30,7 +40,8 @@ const EventForm = () => {
         formState: { errors, isSubmitting },
     } = useForm<EventFormData>({
         defaultValues: {
-            start_time: preselectedDate?.slice(0, 16) ?? "",
+            start_time: defaultStart,
+            end_time: defaultEnd,
         },
     });
     const navigate = useNavigate();
@@ -97,7 +108,7 @@ const EventForm = () => {
                     <Input
                         type="datetime-local"
                         {...register("start_time", { required: true })}
-                        value={preselectedDate?.slice(0, 16) ?? ""}
+                        value={defaultStart}
                     />
                 </label>
                 {errors.start_time && (
@@ -111,6 +122,7 @@ const EventForm = () => {
                     <Input
                         type="datetime-local"
                         {...register("end_time", { required: true })}
+                        value={defaultEnd}
                     />
                 </label>
                 {errors.end_time && (
