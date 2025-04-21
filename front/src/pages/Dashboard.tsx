@@ -52,7 +52,7 @@ const Dashboard = () => {
     console.log("🔍🔍🔍 events.keys", events.keys);
     return (
         <div style={{ padding: "2rem" }}>
-            <h1>Mon tableau de bord</h1>
+            <h1 style={{ textAlign: "center" }}>Mon tableau de bord</h1>
 
             <div
                 style={{
