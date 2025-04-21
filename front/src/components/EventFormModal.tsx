@@ -88,7 +88,7 @@ export const EventFormModal = ({
             }}
         >
             <h3>Créer un événement</h3>
-            <form onSubmit={handleSubmit(onSubmit)}>
+            <form onSubmit={handleSubmit(onSubmit)} style ={{ display: "flex", flexDirection: "column" }}>
                 <label>
                     <span>Titre :</span>
                     <Input {...register("title", { required: true })} />
