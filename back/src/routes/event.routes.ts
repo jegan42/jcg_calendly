@@ -189,7 +189,9 @@ router.post("/google-calendar", async (req: Request, res: Response) => {
 router.get("/google-calendar", async (req: Request, res: Response) => {
     try {
         const user = req.user as User;
+        console.log("👉 Hit /google-calendar", user);
         const events = await getEventsFromGoogleCalendar(user.accessToken);
+        console.log("👉 passed /google-calendar", events);
         res.status(200).json({ success: true, events });
     } catch (error) {
         res.status(500).json({
