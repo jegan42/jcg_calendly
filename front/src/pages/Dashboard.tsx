@@ -80,7 +80,9 @@ const Dashboard = () => {
                         )
                 );
 
-                const allEvents = [...filteredLocalEvents, ...googleEvents];
+                const allEvents = [...filteredLocalEvents, ...googleEvents].sort(
+                    (a, b) => new Date(a.start).getTime() - new Date(b.start).getTime()
+                );
                 setEvents(allEvents);
                 setFormattedEvents(allEvents); // default to all
             } catch (err) {
@@ -129,7 +131,7 @@ const Dashboard = () => {
                 <h3>Total événements: {events.length}</h3>
                 {!events.length && <p>Aucun événement trouvé.</p>}
                 {!!events.length && (
-                    <label style={{ marginBottom: "1rem" }}>
+                    <label>
                         <span>Filtrer : </span>
                         <select
                             value={filter}
@@ -170,8 +172,7 @@ const Dashboard = () => {
             {!!events.length && viewMode === "calendar" && (
                 <FullCalendar
                     plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
-                    initialView="timeGridWeek"
-                    duration={{ days: 5 }}
+                    initialView="dayGridMonth"
                     events={formattedEvents}
                     headerToolbar={{
                         start: "prev,next today",
