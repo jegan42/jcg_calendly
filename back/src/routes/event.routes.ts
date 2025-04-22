@@ -17,7 +17,7 @@ import {
     getEventGuests,
     updateGuestStatus,
 } from "../services/event.service";
-import { createEventInGoogleCalendar } from "../services/googleCalendar.service";
+import { createEventInGoogleCalendar, getEventsFromGoogleCalendar } from "../services/googleCalendar.service";
 import { sendEmail } from "../mailer/mailer";
 
 const router = Router();
@@ -180,6 +180,21 @@ router.post("/google-calendar", async (req: Request, res: Response) => {
         res.status(500).json({
             success: false,
             message: "Error while creating the event on Google Calendar",
+            error: (error as Error).message,
+        });
+    }
+});
+
+// 📅 Get events from Google Calendar
+router.get("/google-calendar", async (req: Request, res: Response) => {
+    try {
+        const user = req.user as User;
+        const events = await getEventsFromGoogleCalendar(user.accessToken);
+        res.status(200).json({ success: true, events });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: "Erreur lors de la récupération des événements Google",
             error: (error as Error).message,
         });
     }

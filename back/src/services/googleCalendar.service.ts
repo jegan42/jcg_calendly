@@ -42,3 +42,21 @@ export const createEventInGoogleCalendar = async (
         throw new Error("Error creating Google Calendar event");
     }
 };
+
+// Function to get events
+export const getEventsFromGoogleCalendar = async (accessToken: string) => {
+    const oauth2Client = new google.auth.OAuth2();
+    oauth2Client.setCredentials({ access_token: accessToken });
+
+    const calendar = google.calendar({ version: "v3", auth: oauth2Client });
+
+    const response = await calendar.events.list({
+        calendarId: "primary",
+        timeMin: new Date().toISOString(), // only upcoming events
+        maxResults: 100,
+        singleEvents: true,
+        orderBy: "startTime",
+    });
+
+    return response.data.items || [];
+};
