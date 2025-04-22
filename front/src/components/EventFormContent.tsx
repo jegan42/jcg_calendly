@@ -100,8 +100,11 @@ export const EventFormContent = ({
                         {...register("cancellation_policy")}
                     />
                 </ModalLabelLin>
-
                 {submitError && <ErrorMessage>{submitError}</ErrorMessage>}
+                <ModalLabelLin>
+                    <span>Ajouter à Google Calendar :</span>
+                    <Input type="checkbox" {...register("syncGoogle")} />
+                </ModalLabelLin>
 
                 <ModalLabelLin>
                     <ModalButton type="submit" disabled={isSubmitting}>

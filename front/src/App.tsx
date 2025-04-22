@@ -4,7 +4,6 @@ import { Route, Routes } from "react-router-dom";
 import {
     Availability,
     Calendar,
-    CreateEvent,
     Dashboard,
     EventDetail,
     EventEdit,
@@ -67,14 +66,6 @@ const App: React.FC = () => {
                         element={
                             <ProtectedRoute>
                                 <Events />
-                            </ProtectedRoute>
-                        }
-                    />
-                    <Route
-                        path="/event/create"
-                        element={
-                            <ProtectedRoute>
-                                <CreateEvent />
                             </ProtectedRoute>
                         }
                     />

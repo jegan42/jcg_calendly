@@ -67,7 +67,7 @@ const Header = () => {
                         <Link to="/profile">Profil</Link>
                         <Link to="/calendar">Calendrier</Link>
                         <Link to="/event">Événements</Link>
-                        <Link to="/event/create">Créer</Link>
+                        <Link to="/event/new">Créer</Link>
                         <LoggoutButton onClick={handleLogout}>
                             Déconnexion
                         </LoggoutButton>

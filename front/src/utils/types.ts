@@ -9,4 +9,5 @@ export type EventFormData = {
     is_public: boolean;
     notification_enabled: boolean;
     cancellation_policy: boolean;
+    syncGoogle?: boolean;
 };

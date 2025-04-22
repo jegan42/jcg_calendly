@@ -7,6 +7,7 @@ import { AxiosError } from "axios";
 import { getDefaultTimes } from "../utils/funtions";
 import { EventFormContent } from "../components/EventFormContent";
 import { EventFormData } from "../utils/types";
+import { createGoogleCalendarEvent } from "../services/googleCalendar";
 
 const EventForm = () => {
     const navigate = useNavigate();
@@ -44,6 +45,17 @@ const EventForm = () => {
 
         try {
             await axiosInstance.post("/events", payload);
+            if (data.syncGoogle) {
+                await createGoogleCalendarEvent({
+                    ...payload,
+                    description: payload.description ?? "", // Ensure description is a string
+                    guests: data.guests
+                        .split(",")
+                        .map((email) => email.trim())
+                        .filter(Boolean),
+                    timeZone: "Europe/Paris",
+                });
+            }
             navigate("/dashboard"); // retour au dashboard après succès
         } catch (error) {
             if ((error as AxiosError).response?.status === 403) {
