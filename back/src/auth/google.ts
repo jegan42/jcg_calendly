@@ -18,9 +18,11 @@ passport.use(
             callbackURL: process.env.GOOGLE_CALLBACK_URL!,
             passReqToCallback: true,
             scope: [
-                "https://www.googleapis.com/auth/calendar.readonly",
-                "https://www.googleapis.com/auth/calendar.events",
+                "profile",
+                "email",
                 "https://www.googleapis.com/auth/calendar",
+                "https://www.googleapis.com/auth/calendar.events",
+                "https://www.googleapis.com/auth/calendar.readonly",
             ],
         },
         async (
