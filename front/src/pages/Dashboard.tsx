@@ -191,17 +191,17 @@ const Dashboard = () => {
                             );
                         }
                     }}
-                    // eventContent={(arg) => {
-                    //     const source = arg.event.extendedProps.source;
-                    //     const badge = source === "google" ? "📘" : "🗂️";
-                    //     return (
-                    //         <div>
-                    //             <strong>
-                    //                 {badge} {arg.event.title}
-                    //             </strong>
-                    //         </div>
-                    //     );
-                    // }}
+                    eventContent={(arg) => {
+                        const source = arg.event.extendedProps.source;
+                        const badge = source === "google" ? "📘" : "🗂️";
+                        return (
+                            <div>
+                                <strong>
+                                    {badge} {arg.event.title}
+                                </strong>
+                            </div>
+                        );
+                    }}
                     eventDidMount={(info) => {
                         const source = info.event.extendedProps.source;
                         const el = info.el;
