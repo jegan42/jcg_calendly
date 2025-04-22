@@ -187,6 +187,7 @@ router.post("/google-calendar", async (req: Request, res: Response) => {
 
 // 📅 Get events from Google Calendar
 router.get("/google-calendar", async (req: Request, res: Response) => {
+    console.log("👉 Hit /google-calendar");
     try {
         const user = req.user as User;
         console.log("👉 Hit /google-calendar", user);
