@@ -22,6 +22,24 @@ import { sendEmail } from "../mailer/mailer";
 
 const router = Router();
 
+// 📅 Get events from Google Calendar
+router.get("/google-calendar", async (req: Request, res: Response) => {
+    console.log("👉 Hit /google-calendar");
+    try {
+        const user = req.user as User;
+        console.log("👉 Hit /google-calendar", user);
+        const events = await getEventsFromGoogleCalendar(user.accessToken);
+        console.log("👉 passed /google-calendar", events);
+        res.status(200).json({ success: true, events });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: "Erreur lors de la récupération des événements Google",
+            error: (error as Error).message,
+        });
+    }
+});
+
 // ✅ Create an event with validation
 router.post("/", async (req: Request, res: Response) => {
     console.log(" ✅ POST events/ ✅ Enter before try data received:", req.body);
@@ -180,24 +198,6 @@ router.post("/google-calendar", async (req: Request, res: Response) => {
         res.status(500).json({
             success: false,
             message: "Error while creating the event on Google Calendar",
-            error: (error as Error).message,
-        });
-    }
-});
-
-// 📅 Get events from Google Calendar
-router.get("/google-calendar", async (req: Request, res: Response) => {
-    console.log("👉 Hit /google-calendar");
-    try {
-        const user = req.user as User;
-        console.log("👉 Hit /google-calendar", user);
-        const events = await getEventsFromGoogleCalendar(user.accessToken);
-        console.log("👉 passed /google-calendar", events);
-        res.status(200).json({ success: true, events });
-    } catch (error) {
-        res.status(500).json({
-            success: false,
-            message: "Erreur lors de la récupération des événements Google",
             error: (error as Error).message,
         });
     }
