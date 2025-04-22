@@ -14,13 +14,14 @@ interface CalendarEvent {
     start: string;
     end: string;
     source: "local" | "google";
+    backgroundColor: string; // bleu clair
+    textColor: string;
 }
 
 type ViewFilter = "all" | "local" | "google";
 
 const Dashboard = () => {
     const [events, setEvents] = useState<CalendarEvent[]>([]);
-    const [formattedEvents, setFormattedEvents] = useState<CalendarEvent[]>();
     const [viewMode, setViewMode] = useState<"calendar" | "list">("calendar");
     const [filter, setFilter] = useState<ViewFilter>("all");
 
@@ -41,6 +42,8 @@ const Dashboard = () => {
                         start: e.start_time,
                         end: e.end_time,
                         source: "local",
+                        backgroundColor: "#d4f5d4", // vert clair
+                        textColor: "#1a7f37", // vert foncé
                     })
                 );
 
@@ -51,12 +54,33 @@ const Dashboard = () => {
                         start: e.start?.dateTime || e.start?.date,
                         end: e.end?.dateTime || e.end?.date,
                         source: "google",
+                        backgroundColor: "#d0e6ff", // bleu clair
+                        textColor: "#1a73e8", // bleu foncé
                     })
                 );
+                // 🔍 Filtrer les doublons : si un Google event a le même titre et horaires, on ignore le local
+                const isDuplicate = (
+                    local: CalendarEvent,
+                    google: CalendarEvent
+                ) => {
+                    return (
+                        local.title === google.title &&
+                        new Date(local.start).getTime() ===
+                            new Date(google.start).getTime() &&
+                        new Date(local.end).getTime() ===
+                            new Date(google.end).getTime()
+                    );
+                };
 
-                const allEvents = [...localEvents, ...googleEvents];
+                const filteredLocalEvents = localEvents.filter(
+                    (local) =>
+                        !googleEvents.some((google) =>
+                            isDuplicate(local, google)
+                        )
+                );
+
+                const allEvents = [...filteredLocalEvents, ...googleEvents];
                 setEvents(allEvents);
-                setFormattedEvents(allEvents); // default to all
             } catch (err) {
                 console.error("❌ Erreur chargement événements :", err);
             }
@@ -66,8 +90,8 @@ const Dashboard = () => {
     }, []);
 
     useEffect(() => {
-        if (filter === "all") setFormattedEvents(events);
-        else setFormattedEvents(events.filter((e) => e.source === filter));
+        if (filter === "all") setEvents([...events]);
+        else setEvents(events.filter((e) => e.source === filter));
     }, [filter, events]);
 
     console.log("events", events);
@@ -144,8 +168,8 @@ const Dashboard = () => {
             {!!events.length && viewMode === "calendar" && (
                 <FullCalendar
                     plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
-                    initialView="dayGridMonth"
-                    events={formattedEvents}
+                    initialView="dayGridWeek"
+                    events={events}
                     headerToolbar={{
                         start: "prev,next today",
                         center: "title",
@@ -192,6 +216,20 @@ const Dashboard = () => {
                 >
                     {events.map((event) => (
                         <Button
+                            style={{
+                                backgroundColor:
+                                    event.source === "google"
+                                        ? "#d0e6ff"
+                                        : "#d4f5d4",
+                                color:
+                                    event.source === "google"
+                                        ? "#1a73e8"
+                                        : "#1a7f37",
+                                padding: "2px 6px",
+                                borderRadius: "6px",
+                                fontSize: "0.8rem",
+                                width: "100%",
+                            }}
                             key={event.id}
                             onClick={() =>
                                 event.source === "local"
@@ -206,7 +244,6 @@ const Dashboard = () => {
                                           "_blank"
                                       )
                             }
-                            style={{ width: "100%" }}
                         >
                             <strong>
                                 {event.source === "google" ? "📘" : "🗂️"}{" "}
