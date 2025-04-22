@@ -14,14 +14,15 @@ interface CalendarEvent {
     start: string;
     end: string;
     source: "local" | "google";
-    backgroundColor: string; // bleu clair
-    textColor: string;
+    backgroundColor: string, // bleu clair
+    textColor: string, 
 }
 
 type ViewFilter = "all" | "local" | "google";
 
 const Dashboard = () => {
     const [events, setEvents] = useState<CalendarEvent[]>([]);
+    const [formattedEvents, setFormattedEvents] = useState<CalendarEvent[]>();
     const [viewMode, setViewMode] = useState<"calendar" | "list">("calendar");
     const [filter, setFilter] = useState<ViewFilter>("all");
 
@@ -43,7 +44,7 @@ const Dashboard = () => {
                         end: e.end_time,
                         source: "local",
                         backgroundColor: "#d4f5d4", // vert clair
-                        textColor: "#1a7f37", // vert foncé
+                        textColor: "#1a7f37",       // vert foncé
                     })
                 );
 
@@ -55,32 +56,25 @@ const Dashboard = () => {
                         end: e.end?.dateTime || e.end?.date,
                         source: "google",
                         backgroundColor: "#d0e6ff", // bleu clair
-                        textColor: "#1a73e8", // bleu foncé
+                        textColor: "#1a73e8",       // bleu foncé
                     })
                 );
-                // 🔍 Filtrer les doublons : si un Google event a le même titre et horaires, on ignore le local
-                const isDuplicate = (
-                    local: CalendarEvent,
-                    google: CalendarEvent
-                ) => {
-                    return (
-                        local.title === google.title &&
-                        new Date(local.start).getTime() ===
-                            new Date(google.start).getTime() &&
-                        new Date(local.end).getTime() ===
-                            new Date(google.end).getTime()
-                    );
-                };
-
-                const filteredLocalEvents = localEvents.filter(
-                    (local) =>
-                        !googleEvents.some((google) =>
-                            isDuplicate(local, google)
-                        )
+            // 🔍 Filtrer les doublons : si un Google event a le même titre et horaires, on ignore le local
+            const isDuplicate = (local: CalendarEvent, google: CalendarEvent) => {
+                return (
+                    local.title === google.title &&
+                    new Date(local.start).getTime() === new Date(google.start).getTime() &&
+                    new Date(local.end).getTime() === new Date(google.end).getTime()
                 );
+            };
 
-                const allEvents = [...filteredLocalEvents, ...googleEvents];
+            const filteredLocalEvents = localEvents.filter(
+                (local) => !googleEvents.some((google) => isDuplicate(local, google))
+            );
+
+            const allEvents = [...filteredLocalEvents, ...googleEvents];
                 setEvents(allEvents);
+                setFormattedEvents(allEvents); // default to all
             } catch (err) {
                 console.error("❌ Erreur chargement événements :", err);
             }
@@ -90,8 +84,8 @@ const Dashboard = () => {
     }, []);
 
     useEffect(() => {
-        if (filter === "all") setEvents([...events]);
-        else setEvents(events.filter((e) => e.source === filter));
+        if (filter === "all") setFormattedEvents(events);
+        else setFormattedEvents(events.filter((e) => e.source === filter));
     }, [filter, events]);
 
     console.log("events", events);
@@ -169,7 +163,7 @@ const Dashboard = () => {
                 <FullCalendar
                     plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
                     initialView="dayGridWeek"
-                    events={events}
+                    events={formattedEvents}
                     headerToolbar={{
                         start: "prev,next today",
                         center: "title",
@@ -187,17 +181,17 @@ const Dashboard = () => {
                             );
                         }
                     }}
-                    // eventContent={(arg) => {
-                    //     const source = arg.event.extendedProps.source;
-                    //     const badge = source === "google" ? "📘" : "🗂️";
-                    //     return (
-                    //         <div>
-                    //             <strong>
-                    //                 {badge} {arg.event.title}
-                    //             </strong>
-                    //         </div>
-                    //     );
-                    // }}
+                    eventContent={(arg) => {
+                        const source = arg.event.extendedProps.source;
+                        const badge = source === "google" ? "📘" : "🗂️";
+                        return (
+                            <div>
+                                <strong>
+                                    {badge} {arg.event.title}
+                                </strong>
+                            </div>
+                        );
+                    }}
                     dateClick={(info) => {
                         const date = new Date(info.dateStr).toISOString();
                         navigate(`/event/new?date=${encodeURIComponent(date)}`);
