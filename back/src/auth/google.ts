@@ -17,6 +17,11 @@ passport.use(
             clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
             callbackURL: process.env.GOOGLE_CALLBACK_URL!,
             passReqToCallback: true,
+            scope: [
+                "https://www.googleapis.com/auth/calendar.readonly",
+                "https://www.googleapis.com/auth/calendar.events",
+                "https://www.googleapis.com/auth/calendar",
+            ],
         },
         async (
             _req: Request,

@@ -45,21 +45,37 @@ export const createEventInGoogleCalendar = async (
 
 // Function to get events
 export const getEventsFromGoogleCalendar = async (accessToken: string) => {
-    console.log(" ✅ getEventsFromGoogleCalendar / ✅ accessToken received:", accessToken);
+    console.log(
+        " ✅ getEventsFromGoogleCalendar / ✅ accessToken received:",
+        accessToken
+    );
     const oauth2Client = new google.auth.OAuth2();
     oauth2Client.setCredentials({ access_token: accessToken });
 
     const calendar = google.calendar({ version: "v3", auth: oauth2Client });
-    console.log(" ✅ getEventsFromGoogleCalendar / ✅ calendar received:", calendar);
+    console.log(
+        " ✅ getEventsFromGoogleCalendar / ✅ calendar received:",
+        calendar
+    );
+    try {
+        const response = await calendar.events.list({
+            calendarId: "primary",
+            timeMin: new Date().toISOString(),
+            maxResults: 100,
+            singleEvents: true,
+            orderBy: "startTime",
+        });
 
-    const response = await calendar.events.list({
-        calendarId: "primary",
-        timeMin: new Date().toISOString(), // only upcoming events
-        maxResults: 100,
-        singleEvents: true,
-        orderBy: "startTime",
-    });
-    console.log(" ✅ getEventsFromGoogleCalendar / ✅ response.data.items received:", response.data.items);
-
-    return response.data.items || [];
+        console.log(
+            " ✅ getEventsFromGoogleCalendar / ✅ response.data.items received:",
+            response.data.items
+        );
+        return response.data.items || [];
+    } catch (err: any) {
+        console.error(
+            "❌ Erreur lors de la récupération des events Google :",
+            err?.response?.data || err.message || err
+        );
+        throw err;
+    }
 };
