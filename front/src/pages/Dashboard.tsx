@@ -170,7 +170,7 @@ const Dashboard = () => {
             {!!events.length && viewMode === "calendar" && (
                 <FullCalendar
                     plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
-                    initialView="listWeek"
+                    initialView="timeGridWeek"
                     events={formattedEvents}
                     headerToolbar={{
                         start: "prev,next today",
