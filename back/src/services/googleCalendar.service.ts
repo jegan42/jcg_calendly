@@ -45,10 +45,12 @@ export const createEventInGoogleCalendar = async (
 
 // Function to get events
 export const getEventsFromGoogleCalendar = async (accessToken: string) => {
+    console.log(" ✅ getEventsFromGoogleCalendar / ✅ accessToken received:", accessToken);
     const oauth2Client = new google.auth.OAuth2();
     oauth2Client.setCredentials({ access_token: accessToken });
 
     const calendar = google.calendar({ version: "v3", auth: oauth2Client });
+    console.log(" ✅ getEventsFromGoogleCalendar / ✅ calendar received:", calendar);
 
     const response = await calendar.events.list({
         calendarId: "primary",
@@ -57,6 +59,7 @@ export const getEventsFromGoogleCalendar = async (accessToken: string) => {
         singleEvents: true,
         orderBy: "startTime",
     });
+    console.log(" ✅ getEventsFromGoogleCalendar / ✅ response.data.items received:", response.data.items);
 
     return response.data.items || [];
 };
