@@ -17,7 +17,15 @@ const router = Router();
 router.get(
     "/google",
     passport.authenticate("google", {
-        scope: ["profile", "email"],
+        scope: [
+            "profile",
+            "email",
+            "https://www.googleapis.com/auth/calendar",
+            "https://www.googleapis.com/auth/calendar.events",
+            "https://www.googleapis.com/auth/calendar.readonly",
+        ],
+        accessType: "offline",
+        prompt: "consent",
     })
 );
 
