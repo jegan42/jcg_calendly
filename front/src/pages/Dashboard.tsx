@@ -187,17 +187,17 @@ const Dashboard = () => {
                             );
                         }
                     }}
-                    eventContent={(arg) => {
-                        const source = arg.event.extendedProps.source;
-                        const badge = source === "google" ? "📘" : "🗂️";
-                        return (
-                            <div>
-                                <strong>
-                                    {badge} {arg.event.title}
-                                </strong>
-                            </div>
-                        );
-                    }}
+                    // eventContent={(arg) => {
+                    //     const source = arg.event.extendedProps.source;
+                    //     const badge = source === "google" ? "📘" : "🗂️";
+                    //     return (
+                    //         <div>
+                    //             <strong>
+                    //                 {badge} {arg.event.title}
+                    //             </strong>
+                    //         </div>
+                    //     );
+                    // }}
                     dateClick={(info) => {
                         const date = new Date(info.dateStr).toISOString();
                         navigate(`/event/new?date=${encodeURIComponent(date)}`);
