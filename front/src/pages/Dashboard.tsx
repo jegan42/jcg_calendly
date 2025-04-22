@@ -14,8 +14,8 @@ interface CalendarEvent {
     start: string;
     end: string;
     source: "local" | "google";
-    backgroundColor: string, // bleu clair
-    textColor: string, 
+    backgroundColor: string; // bleu clair
+    textColor: string;
 }
 
 type ViewFilter = "all" | "local" | "google";
@@ -44,7 +44,7 @@ const Dashboard = () => {
                         end: e.end_time,
                         source: "local",
                         backgroundColor: "#d4f5d4", // vert clair
-                        textColor: "#1a7f37",       // vert foncé
+                        textColor: "#1a7f37", // vert foncé
                     })
                 );
 
@@ -56,23 +56,31 @@ const Dashboard = () => {
                         end: e.end?.dateTime || e.end?.date,
                         source: "google",
                         backgroundColor: "#d0e6ff", // bleu clair
-                        textColor: "#1a73e8",       // bleu foncé
+                        textColor: "#1a73e8", // bleu foncé
                     })
                 );
-            // 🔍 Filtrer les doublons : si un Google event a le même titre et horaires, on ignore le local
-            const isDuplicate = (local: CalendarEvent, google: CalendarEvent) => {
-                return (
-                    local.title === google.title &&
-                    new Date(local.start).getTime() === new Date(google.start).getTime() &&
-                    new Date(local.end).getTime() === new Date(google.end).getTime()
+                // 🔍 Filtrer les doublons : si un Google event a le même titre et horaires, on ignore le local
+                const isDuplicate = (
+                    local: CalendarEvent,
+                    google: CalendarEvent
+                ) => {
+                    return (
+                        local.title === google.title &&
+                        new Date(local.start).getTime() ===
+                            new Date(google.start).getTime() &&
+                        new Date(local.end).getTime() ===
+                            new Date(google.end).getTime()
+                    );
+                };
+
+                const filteredLocalEvents = localEvents.filter(
+                    (local) =>
+                        !googleEvents.some((google) =>
+                            isDuplicate(local, google)
+                        )
                 );
-            };
 
-            const filteredLocalEvents = localEvents.filter(
-                (local) => !googleEvents.some((google) => isDuplicate(local, google))
-            );
-
-            const allEvents = [...filteredLocalEvents, ...googleEvents];
+                const allEvents = [...filteredLocalEvents, ...googleEvents];
                 setEvents(allEvents);
                 setFormattedEvents(allEvents); // default to all
             } catch (err) {
@@ -162,7 +170,7 @@ const Dashboard = () => {
             {!!events.length && viewMode === "calendar" && (
                 <FullCalendar
                     plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
-                    initialView="dayGridWeek"
+                    initialView="listWeek"
                     events={formattedEvents}
                     headerToolbar={{
                         start: "prev,next today",
@@ -181,16 +189,27 @@ const Dashboard = () => {
                             );
                         }
                     }}
-                    eventContent={(arg) => {
-                        const source = arg.event.extendedProps.source;
-                        const badge = source === "google" ? "📘" : "🗂️";
-                        return (
-                            <div>
-                                <strong>
-                                    {badge} {arg.event.title}
-                                </strong>
-                            </div>
-                        );
+                    // eventContent={(arg) => {
+                    //     const source = arg.event.extendedProps.source;
+                    //     const badge = source === "google" ? "📘" : "🗂️";
+                    //     return (
+                    //         <div>
+                    //             <strong>
+                    //                 {badge} {arg.event.title}
+                    //             </strong>
+                    //         </div>
+                    //     );
+                    // }}
+                    eventDidMount={(info) => {
+                        const source = info.event.extendedProps.source;
+                        const el = info.el;
+                        if (source === "google") {
+                            el.style.backgroundColor = "#d0e6ff";
+                            el.style.color = "#1a73e8";
+                        } else {
+                            el.style.backgroundColor = "#d4f5d4";
+                            el.style.color = "#1a7f37";
+                        }
                     }}
                     dateClick={(info) => {
                         const date = new Date(info.dateStr).toISOString();
