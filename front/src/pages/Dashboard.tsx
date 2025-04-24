@@ -7,7 +7,7 @@ import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
-import Tippy from "@tippyjs/react";
+// import Tippy from "@tippyjs/react";
 
 interface CalendarEvent {
     id: string;
