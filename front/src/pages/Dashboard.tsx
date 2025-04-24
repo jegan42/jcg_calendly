@@ -8,7 +8,6 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import Tippy from "@tippyjs/react";
-import "tippy.js/dist/tippy.css";
 
 interface CalendarEvent {
     id: string;
