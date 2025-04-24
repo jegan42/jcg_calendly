@@ -80,8 +80,13 @@ const Dashboard = () => {
                         )
                 );
 
-                const allEvents = [...filteredLocalEvents, ...googleEvents].sort(
-                    (a, b) => new Date(a.start).getTime() - new Date(b.start).getTime()
+                const allEvents = [
+                    ...filteredLocalEvents,
+                    ...googleEvents,
+                ].sort(
+                    (a, b) =>
+                        new Date(a.start).getTime() -
+                        new Date(b.start).getTime()
                 );
                 setEvents(allEvents);
                 setFormattedEvents(allEvents); // default to all
@@ -128,7 +133,7 @@ const Dashboard = () => {
                     marginBottom: "1rem",
                 }}
             >
-                <h3>Total événements: {events.length}</h3>
+                <h3>📅 Total des événements: {events.length}</h3>
                 {!events.length && <p>Aucun événement trouvé.</p>}
                 {!!events.length && (
                     <label>
@@ -218,6 +223,20 @@ const Dashboard = () => {
                         navigate(`/event/new?date=${encodeURIComponent(date)}`);
                     }}
                     height="auto"
+                    eventMouseEnter={(info) => {
+                        const event = info.event;
+                        const tooltipText = `
+                            ${event.title}
+                            \nDébut: ${new Date(event.start!).toLocaleString()}
+                            \nFin: ${new Date(event.end!).toLocaleString()}
+                            \nSource: ${
+                                event.extendedProps.source === "google"
+                                    ? "Google"
+                                    : "Local"
+                            }
+                        `;
+                        info.el.setAttribute("title", tooltipText);
+                    }}
                 />
             )}
             {!!events.length && viewMode === "list" && (
