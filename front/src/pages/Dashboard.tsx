@@ -112,7 +112,7 @@ const Dashboard = () => {
         <div style={{ padding: "2rem" }}>
             <h1 style={{ textAlign: "center" }}>Mon tableau de bord</h1>
 
-            <div
+            {/* <div
                 style={{
                     display: "flex",
                     justifyContent: "space-between",
@@ -124,7 +124,7 @@ const Dashboard = () => {
                 <Button onClick={() => navigate("/event/new")}>
                     ➕ Créer un événement
                 </Button>
-            </div>
+            </div> */}
             <div
                 style={{
                     display: "flex",
@@ -217,26 +217,36 @@ const Dashboard = () => {
                             el.style.backgroundColor = "#d4f5d4";
                             el.style.color = "#1a7f37";
                         }
+                        el.setAttribute(
+                            "title",
+                            `${info.event.title}\nDébut: ${new Date(
+                                info.event.start!
+                            ).toLocaleString()}\nFin: ${new Date(
+                                info.event.end!
+                            ).toLocaleString()}\nSource: ${
+                                source === "google" ? "Google" : "Local"
+                            }`
+                        );
                     }}
                     dateClick={(info) => {
                         const date = new Date(info.dateStr).toISOString();
                         navigate(`/event/new?date=${encodeURIComponent(date)}`);
                     }}
                     height="auto"
-                    eventMouseEnter={(info) => {
-                        const event = info.event;
-                        const tooltipText = `
-                            ${event.title}
-                            \nDébut: ${new Date(event.start!).toLocaleString()}
-                            \nFin: ${new Date(event.end!).toLocaleString()}
-                            \nSource: ${
-                                event.extendedProps.source === "google"
-                                    ? "Google"
-                                    : "Local"
-                            }
-                        `;
-                        info.el.setAttribute("title", tooltipText);
-                    }}
+                    // eventMouseEnter={(info) => {
+                    //     const event = info.event;
+                    //     const tooltipText = `
+                    //         ${event.title}
+                    //         \nDébut: ${new Date(event.start!).toLocaleString()}
+                    //         \nFin: ${new Date(event.end!).toLocaleString()}
+                    //         \nSource: ${
+                    //             event.extendedProps.source === "google"
+                    //                 ? "Google"
+                    //                 : "Local"
+                    //         }
+                    //     `;
+                    //     info.el.setAttribute("title", tooltipText);
+                    // }}
                 />
             )}
             {!!events.length && viewMode === "list" && (
