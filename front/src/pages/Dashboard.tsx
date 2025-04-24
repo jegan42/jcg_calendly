@@ -7,6 +7,8 @@ import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
+import Tippy from "@tippyjs/react";
+import "tippy.js/dist/tippy.css";
 
 interface CalendarEvent {
     id: string;
@@ -14,7 +16,7 @@ interface CalendarEvent {
     start: string;
     end: string;
     source: "local" | "google";
-    backgroundColor: string; // bleu clair
+    backgroundColor: string;
     textColor: string;
 }
 
@@ -43,8 +45,8 @@ const Dashboard = () => {
                         start: e.start_time,
                         end: e.end_time,
                         source: "local",
-                        backgroundColor: "#d4f5d4", // vert clair
-                        textColor: "#1a7f37", // vert foncé
+                        backgroundColor: "#d4f5d4",
+                        textColor: "#1a7f37",
                     })
                 );
 
@@ -55,11 +57,11 @@ const Dashboard = () => {
                         start: e.start?.dateTime || e.start?.date,
                         end: e.end?.dateTime || e.end?.date,
                         source: "google",
-                        backgroundColor: "#d0e6ff", // bleu clair
-                        textColor: "#1a73e8", // bleu foncé
+                        backgroundColor: "#d0e6ff",
+                        textColor: "#1a73e8",
                     })
                 );
-                // 🔍 Filtrer les doublons : si un Google event a le même titre et horaires, on ignore le local
+
                 const isDuplicate = (
                     local: CalendarEvent,
                     google: CalendarEvent
@@ -88,8 +90,9 @@ const Dashboard = () => {
                         new Date(a.start).getTime() -
                         new Date(b.start).getTime()
                 );
+
                 setEvents(allEvents);
-                setFormattedEvents(allEvents); // default to all
+                setFormattedEvents(allEvents);
             } catch (err) {
                 console.error("❌ Erreur chargement événements :", err);
             }
@@ -103,28 +106,10 @@ const Dashboard = () => {
         else setFormattedEvents(events.filter((e) => e.source === filter));
     }, [filter, events]);
 
-    console.log("events", events);
-    console.log("events.length", events.length);
-    console.log("document.cookie", document.cookie);
-
-    console.log("🔍🔍🔍 events.keys", events.keys);
     return (
         <div style={{ padding: "2rem" }}>
             <h1 style={{ textAlign: "center" }}>Mon tableau de bord</h1>
 
-            {/* <div
-                style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                    marginBottom: "1rem",
-                }}
-            >
-                <h2>📅 Mes événements</h2>
-                <Button onClick={() => navigate("/event/new")}>
-                    ➕ Créer un événement
-                </Button>
-            </div> */}
             <div
                 style={{
                     display: "flex",
@@ -134,7 +119,6 @@ const Dashboard = () => {
                 }}
             >
                 <h3>📅 Total des événements: {events.length}</h3>
-                {!events.length && <p>Aucun événement trouvé.</p>}
                 {!!events.length && (
                     <label>
                         <span>Filtrer : </span>
@@ -151,7 +135,6 @@ const Dashboard = () => {
                         </select>
                     </label>
                 )}
-
                 {!!events.length && (
                     <div
                         style={{
@@ -174,6 +157,7 @@ const Dashboard = () => {
                     </div>
                 )}
             </div>
+
             {!!events.length && viewMode === "calendar" && (
                 <FullCalendar
                     plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
@@ -199,33 +183,20 @@ const Dashboard = () => {
                     eventContent={(arg) => {
                         const source = arg.event.extendedProps.source;
                         const badge = source === "google" ? "📘" : "🗂️";
+                        const tooltip = `
+${arg.event.title}
+Début: ${new Date(arg.event.start!).toLocaleString()}
+Fin: ${new Date(arg.event.end!).toLocaleString()}
+Source: ${source === "google" ? "Google" : "Local"}
+                        `;
                         return (
-                            <div>
-                                <strong>
-                                    {badge} {arg.event.title}
-                                </strong>
-                            </div>
-                        );
-                    }}
-                    eventDidMount={(info) => {
-                        const source = info.event.extendedProps.source;
-                        const el = info.el;
-                        if (source === "google") {
-                            el.style.backgroundColor = "#d0e6ff";
-                            el.style.color = "#1a73e8";
-                        } else {
-                            el.style.backgroundColor = "#d4f5d4";
-                            el.style.color = "#1a7f37";
-                        }
-                        el.setAttribute(
-                            "title",
-                            `${info.event.title}\nDébut: ${new Date(
-                                info.event.start!
-                            ).toLocaleString()}\nFin: ${new Date(
-                                info.event.end!
-                            ).toLocaleString()}\nSource: ${
-                                source === "google" ? "Google" : "Local"
-                            }`
+                            <Tippy content={tooltip} placement="top">
+                                <div>
+                                    <strong>
+                                        {badge} {arg.event.title}
+                                    </strong>
+                                </div>
+                            </Tippy>
                         );
                     }}
                     dateClick={(info) => {
@@ -233,22 +204,9 @@ const Dashboard = () => {
                         navigate(`/event/new?date=${encodeURIComponent(date)}`);
                     }}
                     height="auto"
-                    // eventMouseEnter={(info) => {
-                    //     const event = info.event;
-                    //     const tooltipText = `
-                    //         ${event.title}
-                    //         \nDébut: ${new Date(event.start!).toLocaleString()}
-                    //         \nFin: ${new Date(event.end!).toLocaleString()}
-                    //         \nSource: ${
-                    //             event.extendedProps.source === "google"
-                    //                 ? "Google"
-                    //                 : "Local"
-                    //         }
-                    //     `;
-                    //     info.el.setAttribute("title", tooltipText);
-                    // }}
                 />
             )}
+
             {!!events.length && viewMode === "list" && (
                 <div
                     style={{
@@ -260,20 +218,6 @@ const Dashboard = () => {
                 >
                     {events.map((event) => (
                         <Button
-                            style={{
-                                backgroundColor:
-                                    event.source === "google"
-                                        ? "#d0e6ff"
-                                        : "#d4f5d4",
-                                color:
-                                    event.source === "google"
-                                        ? "#1a73e8"
-                                        : "#1a7f37",
-                                padding: "2px 6px",
-                                borderRadius: "6px",
-                                fontSize: "0.8rem",
-                                width: "100%",
-                            }}
                             key={event.id}
                             onClick={() =>
                                 event.source === "local"
@@ -288,11 +232,25 @@ const Dashboard = () => {
                                           "_blank"
                                       )
                             }
+                            style={{
+                                backgroundColor:
+                                    event.source === "google"
+                                        ? "#d0e6ff"
+                                        : "#d4f5d4",
+                                color:
+                                    event.source === "google"
+                                        ? "#1a73e8"
+                                        : "#1a7f37",
+                                padding: "2px 6px",
+                                borderRadius: "6px",
+                                fontSize: "0.8rem",
+                                width: "100%",
+                            }}
                         >
                             <strong>
                                 {event.source === "google" ? "📘" : "🗂️"}{" "}
                                 {event.title}
-                            </strong>{" "}
+                            </strong>
                             <br />
                             {new Date(event.start).toLocaleString()} →{" "}
                             {new Date(event.end).toLocaleString()}
